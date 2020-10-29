@@ -4,7 +4,7 @@ class PauseMenu extends Phaser.Scene{
   }
 
   preload(){
-  
+
   }
 
   create(){
@@ -15,7 +15,7 @@ class PauseMenu extends Phaser.Scene{
     background.setScale(1/3);
     background.setPosition(wid/2, heig/2);
 
-    //BOTON OPCIONES
+  /*  //BOTON OPCIONES
     this.optionsButtonPM = this.add.image(wid*8/16, heig*7/16, 'optionsButtonPM');
     this.optionsButtonPM.setScale(1.5/3);
     this.optionsButtonPM.setInteractive({ useHandCursor: true  } )
@@ -31,7 +31,7 @@ class PauseMenu extends Phaser.Scene{
     this.backButtonPM = this.add.image(wid*8/16, heig*11/16, 'backButtonPM');
     this.backButtonPM.setScale(1.5/3);
     this.backButtonPM.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.BackGame());
+    .on('pointerdown', () => this.BackGame());*/
 
   }
 

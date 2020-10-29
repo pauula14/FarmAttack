@@ -16,14 +16,16 @@ class CreditsMenu extends Phaser.Scene{
     background.setPosition(wid/2, heig/2);
 
     //BOTON ATRAS
-    this.backButtonCM = this.add.image(wid*14/16, heig*14/16, 'backButtonCM');
+    /*this.backButtonCM = this.add.image(wid*14/16, heig*14/16, 'backButtonCM');
     this.backButtonCM.setScale(1.5/3);
     this.backButtonCM.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.BackMainMenu());
+    .on('pointerdown', () => this.BackMainMenu());*/
   }
 
   BackMainMenu(){
-    this.scene.pause('CreditsMenu');
-    this.scene.start('MainMenu');
+    //this.scene.pause('CreditsMenu');
+  //  this.scene.start('MainMenu');
   }
+
+
 }
