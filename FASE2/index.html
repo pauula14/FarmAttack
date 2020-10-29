@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./JS/phaser.js"></script>
+    <script src="./JS/phaser.min.js"></script>
+</head>
+<body>
+
+    <script>
+    var config = {
+        type: Phaser.AUTO,
+        width: 1905,
+        height: 916,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 200 }
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            update:update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+
+    function preload ()
+    {
+        //CARGA DE IMAGENES, MÚSICA, ETC
+        this.load.image('Fondo', 'Assets/PRUEBA/FondoConMarcadores.png');
+    }
+
+    function create ()
+    {
+        //COSAS DEL JUEGO EN SÍ
+        //this.add.image(900, 450, 'Fondo');
+    }
+
+    function update ()
+    {
+        //COSAS QUE SE REFRESCAN TODO EL TIEMPO
+    }
+
+    </script>
+
+</body>
+</html>
