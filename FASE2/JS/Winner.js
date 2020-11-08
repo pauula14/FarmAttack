@@ -8,8 +8,8 @@ class Winner extends Phaser.Scene{
   }
 
   create(){
-    var wid = this.cameras.main.width; //ancho del canvas en el dispositivo
-    var heig = this.cameras.main.height;
+    //var wid = this.cameras.main.width; //ancho del canvas en el dispositivo
+    //var heig = this.cameras.main.height;
 
     //var background = this.add.image(0, 0, 'backgroundOM');
     //background.setScale(2/3);

@@ -8,23 +8,24 @@ class OptionsMenu extends Phaser.Scene{
   }
 
   create(){
-    var wid = this.cameras.main.width; //ancho del canvas en el dispositivo
-    var heig = this.cameras.main.height;
 
-    var background = this.add.image(0, 0, 'backgroundOM');
-    background.setScale(2/3);
-    background.setPosition(wid/2, heig/2);
+    //BACKGROUND
+    this.backgroundOM = this.add.image(0, 0, 'backgroundOM');
+    this.backgroundOM.setPosition(gameWidth/2, gameHeight/2);
 
-/*  //BOTON ATRAS
-    this.backButtonOM = this.add.image(wid*14/16, heig*14/16, 'backButtonOM');
-    this.backButtonOM.setScale(1.5/3);
+    //BACK
+    this.backButtonOM = this.add.image(gameWidth*14/16, gameHeight*14/16, 'backButtonOM');
+    this.backButtonOM.setScale(2/3);
     this.backButtonOM.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.BackMainMenu());*/
+		.on('pointerdown', () => this.BackMainMenuOM());
+
   }
 
-  BackMainMenu(){
+  BackMainMenuOM(){
     this.scene.stop('OptionsMenu');
-    this.scene.sendToBack('OptionsMenu');
-    this.scene.start('MainMenu'); //Ver como hacer para que lleve a la anterior real
+    this.scene.start(prevScene);
+    prevScene = 'OptionsMenu';
+
   }
+
 }

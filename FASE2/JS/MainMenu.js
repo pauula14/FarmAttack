@@ -8,72 +8,67 @@ class MainMenu extends Phaser.Scene{
   }
 
   create(){
-    var wid = this.cameras.main.width; //ancho del canvas en el dispositivo
-    var heig = this.cameras.main.height;
 
-    var background = this.add.image(0, 0, 'backgroundMM');
-    background.setOrigin(0, 0);
-    //background.setPosition(wid/2, heig/2);
-    background.setScale(2/3);
+    this.backgroundMM = this.add.image(0, 0, 'backgroundMM');
+    this.backgroundMM.setPosition(gameWidth/2, gameHeight/2);
 
-    //JUGAR
-    /*this.playButton = this.add.image(wid/2, heig*6/16, 'playButton');
-    this.playButton.setScale(2/3);
+    //PLAY
+    this.playButton = this.add.image(gameWidth*8/16, gameHeight*5/16, 'playButton');
     this.playButton.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.InitGame());
+		.on('pointerdown', () => this.PlayGame());
 
-    //OPTIONS MENU
-    this.optionsButton = this.add.image(wid/2, heig*8/16, 'optionsButton');
-    this.optionsButton.setScale(2/3);
-    this.optionsButton.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.OptionsGame());
+    //OPTIONS
+    this.optionsButtonMM = this.add.image(gameWidth*8/16, gameHeight*7/16, 'optionsButton');
+    this.optionsButtonMM.setInteractive({ useHandCursor: true  } )
+		.on('pointerdown', () => this.OptionsMenuMM());
 
-    //CREDITS MENU
-    this.creditsButton = this.add.image(wid/2, heig*10/16, 'creditsButton');
-    this.creditsButton.setScale(2/3);
+    //CREDITS
+    this.creditsButton = this.add.image(gameWidth*8/16, gameHeight*9/16, 'creditsButton');
     this.creditsButton.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.GameCredits());
+		.on('pointerdown', () => this.CreditsMenu());
 
-    //QUIT
-    this.quitButton = this.add.image(wid/2, heig*12/16, 'quitButton');
-    this.quitButton.setScale(2/3);
-    this.quitButton.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.QuitGame());*/
+    //TUTORIAL
+    this.tutorialButtonMM = this.add.image(gameWidth*8/16, gameHeight*11/16, 'tutorialButton');
+    this.tutorialButtonMM.setInteractive({ useHandCursor: true  } )
+		.on('pointerdown', () => this.TutorialMenuMM());
 
-  /*  this.fullScreen = this.add.image(wid*12/14, heig*12/14, 'ButtonNode1');
-    this.fullScreen.setScale(2/3);
+    //BACK
+    this.backButtonMM = this.add.image(gameWidth*14/16, gameHeight*14/16, 'backButtonMM');
+    this.backButtonMM.setScale(2/3);
+    this.backButtonMM.setInteractive({ useHandCursor: true  } )
+		.on('pointerdown', () => this.BackInitMenu());
 
-    this.fullScreen.setInteractive({ useHandCursor: true})
-		.on('pointerdown', function() {
-      this.scene.scale.toggleFullscreen();
-    });*/
 
   }
 
-  InitGame(){
-    this.scene.pause('MainMenu');
-    this.scene.sendToBack('MainMenu');
-    this.scene.start('MapSelectionMenu');
+  PlayGame(){
+    this.scene.stop("MainMenu");
+    this.scene.start("GamePlay");
+    prevScene = 'MainMenu';
   }
 
-  OptionsGame(){
-    this.scene.pause('MainMenu');
-    this.scene.start('OptionsMenu');
-    //this.scene.bringToTop('OptionsMenu');
+  OptionsMenuMM(){
+    this.scene.stop("MainMenu");
+    this.scene.start("OptionsMenu");
+    prevScene = 'MainMenu';
   }
 
-  GameCredits(){
-    this.scene.pause('MainMenu');
-    this.scene.start('CreditsMenu');
+  CreditsMenu(){
+    this.scene.stop("MainMenu");
+    this.scene.start("CreditsMenu");
+    prevScene = 'MainMenu';
   }
 
-/*  SetFullScreen(){
-    console.log ("Hola");
-    //this.game.config.Phaser.scale.FIT;
-    scene.scale.on('enterfullscreen', function() {});
-  }*/
-
-  QuitGame(){
-    //VER como cerrar la app
+  TutorialMenuMM(){
+    this.scene.stop("MainMenu");
+    this.scene.start("TutorialMenu");
+    prevScene = 'MainMenu';
   }
+
+  BackInitMenu(){
+    this.scene.stop("MainMenu");
+    this.scene.start("InitMenu");
+    prevScene = 'MainMenu';
+  }
+
 }

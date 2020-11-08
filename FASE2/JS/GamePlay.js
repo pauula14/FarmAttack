@@ -8,18 +8,24 @@ class GamePlay extends Phaser.Scene{
   }
 
   create(){
-    var wid = this.cameras.main.width; //ancho del canvas en el dispositivo
-    var heig = this.cameras.main.height;
 
-    //var background = this.add.image(0, 0, 'backgroundOM');
-    //background.setScale(2/3);
-    //background.setPosition(wid/2, heig/2);
+    //BACKGROUND
+    this.backgroundGM = this.add.image(0, 0, 'backgroundGM');
+    this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
 
-/*  //BOTON ATRAS
-    this.backButtonOM = this.add.image(wid*14/16, heig*14/16, 'backButtonOM');
-    this.backButtonOM.setScale(1.5/3);
-    this.backButtonOM.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.BackMainMenu());*/
+    //PAUSE
+    this.pauseButton = this.add.image(gameWidth*2/16, gameHeight*2/16, 'pauseButton');
+    this.pauseButton.setScale(2/3);
+    this.pauseButton.setInteractive({ useHandCursor: true  } )
+		.on('pointerdown', () => this.PauseMenu());
+
+  }
+
+  PauseMenu(){
+    prevScene = 'GamePlay';
+    this.scene.run('PauseMenu');
+    this.scene.bringToTop('PauseMenu');
+    this.scene.pause();
   }
 
 }

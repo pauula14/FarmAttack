@@ -8,50 +8,63 @@ class PauseMenu extends Phaser.Scene{
   }
 
   create(){
-    var wid = this.cameras.main.width; //ancho del canvas en el dispositivo
-    var heig = this.cameras.main.height;
 
-    var background = this.add.image(0, 0, 'backgroundPM');
-    background.setScale(1/3);
-    background.setPosition(wid/2, heig/2);
+    //BACKGROUND
+    this.backgroundPM = this.add.image(0, 0, 'backgroundPM');
+    this.backgroundPM.setPosition(gameWidth/2, gameHeight/2);
 
-  /*  //BOTON OPCIONES
-    this.optionsButtonPM = this.add.image(wid*8/16, heig*7/16, 'optionsButtonPM');
-    this.optionsButtonPM.setScale(1.5/3);
+    //RESUME
+    this.resumeButtonPM = this.add.image(gameWidth*8/16, gameHeight*5/16, 'resumeButtonPM');
+    this.resumeButtonPM.setScale(2/3);
+    this.resumeButtonPM.setInteractive({ useHandCursor: true  } )
+		.on('pointerdown', () => this.BackGamePM());
+
+    //OPTIONS
+    this.optionsButtonPM = this.add.image(gameWidth*8/16, gameHeight*7/16, 'optionsButtonPM');
+    this.optionsButtonPM.setScale(2/3);
     this.optionsButtonPM.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.GoOptionsMenu());
+		.on('pointerdown', () => this.OptionsMenuPM());
 
-    //BOTON ABANDONAR
-    this.quitButtonPM = this.add.image(wid*8/16, heig*9/16, 'quitButtonPM');
-    this.quitButtonPM.setScale(1.5/3);
+    //TUTORIAL
+    this.tutorialButtonPM = this.add.image(gameWidth*8/16, gameHeight*9/16, 'tutorialButtonPM');
+    this.tutorialButtonPM.setScale(2/3);
+    this.tutorialButtonPM.setInteractive({ useHandCursor: true  } )
+		.on('pointerdown', () => this.TutorialMenuPM());
+
+    //QUIT
+    this.quitButtonPM = this.add.image(gameWidth*8/16, gameHeight*11/16, 'quitButtonPM');
+    this.quitButtonPM.setScale(2/3);
     this.quitButtonPM.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.QuitGame());
-
-    //BOTON ATRAS
-    this.backButtonPM = this.add.image(wid*8/16, heig*11/16, 'backButtonPM');
-    this.backButtonPM.setScale(1.5/3);
-    this.backButtonPM.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.BackGame());*/
+		.on('pointerdown', () => this.QuitGamePM());
 
   }
 
-  GoOptionsMenu(){
+  BackGamePM(){
     this.scene.stop('PauseMenu');
-    //this.scene.sendToBack('PauseMenu');
-    this.scene.start('OptionsMenu');
+    this.scene.sendToBack('PauseMenu');
+    this.scene.resume('GamePlay');
+    prevScene = 'PauseMenu';
+  }
+
+  OptionsMenuPM(){
+    this.scene.stop('PauseMenu');
     this.scene.bringToTop('OptionsMenu');
+    this.scene.start('OptionsMenu');
+    prevScene = 'PauseMenu';
   }
 
-/*  BackGame(){
-    this.scene.pause('PauseMenu');
-    this.scene.sendToBack('PauseMenu');
-    this.scene.run('MapOne');
-  }*/
-
-  BackGame(){
-    this.scene.pause('PauseMenu');
-    this.scene.sendToBack('PauseMenu');
-    this.scene.run('MapOne');
-    this.scene.bringToTop('MapOne');
+  TutorialMenuPM(){
+    this.scene.stop('PauseMenu');
+    this.scene.bringToTop('TutorialMenu');
+    this.scene.start('TutorialMenu');
+    prevScene = 'PauseMenu';
   }
+
+  QuitGamePM(){
+    this.scene.stop('PauseMenu');
+    this.scene.stop('GamePlay');
+    this.scene.start('MainMenu');
+    prevScene = 'PauseMenu';
+  }
+
 }
