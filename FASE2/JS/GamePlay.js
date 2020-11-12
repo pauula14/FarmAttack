@@ -4,7 +4,8 @@ class GamePlay extends Phaser.Scene{
   }
 
   preload(){
-
+    this.levelWidth = 1462;
+    this.levelHeight = 687;
   }
 
   create(){
@@ -26,7 +27,7 @@ class GamePlay extends Phaser.Scene{
 
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
     this.eggs = this.physics.add.staticGroup();    // Grupo de monedas
-    this.egg.create(50, 50, 'bomb');
+    this.eggs.create(50, 50, 'egg');
     this.ground.create(500, 500, 'platform');
 
     this.physics.add.collider(this.player, this.ground); 
