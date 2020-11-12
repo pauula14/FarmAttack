@@ -44,7 +44,7 @@ class MainMenu extends Phaser.Scene{
   PlayGame(){
     this.scene.stop("MainMenu");
     this.scene.start("SelectMap");
-    prevScene='MainMenu';
+    prevScene = 'MainMenu';
   }
 
   OptionsMenuMM(){
