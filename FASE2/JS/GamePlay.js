@@ -17,7 +17,7 @@ class GamePlay extends Phaser.Scene{
     this.pauseButton = this.add.image(gameWidth*2/16, gameHeight*2/16, 'pauseButton');
     this.pauseButton.setScale(2/3);
     this.pauseButton.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.PauseMenu());
+    .on('pointerdown', () => this.PauseMenu());
 
   }
 
