@@ -71,6 +71,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('pauseButton', 'ASSETS/Gameplay/botonPausa.png');
     this.load.image('platform', 'ASSETS/Placeholders/platform.png');
     this.load.image('pj', 'ASSETS/Placeholders/dude.png')
+    this.load.image('egg', 'ASSETS/Placeholders/bomb.png')
 
     //SELECT MAP
     this.load.image('star', 'ASSETS/Placeholders/star.png')
@@ -94,7 +95,7 @@ class PreloadMenu extends Phaser.Scene{
 
     //PASA AL MAIN MENU
     this.load.on("complete", () => {
-      prevScene = 'PreloadMenu';
+      //prevScene = 'PreloadMenu';
       console.log("Complete");
       this.scene.start('InitMenu');
     });

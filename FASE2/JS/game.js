@@ -32,12 +32,17 @@ window.onload = function(){
 }
 
 // Variables globales
-var controls = {  // Controles del jugador (teclado)
+var P1_controls = {  // Controles del jugador (teclado)
   up: Phaser.Input.Keyboard.KeyCodes.SPACE,
   left: Phaser.Input.Keyboard.KeyCodes.LEFT,
   right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
   attack: Phaser.Input.Keyboard.KeyCodes.CTRL,
-  test: Phaser.Input.Keyboard.KeyCodes.F,
+};
+var P2_controls = {  // Controles del jugador (teclado)
+  up: Phaser.Input.Keyboard.KeyCodes.W,
+  left: Phaser.Input.Keyboard.KeyCodes.A,
+  right: Phaser.Input.Keyboard.KeyCodes.D,
+  attack: Phaser.Input.Keyboard.KeyCodes.F,
 };
 
 
