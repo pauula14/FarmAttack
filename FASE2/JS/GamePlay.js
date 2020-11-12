@@ -83,6 +83,7 @@ class GamePlay extends Phaser.Scene{
     this.P2_attackButton.off('up');
 
 
+    console.log("Mensaje ebi")
   }
 
   PauseMenu(){
