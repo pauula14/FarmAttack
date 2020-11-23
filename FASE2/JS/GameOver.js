@@ -23,8 +23,8 @@ class GameOver extends Phaser.Scene{
   }
 
   BackMainMenu(){
-    this.scene.stop('OptionsMenu');
-    this.scene.sendToBack('OptionsMenu');
+    this.scene.stop('GameOver');
+    this.scene.sendToBack('GameOver');
     this.scene.start('MainMenu'); //Ver como hacer para que lleve a la anterior real
   }
 }

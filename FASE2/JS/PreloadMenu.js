@@ -10,7 +10,7 @@ class PreloadMenu extends Phaser.Scene{
       var progressBar = this.add.graphics();
       var progressBox = this.add.graphics();
       progressBox.fillStyle(0xffffff, 0.2);
-      progressBox.fillRect(100, 500, 1000, 50);
+      progressBox.fillRect(100, gameWidth-100, gameHeight-50, 50);
 
       var percentText = this.make.text({
           x: 600,
@@ -70,11 +70,11 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundGM', 'ASSETS/Gameplay/FondoJuego.jpg');
     this.load.image('pauseButton', 'ASSETS/Gameplay/botonPausa.png');
     this.load.image('platform', 'ASSETS/Placeholders/platform.png');
-    this.load.image('pj', 'ASSETS/Placeholders/dude.png')
-    this.load.image('egg', 'ASSETS/Placeholders/bomb.png')
+    this.load.image('pj', 'ASSETS/Placeholders/dude.png');
+    this.load.image('egg', 'ASSETS/Placeholders/bomb.png');
 
     //SELECT MAP
-    this.load.image('star', 'ASSETS/Placeholders/star.png')
+    this.load.image('star', 'ASSETS/Placeholders/star.png');
 
     //PAUSE MENU
     this.load.image('backgroundPM', 'ASSETS/PauseMenu/FondoPauseMenu.jpg');
@@ -105,6 +105,11 @@ class PreloadMenu extends Phaser.Scene{
   }
 
   create(){
+
+  
+
+  
+
 
   }
 

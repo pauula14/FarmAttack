@@ -14,7 +14,8 @@ class SelectMap extends Phaser.Scene{
       this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
   
       //PAUSE
-      this.mapButton = this.add.image(gameWidth*2/16, gameHeight*2/16, 'star');
+      this.mapButton = this.add.image(gameWidth/2, gameHeight/2, 'star');
+      this.mapButton.setScale(2,2);
       this.mapButton.setInteractive({ useHandCursor: true  } )
         .on('pointerdown', () => this.StartGame());
   

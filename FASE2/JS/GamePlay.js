@@ -33,6 +33,7 @@ class GamePlay extends Phaser.Scene{
     this.physics.add.collider(this.player, this.ground); 
     this.physics.add.collider(this.eggs, this.ground);
     this.physics.add.collider(this.player, this.eggs);
+
     this.physics.add.overlap(this.player, this.endTrigger, this.FinNivel, null, this); 
 
     // 5) CÁMARA
@@ -53,13 +54,13 @@ class GamePlay extends Phaser.Scene{
     this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up);
     this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left);
     this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right);
-    this.P1_attackButton = this.input.keyboard.addKey(P1_controls.attack);
+    this.P1_interactButton = this.input.keyboard.addKey(P1_controls.interact);
 
     // 2) P2
     this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up);
     this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left);
     this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right);
-    this.P2_attackButton = this.input.keyboard.addKey(P2_controls.attack);
+    this.P2_interactButton = this.input.keyboard.addKey(P2_controls.interact);
 
     this.testButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
 
@@ -70,8 +71,8 @@ class GamePlay extends Phaser.Scene{
     this.P1_leftButton.off('up');
     this.P1_rightButton.off('down');  
     this.P1_rightButton.off('up'); 
-    this.P1_attackButton.off('down');
-    this.P1_attackButton.off('up');
+    this.P1_interactButton.off('down');
+    this.P1_interactButton.off('up');
 
     this.P2_jumpButton.off('down');
     this.P2_jumpButton.off('up');
@@ -79,11 +80,20 @@ class GamePlay extends Phaser.Scene{
     this.P2_leftButton.off('up');
     this.P2_rightButton.off('down');  
     this.P2_rightButton.off('up'); 
-    this.P2_attackButton.off('down');
-    this.P2_attackButton.off('up');
+    this.P2_interactButton.off('down');
+    this.P2_interactButton.off('up');
 
 
-    console.log("Mensaje ebi")
+    this.P1_jumpButton.on('down',this.playerStartJump, this);
+    this.P1_jumpButton.on('up',this.playerStopJump, this);
+    this.P1_leftButton.on('down',this.playerLeft , this);
+    this.P1_leftButton.on('up', this.playerStop, this);
+    this.P1_rightButton.on('down',this.playerRight, this);  
+    this.P1_rightButton.on('up', this.playerStop, this); 
+
+    //this.P1_interactButton.on('down', () => console.log('interact ON'), this);
+    //this.P1_interactButton.on('up', () => console.log('interact OFF') , this);
+
   }
 
   PauseMenu(){
@@ -94,7 +104,64 @@ class GamePlay extends Phaser.Scene{
   }
 
   FinNivel(){
-    
+    this.scene.stop('GamePlay');
+    this.scene.sendToBack('GamePlay');
+    this.scene.start('GameOver');
   }
 
+
+  playerStartJump(){
+
+    this.player.setVelocityY(-300);
+   
+  }
+
+  playerStopJump(){
+
+    this.player.setVelocityY(0);
+
+  }
+
+
+  playerLeft() {
+    
+    this.player.setVelocityX(-100);
+    //this.player.anims.play('move_left', true);
+
+  }
+
+  playerRight() {
+    
+    this.player.setVelocityX(100);
+    //this.player.anims.play('move_right', true);
+
+  }
+
+  playerStop() {
+    
+    this.player.setVelocityX(0);
+
+    if(this.P1_leftButton.isDown){
+      this.playerLeft();
+    }
+    if(this.P1_rightButton.isDown){
+      this.playerRight();
+    }
+  
+    //this.player.anims.stop();
+  }
+
+ 
+/*
+  startDrag(player, objects){
+    this.input.off('down', this.startDrag,this);
+    this.dragObj = objects[0];
+    this.input.on('pointermove' , this.drag, this);
+  }
+
+  drag(){
+    this.dragObj.x=pointer.x;
+    this.dragObj.y=pointer.y;
+  }
+  */
 }

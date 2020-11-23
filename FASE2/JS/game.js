@@ -3,13 +3,13 @@ window.onload = function(){
   var config = {
     type: Phaser.AUTO,
     parent:'game',
-    width: 1462, 
-    height: 687,
+    width: 1425, 
+    height: 800,
     physics: {
       default: 'arcade',
       arcade: {
          debug: true,
-         gravity: { y: 3500 }
+         gravity: { y: 500 }
       }
     },
     scale:{
@@ -36,18 +36,18 @@ var P1_controls = {  // Controles del jugador (teclado)
   up: Phaser.Input.Keyboard.KeyCodes.SPACE,
   left: Phaser.Input.Keyboard.KeyCodes.LEFT,
   right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-  attack: Phaser.Input.Keyboard.KeyCodes.CTRL,
+  interact: Phaser.Input.Keyboard.KeyCodes.CTRL,
 };
 var P2_controls = {  // Controles del jugador (teclado)
   up: Phaser.Input.Keyboard.KeyCodes.W,
   left: Phaser.Input.Keyboard.KeyCodes.A,
   right: Phaser.Input.Keyboard.KeyCodes.D,
-  attack: Phaser.Input.Keyboard.KeyCodes.F,
+  interact: Phaser.Input.Keyboard.KeyCodes.F,
 };
 
 
 // Tamaño pantalla
-var gameWidth = 1462;
-var gameHeight = 687;
+var gameWidth = 1425;
+var gameHeight = 800;
 
 var prevScene = 'PreloadMenu';
