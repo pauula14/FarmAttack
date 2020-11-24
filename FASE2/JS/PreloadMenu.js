@@ -34,8 +34,6 @@ class PreloadMenu extends Phaser.Scene{
       });
 
 
-
-
     //CARGA DE ASSETS
 
     //PRELOAD MENU
@@ -74,7 +72,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundFa2', 'ASSETS/Gameplay/fa 2.png'); //fachada 2
     this.load.image('pauseButton', 'ASSETS/Gameplay/botonPausa.png');
     this.load.image('platform', 'ASSETS/Placeholders/platform.png');
-    this.load.image('pj', 'ASSETS/Placeholders/dude.png');
+    //this.load.image('chicken1Stop', 'ASSETS/Placeholders/dude.png');
     this.load.image('egg', 'ASSETS/Placeholders/bomb.png');
 
     //SELECT MAP
@@ -93,6 +91,11 @@ class PreloadMenu extends Phaser.Scene{
     //GAME OVER
     this.load.image('backgroundGOM', 'ASSETS/GameOverMenu/FondoGameOver.jpg');
 
+    //SPRITES
+    this.load.spritesheet('chicken1', 'Assets/Placeholders/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+
+
 
     this.backgroundPdM = this.add.image(0, 0, 'backgroundPdM');
     this.backgroundPdM.setPosition(gameWidth/2, gameHeight/2);
@@ -110,9 +113,32 @@ class PreloadMenu extends Phaser.Scene{
 
   create(){
 
-  
+    //Aniamcion izq (no va)
+    this.anims.create({
+      key: 'move_left',
+      frames: this.anims.generateFrameNumbers('chicken1',{start: 0, end:3}),
+      frameRate:24,
+      repeat:-1
 
-  
+    })
+
+    this.anims.create({
+      key: 'move_right',
+      frames: this.anims.generateFrameNumbers('chicken1',{start: 5, end:8}),
+      frameRate:24,
+      repeat:-1
+
+    })
+
+    this.anims.create({
+      key: 'stop',
+      frames: this.anims.generateFrameNumbers('chicken1',{start: 4, end:4}),
+      frameRate:24,
+      repeat:-1
+
+    })
+
+
 
 
   }

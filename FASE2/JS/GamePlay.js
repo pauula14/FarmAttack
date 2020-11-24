@@ -15,22 +15,14 @@ class GamePlay extends Phaser.Scene{
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
 
     // 2) PLAYER
-    this.player = this.physics.add.sprite(400, 650, 'pj').setScale(0.4,1);
+    this.player = this.physics.add.sprite(400, 650, 'chicken1').setScale(0.8);
 
-    //Aniamcion izq (no va)
-    this.anims.create({
-			key: 'left',
-			frames: this.anims.generateFrameNumbers('pj',{
-				frames: [0,1,2,3]
-			}),
-			repeat:-1,
-			frameRate:10
-		})
+
 
     // 3) OBJETOS DE CONTROL DE FLUJO
     this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
     this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
-    
+
     // 4) FÍSICAS
     this.physics.world.setBounds(0, 0, this.levelWidth, this.levelHeight);  // Tamaño del nivel
     this.player.setCollideWorldBounds(false);    // No puede sal
@@ -70,17 +62,17 @@ class GamePlay extends Phaser.Scene{
 
 
 
-    this.physics.add.collider(this.player, this.ground); 
+    this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.eggs, this.ground);
 
-    this.physics.add.overlap(this.player, this.endTrigger, this.FinNivel, null, this); 
+    this.physics.add.overlap(this.player, this.endTrigger, this.FinNivel, null, this);
 
     // 5) CÁMARA
     this.cameras.main.setBounds(0, 0, this.levelWidth, this.levelHeight);   // Límites cámara
     this.cameras.main.startFollow(this.player, false, 1, 1, this.cameraOffsetX, 0); // Cámar sigue al personaje
 
     // --- HUD --- //
-    
+
     // 1) BOTON PAUSA
     this.pauseButton = this.add.image(gameWidth/2, gameHeight*2/16, 'pauseButton');
     this.pauseButton.setScale(2/3);
@@ -108,8 +100,8 @@ class GamePlay extends Phaser.Scene{
     this.P1_jumpButton.off('up');
     this.P1_leftButton.off('down');
     this.P1_leftButton.off('up');
-    this.P1_rightButton.off('down');  
-    this.P1_rightButton.off('up'); 
+    this.P1_rightButton.off('down');
+    this.P1_rightButton.off('up');
     this.P1_interactButton.off('down');
     this.P1_interactButton.off('up');
 
@@ -117,8 +109,8 @@ class GamePlay extends Phaser.Scene{
     this.P2_jumpButton.off('up');
     this.P2_leftButton.off('down');
     this.P2_leftButton.off('up');
-    this.P2_rightButton.off('down');  
-    this.P2_rightButton.off('up'); 
+    this.P2_rightButton.off('down');
+    this.P2_rightButton.off('up');
     this.P2_interactButton.off('down');
     this.P2_interactButton.off('up');
 
@@ -127,8 +119,8 @@ class GamePlay extends Phaser.Scene{
     this.P1_jumpButton.on('up',this.playerStopJump, this);
     this.P1_leftButton.on('down',this.playerLeft , this);
     this.P1_leftButton.on('up', this.playerStop, this);
-    this.P1_rightButton.on('down',this.playerRight, this);  
-    this.P1_rightButton.on('up', this.playerStop, this); 
+    this.P1_rightButton.on('down',this.playerRight, this);
+    this.P1_rightButton.on('up', this.playerStop, this);
 
     //this.P1_interactButton.on('down', () => console.log('interact ON'), this);
     //this.P1_interactButton.on('up', () => console.log('interact OFF') , this);
@@ -180,7 +172,7 @@ class GamePlay extends Phaser.Scene{
   playerStartJump(){
 
     this.player.setVelocityY(-300);
-   
+
   }
 
   playerStopJump(){
@@ -191,22 +183,24 @@ class GamePlay extends Phaser.Scene{
 
 
   playerLeft() {
-    
+
+    this.player.anims.play('move_left');
     this.player.setVelocityX(-100);
-    //this.player.anims.play('move_left', true);
 
   }
 
   playerRight() {
-    
+
+    this.player.anims.play('move_right');
     this.player.setVelocityX(100);
     //this.player.anims.play('move_right', true);
 
   }
 
   playerStop() {
-    
+
     this.player.setVelocityX(0);
+    this.player.anims.play('stop');
 
     if(this.P1_leftButton.isDown){
       this.playerLeft();
@@ -214,11 +208,11 @@ class GamePlay extends Phaser.Scene{
     if(this.P1_rightButton.isDown){
       this.playerRight();
     }
-  
+
     //this.player.anims.stop();
   }
 
- 
+
 /*
   startDrag(player, objects){
     this.input.off('down', this.startDrag,this);
