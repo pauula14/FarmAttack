@@ -11,11 +11,21 @@ class GamePlay extends Phaser.Scene{
   create(){
 
     // 1) BACKGROUND
-    this.backgroundGM = this.add.image(0, 0, 'backgroundGM');
+    this.backgroundGM = this.add.image(0, 0, 'backgroundEs1');
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
 
     // 2) PLAYER
-    this.player = this.physics.add.sprite(400, this.playerStartPositionY, 'pj');
+    this.player = this.physics.add.sprite(400, 650, 'pj');
+
+    //Aniamcion izq (no va)
+    this.anims.create({
+			key: 'left',
+			frames: this.anims.generateFrameNumbers('pj',{
+				frames: [0,1,2,3]
+			}),
+			repeat:-1,
+			frameRate:10
+		})
 
     // 3) OBJETOS DE CONTROL DE FLUJO
     this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
@@ -26,9 +36,33 @@ class GamePlay extends Phaser.Scene{
     this.player.setCollideWorldBounds(false);    // No puede sal
 
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
-    this.eggs = this.physics.add.staticGroup();    // Grupo de monedas
-    this.eggs.create(50, 50, 'egg');
-    this.ground.create(500, 500, 'platform');
+    //Bordes y palo del medio
+    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody();
+    this.ground.create(gameWidth/2-10, 65, 'platform').setOrigin(0,0).setScale(0.05,21).refreshBody();
+    this.ground.create(0, 65, 'platform').setOrigin(0,0).setScale(0.05,21).refreshBody();
+    this.ground.create(gameWidth-20, 65, 'platform').setOrigin(0,0).setScale(0.05,21).refreshBody();
+    this.ground.create(0, 57, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody();
+    //Nivel 1
+    this.ground.create(440, 600, 'platform').setOrigin(0,0).setScale(1.36,0.5).refreshBody();
+    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();
+    this.ground.create(1175, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();
+    //Nivel 2
+    this.ground.create(215, 460, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody();
+    this.ground.create(705, 460, 'platform').setOrigin(0,0).setScale(1.25,0.5).refreshBody();
+    //Nivel 3
+    this.ground.create(570, 330, 'platform').setOrigin(0,0).setScale(0.35,0.5).refreshBody();
+    this.ground.create(1050, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();
+    //Madera suelta
+    this.ground.create(160, 275, 'platform').setOrigin(0,0).setScale(0.6,0.5).refreshBody();
+    //Salidas
+    this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
+    this.ground.create(1180, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
+
+
+    //Grupo de huevos
+    this.eggs = this.physics.add.staticGroup();
+    this.eggs.create(200, 160, 'egg');
+
 
     this.physics.add.collider(this.player, this.ground); 
     this.physics.add.collider(this.eggs, this.ground);
@@ -43,7 +77,7 @@ class GamePlay extends Phaser.Scene{
     // --- HUD --- //
     
     // 1) BOTON PAUSA
-    this.pauseButton = this.add.image(gameWidth*2/16, gameHeight*2/16, 'pauseButton');
+    this.pauseButton = this.add.image(gameWidth/2, gameHeight*2/16, 'pauseButton');
     this.pauseButton.setScale(2/3);
     this.pauseButton.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.PauseMenu());
