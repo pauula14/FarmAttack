@@ -3,12 +3,14 @@ window.onload = function(){
   var config = {
     type: Phaser.AUTO,
     parent:'game',
-    width: 1425, 
+    width: 1425,
     height: 800,
+    fps: { target: fpsTarget, },
     physics: {
       default: 'arcade',
       arcade: {
          debug: true,
+         fps: fpsTarget,
          gravity: { y: 500 }
       }
     },
@@ -45,6 +47,7 @@ var P2_controls = {  // Controles del jugador (teclado)
   interact: Phaser.Input.Keyboard.KeyCodes.F,
 };
 
+var fpsTarget = 60;
 
 // Tamaño pantalla
 var gameWidth = 1425;
