@@ -133,8 +133,10 @@ class GamePlay extends Phaser.Scene{
     //this.P1_interactButton.on('down', () => console.log('interact ON'), this);
     //this.P1_interactButton.on('up', () => console.log('interact OFF') , this);
 
+    //Variable para saber los huevos recogidos
     this.score=0;
-    this.scoreText = this.add.text(460, 200, 'score: 0', { fontSize: '32px', fill: '#000' });
+    this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
+
   }
   update(){
 
@@ -158,7 +160,7 @@ class GamePlay extends Phaser.Scene{
     })
 
     this.score += 1;
-    this.scoreText.setText('Score: ' + this.score);
+    this.scoreText.setText('huevos: ' + this.score);
   }
 
   PauseMenu(){
