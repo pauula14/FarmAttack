@@ -15,7 +15,7 @@ class GamePlay extends Phaser.Scene{
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
 
     // 2) PLAYER
-    this.player = this.physics.add.sprite(400, 650, 'pj');
+    this.player = this.physics.add.sprite(400, 650, 'pj').setScale(0.4,1);
 
     //Aniamcion izq (no va)
     this.anims.create({
@@ -61,12 +61,17 @@ class GamePlay extends Phaser.Scene{
 
     //Grupo de huevos
     this.eggs = this.physics.add.staticGroup();
-    this.eggs.create(200, 160, 'egg');
+    this.eggs.create(600, 670, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
+    this.eggs.create(50, 540, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
+    this.eggs.create(gameWidth/2+30, 540, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
+    this.eggs.create(gameWidth/2-80, 400, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
+    this.eggs.create(gameWidth/2+40, 400, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
+    this.eggs.create(900, 210, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
+
 
 
     this.physics.add.collider(this.player, this.ground); 
     this.physics.add.collider(this.eggs, this.ground);
-    this.physics.add.collider(this.player, this.eggs);
 
     this.physics.add.overlap(this.player, this.endTrigger, this.FinNivel, null, this); 
 
@@ -128,6 +133,32 @@ class GamePlay extends Phaser.Scene{
     //this.P1_interactButton.on('down', () => console.log('interact ON'), this);
     //this.P1_interactButton.on('up', () => console.log('interact OFF') , this);
 
+    this.score=0;
+    this.scoreText = this.add.text(460, 200, 'score: 0', { fontSize: '32px', fill: '#000' });
+  }
+  update(){
+
+    this.physics.add.overlap(this.player, this.eggs, this.recogerHuevo, null, this);
+
+  }
+
+  recogerHuevo (player, egg)
+  {
+    //egg.disableBody(true, true);
+
+    egg.body.enable=false;
+    console.log("Huevo recogido");
+
+    this.tweens.add({
+      targets:egg,
+      duration:2000,
+      x:gameWidth/2-20,
+      y:170,
+      onComplete: () => egg.alpha=0
+    })
+
+    this.score += 1;
+    this.scoreText.setText('Score: ' + this.score);
   }
 
   PauseMenu(){
