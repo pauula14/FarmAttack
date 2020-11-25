@@ -42,7 +42,7 @@ class PauseMenu extends Phaser.Scene{
   BackGamePM(){
     this.scene.stop('PauseMenu');
     this.scene.sendToBack('PauseMenu');
-    this.scene.resume('GamePlay');
+    this.scene.resume('GamePlayEs1');
     prevScene = 'PauseMenu';
   }
 

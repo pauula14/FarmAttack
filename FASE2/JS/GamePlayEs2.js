@@ -1,6 +1,6 @@
-class GamePlay extends Phaser.Scene{
+class GamePlayEs2 extends Phaser.Scene{
   constructor(){
-      super("GamePlay");
+      super("GamePlayEs2");
 
 
   }
@@ -13,12 +13,15 @@ class GamePlay extends Phaser.Scene{
   create(){
 
     // 1) BACKGROUND
-    this.backgroundGM = this.add.image(0, 0, 'fondoMapa1');
+    this.backgroundGM = this.add.image(0, 0, 'backgroundEs2');
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
+    this.backgroundGM.setDepth(0);
 
     // 2) PLAYER
-    this.player1 = this.physics.add.sprite(400, 650, 'chicken1').setScale(0.8);
-    this.player2 = this.physics.add.sprite(1000, 650, 'chicken2').setScale(0.8);
+    this.player1 = this.physics.add.sprite(400, 50, 'chicken1').setScale(0.8).setDepth(2);
+    this.player2 = this.physics.add.sprite(1000, 50, 'chicken2').setScale(0.8).setDepth(2);
+
+
 
     // 3) OBJETOS DE CONTROL DE FLUJO
     this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
@@ -31,41 +34,57 @@ class GamePlay extends Phaser.Scene{
 
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
     //Bordes y palo del medio
-    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody();
-    this.ground.create(gameWidth/2-10, 65, 'platform').setOrigin(0,0).setScale(0.05,21).refreshBody();
-    this.ground.create(0, 65, 'platform').setOrigin(0,0).setScale(0.05,21).refreshBody();
-    this.ground.create(gameWidth-20, 65, 'platform').setOrigin(0,0).setScale(0.05,21).refreshBody();
-    this.ground.create(0, 57, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody();
+    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //abajo
+    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo medio
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody();//palo dcha
+    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo izq
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //arriba
+    
     //Nivel 1
-    this.ground.create(440, 600, 'platform').setOrigin(0,0).setScale(1.36,0.5).refreshBody();
-    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();
-    this.ground.create(1175, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();
+    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();//left
+    this.ground.create(860, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody(); //right
+    this.ground.create(gameWidth/2-170, 600, 'platform').setOrigin(0,0).setScale(0.4,4).refreshBody(); //straw
+
+    
     //Nivel 2
-    this.ground.create(215, 460, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody();
-    this.ground.create(705, 460, 'platform').setOrigin(0,0).setScale(1.25,0.5).refreshBody();
+    this.ground.create(124, 460, 'platform').setOrigin(0,0).setScale(1.46,0.5).refreshBody();//left long
+    this.ground.create(gameWidth/2+5, 460, 'platform').setOrigin(0,0).setScale(0.74,0.5).refreshBody();//right 1
+    this.ground.create(gameWidth/2+447, 460, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();//right 2
+
+    //Nivel 2: Platform that our teammate will destroy
+    this.deletedPtf = this.physics.add.sprite(13, 460, 'platform').setOrigin(0,0).setScale(0.3, 0.5).setDepth(2);
+    this.deletedPtf.body.allowGravity=false;
+    this.deletedPtf.body.immovable=true;
+    
+    
     //Nivel 3
-    this.ground.create(570, 330, 'platform').setOrigin(0,0).setScale(0.35,0.5).refreshBody();
-    this.ground.create(1050, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();
+    this.ground.create(0, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();
+    this.ground.create(gameWidth/2-170, 330, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody();
+    this.ground.create(gameWidth/2, 290, 'platform').setOrigin(0,0).setScale(0.83,0.5).refreshBody();
+    /*
     //Madera suelta
     this.ground.create(160, 275, 'platform').setOrigin(0,0).setScale(0.6,0.5).refreshBody();
     //Salidas
     this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
     this.ground.create(1180, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
+*/
 
+    
 
     //Grupo de huevos
     this.eggs = this.physics.add.staticGroup();
-    this.eggs.create(600, 670, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
-    this.eggs.create(50, 540, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
-    this.eggs.create(gameWidth/2+30, 540, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
-    this.eggs.create(gameWidth/2-80, 400, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
-    this.eggs.create(gameWidth/2+40, 400, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
-    this.eggs.create(900, 210, 'egg').setOrigin(0,0).setScale(3).refreshBody();;
+    this.eggs.create(600, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggs.create(50, 540, 'egg').setOrigin(0,0).setScale(3).refreshBody().setDepth(2);
+    this.eggs.create(gameWidth/2+30, 540, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggs.create(gameWidth/2-80, 400, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggs.create(gameWidth/2+40, 400, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggs.create(900, 210, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
 
 
 
     this.physics.add.collider(this.player1, this.ground);
     this.physics.add.collider(this.eggs, this.ground);
+    this.physics.add.collider(this.player1, this.deletedPtf);//collision platform to delete
     this.physics.add.overlap(this.player1, this.endTrigger, this.FinNivel, null, this);
 
     this.physics.add.collider(this.player2, this.ground);
@@ -79,7 +98,7 @@ class GamePlay extends Phaser.Scene{
     // --- HUD --- //
 
     // 1) BOTON PAUSA
-    this.pauseButton = this.add.image(gameWidth/2, gameHeight*2/16, 'pauseButton');
+    this.pauseButton = this.add.image(gameWidth/2, 30, 'pauseButton');
     this.pauseButton.setScale(2/3);
     this.pauseButton.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.PauseMenu());
@@ -141,11 +160,13 @@ class GamePlay extends Phaser.Scene{
     //Variable para saber los huevos recogidos
     this.score=0;
     this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
+    this.scoreText.setDepth(2);
 
     //Timer
     this.initialTime=120;
 
-    this.text = this.add.text(460, 250, 'Countdown: ' + this.formatTime(this.initialTime), { fontSize: '32px', fill: '#000' });
+    this.text = this.add.text(460, 250, this.formatTime(this.initialTime), { fontSize: '32px', fill: '#000' });
+    this.text.setDepth(2);
 
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
@@ -172,7 +193,7 @@ class GamePlay extends Phaser.Scene{
   onEvent ()
   {
     this.initialTime -= 1; // One second
-    this.text.setText('Countdown: ' + this.formatTime(this.initialTime));
+    this.text.setText(this.formatTime(this.initialTime));
 
     if(this.initialTime==0){
       console.log("Se acaboo");
