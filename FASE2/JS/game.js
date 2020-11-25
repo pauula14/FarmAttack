@@ -19,7 +19,7 @@ window.onload = function(){
       autoCenter: Phaser.Scale.CENTER_BOTH,
       isPortrait: true,
     },
-    backgroundColor: 0x000000,
+    backgroundColor: 0xffffff,
     //nombre que se muestra en la ventana del navegador
     //title:"FARM ATTACK",
     //URL del JUEGO

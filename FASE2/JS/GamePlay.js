@@ -1,6 +1,8 @@
 class GamePlay extends Phaser.Scene{
   constructor(){
       super("GamePlay");
+
+
   }
 
   preload(){
@@ -11,7 +13,7 @@ class GamePlay extends Phaser.Scene{
   create(){
 
     // 1) BACKGROUND
-    this.backgroundGM = this.add.image(0, 0, 'backgroundEs1');
+    this.backgroundGM = this.add.image(0, 0, 'fondoMapa1');
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
 
     // 2) PLAYER
