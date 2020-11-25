@@ -25,7 +25,7 @@ window.onload = function(){
     //URL del JUEGO
     //utl: "http://farmAttack.es",
 
-    scene: [PreloadMenu, InitMenu, MainMenu, OptionsMenu, TutorialMenu, CreditsMenu, SelectMap, GamePlayEs1, GamePlayEs2, PauseMenu, GameOver, Winner]
+    scene: [PreloadMenu, InitMenu, MainMenu, OptionsMenu, TutorialMenu, CreditsMenu, SelectMap, GamePlayEs1, GamePlayEs2, GamePlayFa1, PauseMenu, GameOver, Winner]
 
   }
 
