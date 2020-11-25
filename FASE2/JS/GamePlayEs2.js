@@ -12,6 +12,8 @@ class GamePlayEs2 extends Phaser.Scene{
 
   create(){
 
+    levelGameplay = 'GamePlayEs2';
+
     // 1) BACKGROUND
     this.backgroundGM = this.add.image(0, 0, 'backgroundEs2');
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
@@ -39,7 +41,7 @@ class GamePlayEs2 extends Phaser.Scene{
     this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody();//palo dcha
     this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo izq
     this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //arriba
-    
+
     //Nivel 1
     this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();//left
     this.ground.create(860, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody(); //right
@@ -71,7 +73,7 @@ class GamePlayEs2 extends Phaser.Scene{
     this.deletedPtfIcon = this.physics.add.sprite(gameWidth/2+50, 360, 'platform').setOrigin(0,0).setScale(0.1, 2).setDepth(2);
     this.deletedPtfIcon.body.allowGravity=false;
     this.deletedPtfIcon.body.immovable=true;
-    
+
     //Nivel 3
     this.ground.create(0, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();//left 1
     this.ground.create(gameWidth/2-170, 330, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody();//left 2
@@ -80,7 +82,7 @@ class GamePlayEs2 extends Phaser.Scene{
     //Exits
     this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
     this.ground.create(1180, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
-    
+
 
     //Grupo de huevos
     this.eggs = this.physics.add.staticGroup();
@@ -251,15 +253,15 @@ class GamePlayEs2 extends Phaser.Scene{
   }
 
   PauseMenu(){
-    //prevScene = 'GamePlay';
     this.scene.run('PauseMenu');
     this.scene.bringToTop('PauseMenu');
     this.scene.pause();
+    //prevScene = 'GamePlayEs2';
   }
 
   FinNivel(){
-    this.scene.stop('GamePlay');
-    this.scene.sendToBack('GamePlay');
+    this.scene.stop('GamePlayEs2');
+    this.scene.sendToBack('GamePlayEs2');
     this.scene.start('GameOver');
   }
 

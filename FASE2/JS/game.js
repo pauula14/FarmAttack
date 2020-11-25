@@ -55,3 +55,4 @@ var gameWidth = 1425;
 var gameHeight = 800;
 
 var prevScene = 'PreloadMenu';
+var levelGameplay = 'GamePlayEs1';

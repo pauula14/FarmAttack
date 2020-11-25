@@ -40,16 +40,29 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundPdM', 'ASSETS/PreloadMenu/FondoPreloadMenu.png');
 
     //INIT MENU
-    this.load.image('backgroundIM', 'ASSETS/InitMenu/FondoInitMenu.jpg');
-    this.load.image('onlineButton', 'ASSETS/InitMenu/BotonOnline.png');
-    this.load.image('offlineButton', 'ASSETS/InitMenu/BotonOffline.png');
+    this.load.image('backgroundIM', 'ASSETS/Interface/Main_background.jpg');
+    //Online
+    this.load.image('onlineButton', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/online_button.png');
+    this.load.image('onlineButtonSel', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/online_button_selected.png');
+    //Offline
+    this.load.image('offlineButton', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/offline_button.png');
+    this.load.image('offlineButtonSel', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/offline_button_selected.png');
 
     //MAIN MENU
-    this.load.image('backgroundMM', 'ASSETS/MainMenu/FondoMainMenu.jpg');
-    this.load.image('playButton', 'ASSETS/MainMenu/BotonJugar.png');
-    this.load.image('optionsButton', 'ASSETS/MainMenu/BotonOpciones.png');
-    this.load.image('creditsButton', 'ASSETS/MainMenu/BotonCreditos.png');
-    this.load.image('tutorialButton', 'ASSETS/MainMenu/BotonTutorial.png');
+    this.load.image('backgroundMM', 'ASSETS/Interface/MainMenu/main_menu_buttons.jpg');
+    //Play
+    this.load.image('playButton', 'ASSETS/Interface/MainMenu/Buttons/play_button.png');
+    this.load.image('playButtonSel', 'ASSETS/Interface/MainMenu/Buttons/play_button_selected.png');
+    //Options
+    this.load.image('optionsButton', 'ASSETS/Interface/MainMenu/Buttons/options_button.png');
+    this.load.image('optionsButtonSel', 'ASSETS/Interface/MainMenu/Buttons/options_button_selected.png');
+    //Credits
+    this.load.image('creditsButton', 'ASSETS/Interface/MainMenu/Buttons/credits_button.png');
+    this.load.image('creditsButtonSel', 'ASSETS/Interface/MainMenu/Buttons/credits_button_selected.png');
+    //Tutorial
+    this.load.image('tutorialButton', 'ASSETS/Interface/MainMenu/Buttons/tutorial_button.png');
+    this.load.image('tutorialButtonSel', 'ASSETS/Interface/MainMenu/Buttons/tutorial_button_selected.png');
+
     this.load.image('backButtonMM', 'ASSETS/MainMenu/BotonAtras.png');
 
     //TUTORIAL MENU
@@ -105,7 +118,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('GamePlayEs2');
+      this.scene.start('InitMenu');
     });
 
 

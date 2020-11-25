@@ -12,6 +12,8 @@ class GamePlayEs1 extends Phaser.Scene{
 
   create(){
 
+    levelGameplay = 'GamePlayEs1';
+
     // 1) BACKGROUND
     this.backgroundGM = this.add.image(0, 0, 'fondoMapa1');
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
@@ -203,19 +205,6 @@ class GamePlayEs1 extends Phaser.Scene{
     this.scoreText.setText('huevos: ' + this.score);
   }
 
-  PauseMenu(){
-    //prevScene = 'GamePlay';
-    this.scene.run('PauseMenu');
-    this.scene.bringToTop('PauseMenu');
-    this.scene.pause();
-  }
-
-  FinNivel(){
-    this.scene.stop('GamePlay');
-    this.scene.sendToBack('GamePlay');
-    this.scene.start('GameOver');
-  }
-
   //CAMBIOS ANIMACIÓN PLAYER 1
 
   player1StartJump(){
@@ -306,6 +295,19 @@ class GamePlayEs1 extends Phaser.Scene{
   eggCatched(){
   }
 
+  //FUNCIONES BOTONES Y FLUJO DE JUEGO
+  PauseMenu(){
+    this.scene.run('PauseMenu');
+    this.scene.bringToTop('PauseMenu');
+    this.scene.pause();
+    //prevScene = 'GamePlayEs1';
+  }
+
+  FinNivel(){
+    this.scene.stop('GamePlayEs1');
+    this.scene.sendToBack('GamePlayEs1');
+    this.scene.start('GameOver');
+  }
 
 /*
   startDrag(player, objects){
