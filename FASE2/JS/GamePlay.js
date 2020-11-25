@@ -244,10 +244,10 @@ class GamePlay extends Phaser.Scene{
     this.player1.anims.play('stop1', true);
 
     if(this.P1_leftButton.isDown){
-      this.playerLeft();
+      this.player1Left();
     }
     if(this.P1_rightButton.isDown){
-      this.playerRight();
+      this.player1Right();
     }
 
     //this.player.anims.stop();
