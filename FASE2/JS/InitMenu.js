@@ -11,7 +11,7 @@ class InitMenu extends Phaser.Scene{
     //var wid = this.cameras.main.width; //ancho del canvas en el dispositivo
     //var heig = this.cameras.main.height;
 
-    this.backgroundIM = this.add.image(0, 0, 'backgroundIM');
+    this.backgroundIM = this.add.image(0, 0, 'backgroundMenus');
     this.backgroundIM.setPosition(gameWidth/2, gameHeight/2);
 
     //ONLINE

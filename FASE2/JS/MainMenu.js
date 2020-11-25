@@ -9,7 +9,7 @@ class MainMenu extends Phaser.Scene{
 
   create(){
 
-    this.backgroundMM = this.add.image(0, 0, 'backgroundMM');
+    this.backgroundMM = this.add.image(0, 0, 'backgroundMenus');
     this.backgroundMM.setPosition(gameWidth/2, gameHeight/2);
 
     //PLAY

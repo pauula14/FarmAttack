@@ -37,10 +37,13 @@ class PreloadMenu extends Phaser.Scene{
     //CARGA DE ASSETS
 
     //PRELOAD MENU
-    this.load.image('backgroundPdM', 'ASSETS/PreloadMenu/FondoPreloadMenu.png');
+
+
+    //BACKGROUND MENUS
+    this.load.image('backgroundMenus', 'ASSETS/Interface/Main_background.jpg');
 
     //INIT MENU
-    this.load.image('backgroundIM', 'ASSETS/Interface/Main_background.jpg');
+    //this.load.image('backgroundIM', 'ASSETS/Interface/Main_background.jpg');
     //Online
     this.load.image('onlineButton', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/online_button.png');
     this.load.image('onlineButtonSel', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/online_button_selected.png');
@@ -49,7 +52,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('offlineButtonSel', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/offline_button_selected.png');
 
     //MAIN MENU
-    this.load.image('backgroundMM', 'ASSETS/Interface/MainMenu/main_menu_buttons.jpg');
+    //this.load.image('backgroundMM', 'ASSETS/Interface/MainMenu/main_menu_buttons.jpg');
     //Play
     this.load.image('playButton', 'ASSETS/Interface/MainMenu/Buttons/play_button.png');
     this.load.image('playButtonSel', 'ASSETS/Interface/MainMenu/Buttons/play_button_selected.png');
@@ -111,8 +114,8 @@ class PreloadMenu extends Phaser.Scene{
     this.load.spritesheet('chicken2', 'Assets/Placeholders/dude.png', { frameWidth: 32, frameHeight: 48 });
 
 
-    this.backgroundPdM = this.add.image(0, 0, 'backgroundPdM');
-    this.backgroundPdM.setPosition(gameWidth/2, gameHeight/2);
+    /*this.backgroundPdM = this.add.image(0, 0, 'backgroundPdM');
+    this.backgroundPdM.setPosition(gameWidth/2, gameHeight/2);*/
 
     //PASA AL MAIN MENU
     this.load.on("complete", () => {
