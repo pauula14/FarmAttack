@@ -212,6 +212,8 @@ class GamePlay extends Phaser.Scene{
     //this.player.anims.stop();
   }
 
+  eggCatched(){
+  }
 
 /*
   startDrag(player, objects){
