@@ -15,15 +15,17 @@ class GamePlay extends Phaser.Scene{
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
 
     // 2) PLAYER
-
+    this.player1 = this.physics.add.sprite(400, 650, 'chicken1').setScale(0.8);
+    this.player2 = this.physics.add.sprite(1000, 650, 'chicken2').setScale(0.8);
 
     // 3) OBJETOS DE CONTROL DE FLUJO
     this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
     this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
-    
+
     // 4) FÍSICAS
     this.physics.world.setBounds(0, 0, this.levelWidth, this.levelHeight);  // Tamaño del nivel
-    this.player.setCollideWorldBounds(false);    // No puede sal
+    this.player1.setCollideWorldBounds(false);    // No puede sal
+    this.player2.setCollideWorldBounds(false);
 
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
     //Bordes y palo del medio
@@ -60,17 +62,20 @@ class GamePlay extends Phaser.Scene{
 
 
 
-    this.physics.add.collider(this.player, this.ground); 
+    this.physics.add.collider(this.player1, this.ground);
     this.physics.add.collider(this.eggs, this.ground);
+    this.physics.add.overlap(this.player1, this.endTrigger, this.FinNivel, null, this);
 
-    this.physics.add.overlap(this.player, this.endTrigger, this.FinNivel, null, this); 
+    this.physics.add.collider(this.player2, this.ground);
+    this.physics.add.collider(this.eggs, this.ground);
+    this.physics.add.overlap(this.player2, this.endTrigger, this.FinNivel, null, this);
 
     // 5) CÁMARA
     this.cameras.main.setBounds(0, 0, this.levelWidth, this.levelHeight);   // Límites cámara
-    this.cameras.main.startFollow(this.player, false, 1, 1, this.cameraOffsetX, 0); // Cámar sigue al personaje
+    //this.cameras.main.startFollow(this.player1, false, 1, 1, this.cameraOffsetX, 0); // Cámar sigue al personaje
 
     // --- HUD --- //
-    
+
     // 1) BOTON PAUSA
     this.pauseButton = this.add.image(gameWidth/2, gameHeight*2/16, 'pauseButton');
     this.pauseButton.setScale(2/3);
@@ -98,8 +103,8 @@ class GamePlay extends Phaser.Scene{
     this.P1_jumpButton.off('up');
     this.P1_leftButton.off('down');
     this.P1_leftButton.off('up');
-    this.P1_rightButton.off('down');  
-    this.P1_rightButton.off('up'); 
+    this.P1_rightButton.off('down');
+    this.P1_rightButton.off('up');
     this.P1_interactButton.off('down');
     this.P1_interactButton.off('up');
 
@@ -107,18 +112,26 @@ class GamePlay extends Phaser.Scene{
     this.P2_jumpButton.off('up');
     this.P2_leftButton.off('down');
     this.P2_leftButton.off('up');
-    this.P2_rightButton.off('down');  
-    this.P2_rightButton.off('up'); 
+    this.P2_rightButton.off('down');
+    this.P2_rightButton.off('up');
     this.P2_interactButton.off('down');
     this.P2_interactButton.off('up');
 
+    //Controles jugador 1
+    this.P1_jumpButton.on('down',this.player1StartJump, this);
+    this.P1_jumpButton.on('up',this.player1StopJump, this);
+    this.P1_leftButton.on('down',this.player1Left , this);
+    this.P1_leftButton.on('up', this.player1Stop, this);
+    this.P1_rightButton.on('down',this.player1Right, this);
+    this.P1_rightButton.on('up', this.player1Stop, this);
 
-    this.P1_jumpButton.on('down',this.playerStartJump, this);
-    this.P1_jumpButton.on('up',this.playerStopJump, this);
-    this.P1_leftButton.on('down',this.playerLeft , this);
-    this.P1_leftButton.on('up', this.playerStop, this);
-    this.P1_rightButton.on('down',this.playerRight, this);  
-    this.P1_rightButton.on('up', this.playerStop, this); 
+    //Controles jugador 2
+    this.P2_jumpButton.on('down',this.player2StartJump, this);
+    this.P2_jumpButton.on('up',this.player2StopJump, this);
+    this.P2_leftButton.on('down',this.player2Left, this);
+    this.P2_leftButton.on('up', this.player2Stop, this);
+    this.P2_rightButton.on('down',this.player2Right, this);
+    this.P2_rightButton.on('up', this.player2Stop, this);
 
     //this.P1_interactButton.on('down', () => console.log('interact ON'), this);
     //this.P1_interactButton.on('up', () => console.log('interact OFF') , this);
@@ -138,7 +151,8 @@ class GamePlay extends Phaser.Scene{
   }
   update(){
 
-    this.physics.add.overlap(this.player, this.eggs, this.recogerHuevo, null, this);
+    this.physics.add.overlap(this.player1, this.eggs, this.recogerHuevo, null, this);
+    this.physics.add.overlap(this.player2, this.eggs, this.recogerHuevo, null, this);
 
   }
 
@@ -161,7 +175,7 @@ class GamePlay extends Phaser.Scene{
     if(this.initialTime==0){
       console.log("Se acaboo");
     }
-  }   
+  }
 
   recogerHuevo (player, egg)
   {
@@ -195,37 +209,39 @@ class GamePlay extends Phaser.Scene{
     this.scene.start('GameOver');
   }
 
+  //CAMBIOS ANIMACIÓN PLAYER 1
 
-  playerStartJump(){
+  player1StartJump(){
 
-    this.player.setVelocityY(-300);
-   
-  }
-
-  playerStopJump(){
-
-    this.player.setVelocityY(0);
+    this.player1.setVelocityY(-300);
 
   }
 
+  player1StopJump(){
 
-  playerLeft() {
-    
-    this.player.setVelocityX(-100);
-    //this.player.anims.play('move_left', true);
+    this.player1.setVelocityY(0);
 
   }
 
-  playerRight() {
-    
-    this.player.setVelocityX(100);
-    //this.player.anims.play('move_right', true);
+
+  player1Left() {
+
+    this.player1.setVelocityX(-100);
+    this.player1.anims.play('move_left1', true);
 
   }
 
-  playerStop() {
-    
-    this.player.setVelocityX(0);
+  player1Right() {
+
+    this.player1.setVelocityX(100);
+    this.player1.anims.play('move_right1', true);
+
+  }
+
+  player1Stop() {
+
+    this.player1.setVelocityX(0);
+    this.player1.anims.play('stop1', true);
 
     if(this.P1_leftButton.isDown){
       this.playerLeft();
@@ -233,14 +249,57 @@ class GamePlay extends Phaser.Scene{
     if(this.P1_rightButton.isDown){
       this.playerRight();
     }
-  
+
+    //this.player.anims.stop();
+  }
+
+  //CAMBIOS ANIMACION PLAYER 2
+  player2StartJump(){
+
+    this.player2.setVelocityY(-300);
+
+  }
+
+  player2StopJump(){
+
+    this.player2.setVelocityY(0);
+
+  }
+
+
+  player2Left() {
+
+    this.player2.setVelocityX(-100);
+    this.player2.anims.play('move_left2', true);
+
+  }
+
+  player2Right() {
+
+    this.player2.setVelocityX(100);
+    this.player2.anims.play('move_right2', true);
+
+  }
+
+  player2Stop() {
+
+    this.player2.setVelocityX(0);
+    this.player2.anims.play('stop2', true);
+
+    if(this.P2_leftButton.isDown){
+      this.player2Left();
+    }
+    if(this.P2_rightButton.isDown){
+      this.player2Right();
+    }
+
     //this.player.anims.stop();
   }
 
   eggCatched(){
   }
 
- 
+
 /*
   startDrag(player, objects){
     this.input.off('down', this.startDrag,this);

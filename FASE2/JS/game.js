@@ -34,13 +34,14 @@ window.onload = function(){
 }
 
 // Variables globales
-var P1_controls = {  // Controles del jugador (teclado)
+var P2_controls = {  // Controles del jugador (teclado)
   up: Phaser.Input.Keyboard.KeyCodes.UP,
   left: Phaser.Input.Keyboard.KeyCodes.LEFT,
   right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
   interact: Phaser.Input.Keyboard.KeyCodes.CTRL,
 };
-var P2_controls = {  // Controles del jugador (teclado)
+
+var P1_controls = {  // Controles del jugador (teclado)
   up: Phaser.Input.Keyboard.KeyCodes.W,
   left: Phaser.Input.Keyboard.KeyCodes.A,
   right: Phaser.Input.Keyboard.KeyCodes.D,
