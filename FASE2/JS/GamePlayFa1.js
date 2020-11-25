@@ -20,10 +20,8 @@ class GamePlayFa1 extends Phaser.Scene{
     this.backgroundGM.setDepth(0);
 
     // 2) PLAYER
-    this.player1 = this.physics.add.sprite(400, 550, 'chicken1').setScale(0.8).setDepth(2);
-    this.player2 = this.physics.add.sprite(1000, 50, 'chicken2').setScale(0.8).setDepth(2);
-
-
+    this.player1 = this.physics.add.sprite(50, 700, 'chicken1').setScale(0.8).setDepth(2);
+    this.player2 = this.physics.add.sprite(gameWidth-50, 700, 'chicken2').setScale(0.8).setDepth(2);
 
     // 3) OBJETOS DE CONTROL DE FLUJO
     this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
@@ -43,64 +41,64 @@ class GamePlayFa1 extends Phaser.Scene{
     this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //arriba
 
     //Nivel 1
-    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();//left
-    this.ground.create(860, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody(); //right
-    this.ground.create(gameWidth/2-170, 600, 'platform').setOrigin(0,0).setScale(0.4,4).refreshBody(); //straw
+    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody();//left
+    this.ground.create(gameWidth/2, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody(); //right
 
-    //Nivel 1: straw that our teammate will help move it to the right
-    this.movableStraw=this.physics.add.sprite(gameWidth-265, 475, 'platform').setOrigin(0,0).setScale(0.2,4).refreshBody();
-    this.movableStraw.body.allowGravity=false;
-    this.movableStraw.body.immovable=true;
-    this.movableStraw.setDepth(3)
+    //Nivel 1: platform that our teammate will help move it to the left
+    this.movablePlatform2=this.physics.add.sprite(gameWidth-160, 600, 'platform').setOrigin(0,0).setScale(0.4,0.5).refreshBody();
+    this.movablePlatform2.body.allowGravity=false;
+    this.movablePlatform2.body.immovable=true;
+    this.movablePlatform2.setDepth(2)
 
-    //Nivel 1: icon to help our teammate with the straw
-    this.movableStrawIcon=this.physics.add.sprite(gameWidth/2-100, 510, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
-    this.movableStrawIcon.body.allowGravity=false;
-    this.movableStrawIcon.body.immovable=true;
-    this.movableStrawIcon.setDepth(2)
+    //Nivel 1: icon to help our teammate with the platform
+    this.movablePlatformIcon2=this.physics.add.sprite(50, 510, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
+    this.movablePlatformIcon2.body.allowGravity=false;
+    this.movablePlatformIcon2.body.immovable=true;
+    this.movablePlatformIcon2.setDepth(2)
 
     //Nivel 2
-    this.ground.create(124, 460, 'platform').setOrigin(0,0).setScale(1.46,0.5).refreshBody();//left long
-    this.ground.create(gameWidth/2+5, 460, 'platform').setOrigin(0,0).setScale(0.74,0.5).refreshBody();//right 1
-    this.ground.create(gameWidth/2+447, 460, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();//right 2
-
-    //Nivel 2: Platform that our teammate will destroy
-    this.deletedPtf = this.physics.add.sprite(13, 460, 'platform').setOrigin(0,0).setScale(0.3, 0.5).setDepth(2);
-    this.deletedPtf.body.allowGravity=false;
-    this.deletedPtf.body.immovable=true;
-
-    //Nivel 2: icon to destroy our teammate block platform
-    this.deletedPtfIcon = this.physics.add.sprite(gameWidth/2+50, 360, 'platform').setOrigin(0,0).setScale(0.1, 2).setDepth(2);
-    this.deletedPtfIcon.body.allowGravity=false;
-    this.deletedPtfIcon.body.immovable=true;
+    this.ground.create(gameWidth/2-430, 455, 'platform').setOrigin(0,0).setScale(1.08,0.5).refreshBody();//left long
+    this.ground.create(gameWidth/2+270, 455, 'platform').setOrigin(0,0).setScale(0.74,0.5).refreshBody();//right
 
     //Nivel 3
-    this.ground.create(0, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();//left 1
-    this.ground.create(gameWidth/2-170, 330, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody();//left 2
-    this.ground.create(gameWidth/2, 290, 'platform').setOrigin(0,0).setScale(0.83,0.5).refreshBody();//right
+    this.ground.create(0, 310, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody();//left 1
+    this.ground.create(gameWidth/2, 310, 'platform').setOrigin(0,0).setScale(0.9,0.5).refreshBody();//right
+    this.ground.create(gameWidth-180, 310, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody();//right 2
+
+    //Nivel 3: platform that our teammate will help move it to the left
+    this.movablePlatform=this.physics.add.sprite(450, 310, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();
+    this.movablePlatform.body.allowGravity=false;
+    this.movablePlatform.body.immovable=true;
+    this.movablePlatform.setDepth(2)
+
+    //Nivel 3: icon to help our teammate with the platform
+    this.movablePlatformIcon=this.physics.add.sprite(850, 220, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
+    this.movablePlatformIcon.body.allowGravity=false;
+    this.movablePlatformIcon.body.immovable=true;
+    this.movablePlatformIcon.setDepth(2)
 
     //Exits
-    this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
-    this.ground.create(1180, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
+    this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(1.07,0.5).refreshBody();
+    this.ground.create(gameWidth/2+10, 170, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
 
 
     //Grupo de huevos
     this.eggs = this.physics.add.staticGroup();
-    this.eggs.create(450, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggs.create(270, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
     this.eggs.create(gameWidth/2+260, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
     this.eggs.create(gameWidth/2-80, 400, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggs.create(gameWidth-170, 520, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggs.create(800, 230, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggs.create(50, 260, 'egg').setOrigin(0,0).setScale(3).refreshBody().setDepth(2);
+    this.eggs.create(gameWidth/2+100, 540, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggs.create(gameWidth-100, 240, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggs.create(50, 240, 'egg').setOrigin(0,0).setScale(3).refreshBody().setDepth(2);
 
     this.physics.add.collider(this.player1, this.ground);
     this.physics.add.collider(this.eggs, this.ground);
-    this.physics.add.collider(this.player1, this.deletedPtf);//collision platform to delete
+    this.physics.add.collider(this.player1, this.movablePlatform);//collision platform move to left
     this.physics.add.overlap(this.player1, this.endTrigger, this.FinNivel, null, this);
 
     this.physics.add.collider(this.player2, this.ground);
     this.physics.add.collider(this.eggs, this.ground);
-    this.physics.add.collider(this.player2, this.movableStraw);//collision straw to move right
+    this.physics.add.collider(this.player2, this.movablePlatform2);//collision platform move to left
     this.physics.add.overlap(this.player2, this.endTrigger, this.FinNivel, null, this);
 
     // 5) CÁMARA
@@ -189,8 +187,9 @@ class GamePlayFa1 extends Phaser.Scene{
     this.physics.add.overlap(this.player1, this.eggs, this.recogerHuevo, null, this);
     this.physics.add.overlap(this.player2, this.eggs, this.recogerHuevo, null, this);
 
-    this.physics.add.overlap(this.player1, this.movableStrawIcon, this.moveStrawRight, null, this);
-    this.physics.add.overlap(this.player2, this.deletedPtfIcon, this.deletePlatform, null, this);
+    this.physics.add.overlap(this.player2, this.movablePlatformIcon, this.movePltLeft, null, this);
+    this.physics.add.overlap(this.player1, this.movablePlatformIcon2, this.movePltLeft2, null, this);
+
 
   }
 
@@ -234,22 +233,26 @@ class GamePlayFa1 extends Phaser.Scene{
     this.scoreText.setText('huevos: ' + this.score);
   }
 
-  moveStrawRight(){
+  movePltLeft(){
 
-    this.movableStrawIcon.disableBody(true,true);
+    this.movablePlatformIcon.disableBody(true,true);
 
     this.tweens.add({
-      targets:this.movableStraw,
+      targets:this.movablePlatform,
       duration:2000,
-      x:gameWidth-100,
+      x:0,
     })
   }
 
-  deletePlatform(){
+  movePltLeft2(){
 
-    this.deletedPtfIcon.disableBody(true,true);
+    this.movablePlatformIcon2.disableBody(true,true);
 
-    this.deletedPtf.disableBody(true,true);
+    this.tweens.add({
+      targets:this.movablePlatform2,
+      duration:2000,
+      x:gameWidth-360,
+    })
   }
 
   PauseMenu(){
