@@ -91,6 +91,9 @@ class PreloadMenu extends Phaser.Scene{
     //this.load.image('chicken1Stop', 'ASSETS/Placeholders/dude.png');
     this.load.image('egg', 'ASSETS/Placeholders/bomb.png');
 
+    this.load.image('basket1', 'ASSETS/Placeholders/Cesta.jpeg');
+    this.load.image('basket2', 'ASSETS/Placeholders/Cesta.jpeg');
+
     this.load.image('fondoMapa1', 'ASSETS/Placeholders/FondoProvisional.jpeg');
 
     //SELECT MAP
