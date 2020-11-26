@@ -106,7 +106,7 @@ class GamePlayEs2 extends Phaser.Scene{
     this.eggsP1.create(40, 230, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
 
     this.eggsP2 = this.physics.add.staticGroup();
-    this.eggsP2.create(gameWidth-170, 500, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP2.create(gameWidth-195, 500, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
     this.eggsP2.create(gameWidth/2+260, 640, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
     this.eggsP2.create(800, 200, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
 
