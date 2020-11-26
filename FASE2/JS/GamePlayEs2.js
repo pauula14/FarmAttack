@@ -334,7 +334,7 @@ endArrived(player, end){
     //prevScene = 'GamePlayEs2';
   }
 
-  FinNivelEs1(){
+  FinNivelEs2(){
     this.scene.stop('GamePlayEs2');
     this.scene.sendToBack('GamePlayEs2');
     this.scene.start('GamePlayFa1');
