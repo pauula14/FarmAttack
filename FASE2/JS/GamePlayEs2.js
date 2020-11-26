@@ -75,6 +75,7 @@ class GamePlayEs2 extends Phaser.Scene{
     this.ground.create(124, 460, 'platform').setOrigin(0,0).setScale(1.46,0.5).refreshBody();//left long
     this.ground.create(gameWidth/2+5, 460, 'platform').setOrigin(0,0).setScale(0.74,0.5).refreshBody();//right 1
     this.ground.create(gameWidth/2+447, 460, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();//right 2
+    this.ground.create(1290, 365, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody();
 
     //Nivel 2: Platform that our teammate will destroy
     this.deletedPtf = this.physics.add.sprite(13, 460, 'platform').setOrigin(0,0).setScale(0.3, 0.5).setDepth(2);
@@ -90,6 +91,7 @@ class GamePlayEs2 extends Phaser.Scene{
     this.ground.create(0, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();//left 1
     this.ground.create(gameWidth/2-170, 330, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody();//left 2
     this.ground.create(gameWidth/2, 290, 'platform').setOrigin(0,0).setScale(0.83,0.5).refreshBody();//right
+    this.ground.create(590, 230, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody();
 
     //Exits
     this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
