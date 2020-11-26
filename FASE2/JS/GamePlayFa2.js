@@ -364,6 +364,7 @@ endArrived(player, end){
   moveStick(){
 
     this.stickDeleteIcon.disableBody(true,true);
+    this.stickDelete.body.enable=false;
 
     this.tweens.add({
       targets:this.stickDelete,
