@@ -32,11 +32,12 @@ class GamePlayEs2 extends Phaser.Scene{
     // 3) OBJETOS DE CONTROL DE FLUJO
     //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
     //this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
-    this.endTrigger1 = this.physics.add.sprite(50, 80, 'basket1').setOrigin(0).setDepth(2).setScale(0.4).refreshBody();
+    this.endTrigger1 = this.physics.add.sprite(43, 83, 'basket1').setOrigin(0).setSize(100, 100).setDepth(2).refreshBody();
     this.endTrigger1.body.setAllowGravity(false);
     //this.endTrigger1.body.enable = false;
     this.endTrigger1.setVisible(false);
-    this.endTrigger2 = this.physics.add.sprite(1250, 80, 'basket2').setOrigin(0).setDepth(2).setScale(0.4).refreshBody();
+
+    this.endTrigger2 = this.physics.add.sprite(1250, 98, 'basket2').setOrigin(0).setSize(100, 102).setDepth(2).refreshBody();
     this.endTrigger2.body.setAllowGravity(false);
     this.endTrigger2.setVisible(false);
     //this.endTrigger2.body.enable = false;
@@ -100,14 +101,14 @@ class GamePlayEs2 extends Phaser.Scene{
 
     //Grupo de huevos
     this.eggsP1 = this.physics.add.staticGroup();
-    this.eggsP1.create(450, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggsP1.create(gameWidth/2-80, 400, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggsP1.create(50, 260, 'egg').setOrigin(0,0).setScale(3).refreshBody().setDepth(2);
+    this.eggsP1.create(450, 640, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP1.create(gameWidth/2-100, 370, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP1.create(40, 230, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
 
     this.eggsP2 = this.physics.add.staticGroup();
-    this.eggsP2.create(gameWidth-170, 520, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggsP2.create(gameWidth/2+260, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggsP2.create(800, 230, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggsP2.create(gameWidth-170, 500, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP2.create(gameWidth/2+260, 640, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP2.create(800, 200, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
 
 
     this.physics.add.collider(this.player1, this.ground);

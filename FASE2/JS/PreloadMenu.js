@@ -91,10 +91,11 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('platformBroken', 'ASSETS/Gameplay/Obstacles/broken_wood.png');//platform broken
     this.load.image('platformBale', 'ASSETS/Gameplay/Obstacles/hay_bale.png');//straw
     //this.load.image('chicken1Stop', 'ASSETS/Placeholders/dude.png');
-    this.load.image('egg', 'ASSETS/Placeholders/bomb.png');
+    this.load.image('egg', 'ASSETS/Gameplay/Objects/egg.png');
+    this.load.image('eggWhite', 'ASSETS/Gameplay/Objects/white_egg.png');
 
-    this.load.image('basket1', 'ASSETS/Placeholders/Cesta.jpeg');
-    this.load.image('basket2', 'ASSETS/Placeholders/Cesta.jpeg');
+    this.load.image('basket2', 'ASSETS/Gameplay/Objects/egg_counter.png');
+    this.load.image('basket1', 'ASSETS/Gameplay/Objects/white_egg_counter.png');
 
     //this.load.image('fondoMapa1', 'ASSETS/Placeholders/FondoProvisional.jpeg');
 
@@ -126,7 +127,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('GamePlayEs2');
+      this.scene.start('GamePlayEs1');
     });
 
 
