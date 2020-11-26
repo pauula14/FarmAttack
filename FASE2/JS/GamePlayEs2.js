@@ -308,7 +308,7 @@ endArrived(player, end){
       }
 
       if (this.playersArrived == 2){
-          this.GamePlayEs2();
+          this.FinNivelEs2();
       }
   }
 
