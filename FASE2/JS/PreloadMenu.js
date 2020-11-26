@@ -88,6 +88,8 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundFa2', 'ASSETS/Gameplay/Maps/fa 2.png'); //fachada 2
     this.load.image('pauseButton', 'ASSETS/Gameplay/botonPausa.png');
     this.load.image('platform', 'ASSETS/Placeholders/platform.png');
+    this.load.image('platformBroken', 'ASSETS/Gameplay/Obstacles/broken_wood.png');//platform broken
+    this.load.image('platformBale', 'ASSETS/Gameplay/Obstacles/hay_bale.png');//straw
     //this.load.image('chicken1Stop', 'ASSETS/Placeholders/dude.png');
     this.load.image('egg', 'ASSETS/Placeholders/bomb.png');
 

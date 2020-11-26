@@ -60,13 +60,13 @@ class GamePlayEs2 extends Phaser.Scene{
     this.ground.create(gameWidth/2-150, 592, 'platform').setOrigin(0,0).setScale(0.35,4.4).refreshBody(); //straw
 
     //Nivel 1: straw that our teammate will help move it to the right
-    this.movableStraw=this.physics.add.sprite(gameWidth-265, 475, 'platform').setOrigin(0,0).setScale(0.2,4).refreshBody();
+    this.movableStraw=this.physics.add.sprite(gameWidth-285, 488, 'platformBale').setOrigin(0,0).setScale(1,1).refreshBody();
     this.movableStraw.body.allowGravity=false;
     this.movableStraw.body.immovable=true;
     this.movableStraw.setDepth(3)
 
     //Nivel 1: icon to help our teammate with the straw
-    this.movableStrawIcon=this.physics.add.sprite(gameWidth/2-100, 510, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
+    this.movableStrawIcon=this.physics.add.sprite(gameWidth/2-100, 510, 'platformBale').setOrigin(0,0).setScale(0.5,0.5).refreshBody();
     this.movableStrawIcon.body.allowGravity=false;
     this.movableStrawIcon.body.immovable=true;
     this.movableStrawIcon.setDepth(2)
@@ -78,12 +78,12 @@ class GamePlayEs2 extends Phaser.Scene{
     this.ground.create(1290, 365, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody();
 
     //Nivel 2: Platform that our teammate will destroy
-    this.deletedPtf = this.physics.add.sprite(13, 460, 'platform').setOrigin(0,0).setScale(0.3, 0.5).setDepth(2);
+    this.deletedPtf = this.physics.add.sprite(13, 460, 'platformBroken').setOrigin(0,0).setScale(1, 1).setDepth(2);
     this.deletedPtf.body.allowGravity=false;
     this.deletedPtf.body.immovable=true;
 
     //Nivel 2: icon to destroy our teammate block platform
-    this.deletedPtfIcon = this.physics.add.sprite(gameWidth/2+50, 360, 'platform').setOrigin(0,0).setScale(0.1, 2).setDepth(2);
+    this.deletedPtfIcon = this.physics.add.sprite(gameWidth/2+50, 360, 'platformBroken').setOrigin(0,0).setScale(0.35, 4.5).setDepth(2);
     this.deletedPtfIcon.body.allowGravity=false;
     this.deletedPtfIcon.body.immovable=true;
 
@@ -318,7 +318,7 @@ endArrived(player, end){
     this.tweens.add({
       targets:this.movableStraw,
       duration:2000,
-      x:gameWidth-100,
+      x:gameWidth-140,
     })
   }
 
