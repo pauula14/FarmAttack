@@ -73,15 +73,15 @@ class GamePlayEs1 extends Phaser.Scene{
 
     //Grupo de huevos
     this.eggsP1 = this.physics.add.staticGroup();
-    this.eggsP1.create(600, 670, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
-    this.eggsP1.create(50, 540, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
-    this.eggsP1.create(gameWidth/2-80, 400, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP1.create(570, 620, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP1.create(10, 490, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP1.create(gameWidth/2-108, 350, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
     //this.eggsP1.body.setSize(75, 75);
 
     this.eggsP2 = this.physics.add.staticGroup();
-    this.eggsP2.create(gameWidth/2+40, 400, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
-    this.eggsP2.create(gameWidth/2+30, 540, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
-    this.eggsP2.create(900, 210, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP2.create(gameWidth/2+10, 350, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP2.create(gameWidth/2+50, 500, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP2.create(900, 10, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
 
 
 
