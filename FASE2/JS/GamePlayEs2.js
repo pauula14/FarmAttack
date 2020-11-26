@@ -21,7 +21,7 @@ class GamePlayEs2 extends Phaser.Scene{
     // 1) BACKGROUND
     this.backgroundGM = this.add.image(0, 0, 'backgroundEs2');
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
-    this.backgroundGM.setDepth(0);
+    this.backgroundGM.setDepth(1);
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(400, 550, 'chicken1').setScale(0.8).setDepth(2);
@@ -57,7 +57,7 @@ class GamePlayEs2 extends Phaser.Scene{
     //Nivel 1
     this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();//left
     this.ground.create(860, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody(); //right
-    this.ground.create(gameWidth/2-170, 600, 'platform').setOrigin(0,0).setScale(0.4,4).refreshBody(); //straw
+    this.ground.create(gameWidth/2-150, 592, 'platform').setOrigin(0,0).setScale(0.35,4.4).refreshBody(); //straw
 
     //Nivel 1: straw that our teammate will help move it to the right
     this.movableStraw=this.physics.add.sprite(gameWidth-265, 475, 'platform').setOrigin(0,0).setScale(0.2,4).refreshBody();

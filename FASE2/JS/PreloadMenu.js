@@ -124,7 +124,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('GamePlayFa2');
+      this.scene.start('GamePlayEs1');
     });
 
 

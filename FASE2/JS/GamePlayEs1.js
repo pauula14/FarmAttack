@@ -55,12 +55,14 @@ class GamePlayEs1 extends Phaser.Scene{
     this.ground.create(440, 600, 'platform').setOrigin(0,0).setScale(1.36,0.5).refreshBody();
     this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();
     this.ground.create(1175, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();
+    this.ground.create(830, 600, 'platform').setOrigin(0,0).setScale(0.4,4.2).refreshBody();
     //Nivel 2
     this.ground.create(215, 460, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody();
     this.ground.create(705, 460, 'platform').setOrigin(0,0).setScale(1.25,0.5).refreshBody();
     //Nivel 3
     this.ground.create(570, 330, 'platform').setOrigin(0,0).setScale(0.35,0.5).refreshBody();
     this.ground.create(1050, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();
+    this.ground.create(575, 230, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody();
     //Madera suelta
     this.ground.create(160, 275, 'platform').setOrigin(0,0).setScale(0.6,0.5).refreshBody();
     //Exits
