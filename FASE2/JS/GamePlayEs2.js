@@ -305,9 +305,7 @@ endArrived(player, end){
       }
 
       if (this.playersArrived == 2){
-        this.scene.stop('GamePlayEs1');
-        this.scene.sendToBack('GamePlayEs1');
-        this.scene.start('GamePlayEs2');
+          this.GamePlayEs2();
       }
   }
 
@@ -336,7 +334,7 @@ endArrived(player, end){
     //prevScene = 'GamePlayEs2';
   }
 
-  FinNivel(){
+  FinNivelEs1(){
     this.scene.stop('GamePlayEs2');
     this.scene.sendToBack('GamePlayEs2');
     this.scene.start('GamePlayFa1');

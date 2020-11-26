@@ -82,10 +82,10 @@ class PreloadMenu extends Phaser.Scene{
 
     //GAME
     this.load.image('backgroundGM', 'ASSETS/Gameplay/FondoJuego.jpg');
-    this.load.image('backgroundEs1', 'ASSETS/Gameplay/es 1.png'); //establo 1
-    this.load.image('backgroundEs2', 'ASSETS/Gameplay/es 2.png'); //establo 2
-    this.load.image('backgroundFa1', 'ASSETS/Gameplay/fa 1.png'); //fachada 1
-    this.load.image('backgroundFa2', 'ASSETS/Gameplay/fa 2.png'); //fachada 2
+    this.load.image('backgroundEs1', 'ASSETS/Gameplay/Maps/barn1.jpg'); //establo 1
+    this.load.image('backgroundEs2', 'ASSETS/Gameplay/Maps/barn2.jpg'); //establo 2
+    this.load.image('backgroundFa1', 'ASSETS/Gameplay/Maps/fa 1.png'); //fachada 1
+    this.load.image('backgroundFa2', 'ASSETS/Gameplay/Maps/fa 2.png'); //fachada 2
     this.load.image('pauseButton', 'ASSETS/Gameplay/botonPausa.png');
     this.load.image('platform', 'ASSETS/Placeholders/platform.png');
     //this.load.image('chicken1Stop', 'ASSETS/Placeholders/dude.png');
@@ -94,7 +94,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('basket1', 'ASSETS/Placeholders/Cesta.jpeg');
     this.load.image('basket2', 'ASSETS/Placeholders/Cesta.jpeg');
 
-    this.load.image('fondoMapa1', 'ASSETS/Placeholders/FondoProvisional.jpeg');
+    //this.load.image('fondoMapa1', 'ASSETS/Placeholders/FondoProvisional.jpeg');
 
     //SELECT MAP
     this.load.image('star', 'ASSETS/Placeholders/star.png');

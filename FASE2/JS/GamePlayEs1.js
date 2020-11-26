@@ -19,7 +19,7 @@ class GamePlayEs1 extends Phaser.Scene{
     levelGameplay = 'GamePlayEs1';
 
     // 1) BACKGROUND
-    this.backgroundGM = this.add.image(0, 0, 'fondoMapa1');
+    this.backgroundGM = this.add.image(0, 0, 'backgroundEs1');
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
     this.backgroundGM.setDepth(1);
 
@@ -276,9 +276,7 @@ endArrived(player, end){
       }
 
       if (this.playersArrived == 2){
-        this.scene.stop('GamePlayEs1');
-        this.scene.sendToBack('GamePlayEs1');
-        this.scene.start('GamePlayEs2');
+          this.FinNivelEs1();
       }
   }
 
@@ -380,10 +378,10 @@ endArrived(player, end){
     //prevScene = 'GamePlayEs1';
   }
 
-  FinNivel(){
+  FinNivelEs1(){
     this.scene.stop('GamePlayEs1');
     this.scene.sendToBack('GamePlayEs1');
-    this.scene.start('GameOver');
+    this.scene.start('GamePlayEs2');
   }
 
 /*

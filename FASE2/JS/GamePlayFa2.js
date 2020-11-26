@@ -2,7 +2,11 @@ class GamePlayFa2 extends Phaser.Scene{
   constructor(){
       super("GamePlayFa2");
 
-
+      this.numEgssP1 = 0;
+      this.numEgssP2 = 0;
+      this.end1Visible = false;
+      this.end2Visible = false;
+      this.playersArrived = 0;
   }
 
   preload(){
@@ -15,17 +19,25 @@ class GamePlayFa2 extends Phaser.Scene{
     levelGameplay = 'GamePlayFa2';
 
     // 1) BACKGROUND
-    //this.backgroundGM = this.add.image(0, 0, 'backgroundFa2');
-    //this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
-    //this.backgroundGM.setDepth(0);
+    this.backgroundGM = this.add.image(0, 0, 'backgroundFa2');
+    this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
+    this.backgroundGM.setDepth(0);
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(200, 300, 'chicken1').setScale(0.8).setDepth(2);
     this.player2 = this.physics.add.sprite(gameWidth-50, 400, 'chicken2').setScale(0.8).setDepth(2);
 
     // 3) OBJETOS DE CONTROL DE FLUJO
-    this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
-    this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
+    //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
+    //this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
+    this.endTrigger1 = this.physics.add.sprite(50, 80, 'basket1').setOrigin(0).setDepth(2).setScale(0.4).refreshBody();
+    this.endTrigger1.body.setAllowGravity(false);
+    //this.endTrigger1.body.enable = false;
+    this.endTrigger1.setVisible(false);
+    this.endTrigger2 = this.physics.add.sprite(1250, 80, 'basket2').setOrigin(0).setDepth(2).setScale(0.4).refreshBody();
+    this.endTrigger2.body.setAllowGravity(false);
+    this.endTrigger2.setVisible(false);
+    //this.endTrigger2.body.enable = false;
 
     // 4) FÍSICAS
     this.physics.world.setBounds(0, 0, this.levelWidth, this.levelHeight);  // Tamaño del nivel
@@ -103,23 +115,25 @@ class GamePlayFa2 extends Phaser.Scene{
 
 
     //Grupo de huevos
-    this.eggs = this.physics.add.staticGroup();
-    this.eggs.create(270, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggs.create(gameWidth/2+50, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggs.create(gameWidth/2-80, 400, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggs.create(gameWidth/2+50, 400, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggs.create(gameWidth-100, 200, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
-    this.eggs.create(50, 110, 'egg').setOrigin(0,0).setScale(3).refreshBody().setDepth(2);
+    this.eggsP1 = this.physics.add.staticGroup();
+    this.eggsP1.create(270, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggsP1.create(gameWidth/2-80, 400, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggsP1.create(50, 110, 'egg').setOrigin(0,0).setScale(3).refreshBody().setDepth(2);
+
+    this.eggsP2 = this.physics.add.staticGroup();
+    this.eggsP2.create(gameWidth/2+50, 400, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggsP2.create(gameWidth-100, 200, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
+    this.eggsP2.create(gameWidth/2+50, 670, 'egg').setOrigin(0,0).setScale(3).setDepth(2).refreshBody();
 
     this.physics.add.collider(this.player1, this.ground);
-    this.physics.add.collider(this.eggs, this.ground);
+    this.physics.add.collider(this.eggsP1, this.ground);
     this.physics.add.collider(this.player1, this.movablePlatform2);//collision platform move to left-right loop
-    this.physics.add.overlap(this.player1, this.endTrigger, this.FinNivel, null, this);
+    //this.physics.add.overlap(this.player1, this.endTrigger, this.FinNivel, null, this);
 
     this.physics.add.collider(this.player2, this.ground);
-    this.physics.add.collider(this.eggs, this.ground);
+    this.physics.add.collider(this.eggsP2, this.ground);
     this.physics.add.collider(this.player2, this.movablePlatform);//collision platform move to left
-    this.physics.add.overlap(this.player2, this.endTrigger, this.FinNivel, null, this);
+    //this.physics.add.overlap(this.player2, this.endTrigger, this.FinNivel, null, this);
 
     // 5) CÁMARA
     this.cameras.main.setBounds(0, 0, this.levelWidth, this.levelHeight);   // Límites cámara
@@ -204,14 +218,19 @@ class GamePlayFa2 extends Phaser.Scene{
   }
   update(){
 
-    this.physics.add.overlap(this.player1, this.eggs, this.recogerHuevo, null, this);
-    this.physics.add.overlap(this.player2, this.eggs, this.recogerHuevo, null, this);
+    this.physics.add.overlap(this.player1, this.eggsP1, this.recogerHuevoP1, null, this);
+    this.physics.add.overlap(this.player2, this.eggsP2, this.recogerHuevoP2, null, this);
 
     this.physics.add.overlap(this.player1, this.movablePlatformIcon, this.movePltLeft, null, this);
     this.physics.add.overlap(this.player2, this.movablePlatformIcon2, this.movePltLeft2, null, this);
 
     this.physics.add.overlap(this.player1, this.blockDeleteIcon, this.deleteBlock, null, this);
     this.physics.add.overlap(this.player2, this.stickDeleteIcon, this.moveStick, null, this);
+
+    if(this.end1Visible == true || this.end2Visible == true ){
+      this.physics.add.overlap(this.player1, this.endTrigger1, this.endArrived, null, this);
+      this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
+    }
 
   }
 
@@ -236,9 +255,34 @@ class GamePlayFa2 extends Phaser.Scene{
     }
   }
 
-  recogerHuevo (player, egg)
+  recogerHuevoP1 (player, egg)
   {
-    //egg.disableBody(true, true);
+    egg.body.enable=false;
+    console.log("Huevo recogido");
+
+    this.tweens.add({
+      targets:egg,
+      duration:2000,
+      x:gameWidth/2-20,
+      y:170,
+      onComplete: () => egg.alpha=0
+    })
+
+    this.score += 1;
+    this.scoreText.setText('huevos: ' + this.score);
+    //console.log(player);
+
+    this.numEgssP1 ++;
+    console.log(this.numEgssP1);
+
+    if(this.numEgssP1 == 3){
+      this.endTrigger1.setVisible(true);
+      this.end1Visible = true;
+    }
+  }
+
+  recogerHuevoP2 (player, egg)
+  {
 
     egg.body.enable=false;
     console.log("Huevo recogido");
@@ -253,6 +297,36 @@ class GamePlayFa2 extends Phaser.Scene{
 
     this.score += 1;
     this.scoreText.setText('huevos: ' + this.score);
+    console.log(player);
+
+    this.numEgssP2 ++;
+    console.log(this.numEgssP2);
+
+    if(this.numEgssP2 == 3){
+      this.endTrigger2.setVisible(true);
+      this.end2Visible = true;
+    }
+  }
+
+
+endArrived(player, end){
+    console.log("Colas");
+    console.log(player);
+
+      end.body.enable=false;
+
+      this.playersArrived++;
+      console.log(this.playersArrived);
+      console.log("Hola");
+
+      if(player == null){
+
+
+      }
+
+      if (this.playersArrived == 2){
+        this.FinNivelFa2();
+      }
   }
 
   movePltLeft(){
@@ -267,10 +341,10 @@ class GamePlayFa2 extends Phaser.Scene{
   }
 
   movePltLeft2(){
-    
+
     this.movablePlatformIcon2.disableBody(true, true);
     this.pltToDelete.disableBody(true, true);
-    
+
     this.tweens.add({
       targets:this.movablePlatform2,
       duration:2000,
@@ -284,7 +358,7 @@ class GamePlayFa2 extends Phaser.Scene{
 
     this.blockDeleteIcon.disableBody(true, true);
     this.blockDelete.disableBody(true, true);
-    
+
   }
 
   moveStick(){
@@ -305,10 +379,10 @@ class GamePlayFa2 extends Phaser.Scene{
     //prevScene = 'GamePlayEs2';
   }
 
-  FinNivel(){
-    this.scene.stop('GamePlayEs2');
-    this.scene.sendToBack('GamePlayEs2');
-    this.scene.start('GameOver');
+  FinNivelFa2(){
+    this.scene.stop('GamePlayFa2');
+    this.scene.sendToBack('GamePlayFa2');
+    this.scene.start('MainMenu');
   }
 
   //CAMBIOS ANIMACIÓN PLAYER 1
