@@ -24,8 +24,8 @@ class GamePlayFa1 extends Phaser.Scene{
     this.backgroundGM.setDepth(1);
 
     // 2) PLAYER
-    this.player1 = this.physics.add.sprite(50, 650, 'chicken1dch').setScale(0.7).setDepth(2);
-    this.player2 = this.physics.add.sprite(gameWidth-50, 650, 'chicken2dch').setScale(0.7).setDepth(2);
+    this.player1 = this.physics.add.sprite(50, 690, 'chicken1dch').setScale(0.7).setDepth(2);
+    this.player2 = this.physics.add.sprite(gameWidth-50, 690, 'chicken2dch').setScale(0.7).setDepth(2);
 
     // 3) OBJETOS DE CONTROL DE FLUJO
     //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel

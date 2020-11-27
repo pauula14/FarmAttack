@@ -24,20 +24,20 @@ class GamePlayEs2 extends Phaser.Scene{
     this.backgroundGM.setDepth(1);
 
     // 2) PLAYER
-    this.player1 = this.physics.add.sprite(400, 550, 'chicken1').setScale(0.8).setDepth(2);
-    this.player2 = this.physics.add.sprite(1000, 50, 'chicken2').setScale(0.8).setDepth(2);
+    this.player1 = this.physics.add.sprite(60, 155, 'chicken1dch').setScale(0.8).setDepth(2);
+    this.player2 = this.physics.add.sprite(gameWidth-60, 155, 'chicken2dch').setScale(0.8).setDepth(2);
 
 
 
     // 3) OBJETOS DE CONTROL DE FLUJO
     //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
     //this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
-    this.endTrigger1 = this.physics.add.sprite(43, 83, 'basket1').setOrigin(0).setSize(100, 100).setDepth(2).refreshBody();
+    this.endTrigger1 = this.physics.add.sprite(0, 610, 'basket1').setOrigin(0).setSize(100, 100).setDepth(2).refreshBody();
     this.endTrigger1.body.setAllowGravity(false);
     //this.endTrigger1.body.enable = false;
     //this.endTrigger1.setVisible(false);
 
-    this.endTrigger2 = this.physics.add.sprite(1250, 98, 'basket2').setOrigin(0).setSize(100, 102).setDepth(2).refreshBody();
+    this.endTrigger2 = this.physics.add.sprite(1270, 628, 'basket2').setOrigin(0).setSize(100, 102).setDepth(2).refreshBody();
     this.endTrigger2.body.setAllowGravity(false);
     //this.endTrigger2.setVisible(false);
     //this.endTrigger2.body.enable = false;
