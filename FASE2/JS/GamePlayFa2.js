@@ -52,12 +52,14 @@ class GamePlayFa2 extends Phaser.Scene{
     this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,6).refreshBody(); //palo medio 1
     this.ground.create(gameWidth/2-10, 320, 'platform').setOrigin(0,0).setScale(0.05,13).refreshBody(); //palo medio 2
     this.stickDelete=this.ground.create(gameWidth/2-10, 175, 'platform').setOrigin(0,0).setScale(0.05,5).refreshBody(); //palo medio removable
+    this.stickDelete.tint=0x180d06;
 
     //Icon to help our teammate with the platform that block him to pass to otherside
     this.stickDeleteIcon=this.physics.add.sprite(gameWidth/2+100, 230, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
     this.stickDeleteIcon.body.allowGravity=false;
     this.stickDeleteIcon.body.immovable=true;
-    this.stickDeleteIcon.setDepth(2)
+    this.stickDeleteIcon.setDepth(2);
+    this.stickDeleteIcon.tint=0x180d06;
 
     this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody();//palo dcha
     this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo izq
@@ -72,14 +74,18 @@ class GamePlayFa2 extends Phaser.Scene{
     this.movablePlatform2=this.physics.add.sprite(150, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody();
     this.movablePlatform2.body.allowGravity=false;
     this.movablePlatform2.body.immovable=true;
-    this.movablePlatform2.setDepth(2)
-    this.pltToDelete=this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.5,0.5).refreshBody();//left2
+    this.movablePlatform2.setDepth(2);
+    this.movablePlatform2.tint=0x180d06;
+
+    this.pltToDelete=this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.5,0.5).setDepth(2).refreshBody();//left2
+    this.pltToDelete.tint=0x180d06;
 
     //Nivel 1: icon to help our teammate with the platform that block him to pass
     this.movablePlatformIcon2=this.physics.add.sprite(gameWidth/2+100, 510, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
     this.movablePlatformIcon2.body.allowGravity=false;
     this.movablePlatformIcon2.body.immovable=true;
-    this.movablePlatformIcon2.setDepth(2)
+    this.movablePlatformIcon2.setDepth(2);
+    this.movablePlatformIcon2.tint=0x180d06;
 
     //Nivel 2
     this.ground.create(0, 455, 'platform').setOrigin(0,0).setScale(0.68,0.5).refreshBody();//left
@@ -90,24 +96,28 @@ class GamePlayFa2 extends Phaser.Scene{
     this.movablePlatform=this.physics.add.sprite(gameWidth-150, 455, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();
     this.movablePlatform.body.allowGravity=false;
     this.movablePlatform.body.immovable=true;
-    this.movablePlatform.setDepth(2)
+    this.movablePlatform.setDepth(2);
+    this.movablePlatform.tint=0x180d06;
 
     //Nivel 2: icon to help our teammate with the platform
     this.movablePlatformIcon=this.physics.add.sprite(50, 375, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
     this.movablePlatformIcon.body.allowGravity=false;
     this.movablePlatformIcon.body.immovable=true;
-    this.movablePlatformIcon.setDepth(2)
+    this.movablePlatformIcon.setDepth(2);
+    this.movablePlatformIcon.tint=0x180d06;
 
     //Nivel 3
     this.ground.create(260, 310, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody();//left
     this.ground.create(gameWidth/2, 310, 'platform').setOrigin(0,0).setScale(0.9,0.5).refreshBody();//right
-    this.blockDelete=this.ground.create(gameWidth/2+240, 220, 'platform').setOrigin(0,0).setScale(0.3,3).refreshBody();//block that dont allow pass
+    this.blockDelete=this.ground.create(gameWidth/2+240, 220, 'platform').setOrigin(0,0).setScale(0.3,3).setDepth(2).refreshBody();//block that dont allow pass
+    this.blockDelete.tint=0x180d06;
 
     //Nivel 3: icon to help our teammate with the block that block him to pass
     this.blockDeleteIcon=this.physics.add.sprite(gameWidth/2-100, 90, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
     this.blockDeleteIcon.body.allowGravity=false;
     this.blockDeleteIcon.body.immovable=true;
     this.blockDeleteIcon.setDepth(2);
+    this.blockDeleteIcon.tint=0x180d06;
 
     //Exit
     this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(0.5,0.5).refreshBody();//left 1

@@ -60,13 +60,15 @@ class GamePlayFa1 extends Phaser.Scene{
     this.movablePlatform2=this.physics.add.sprite(gameWidth-160, 600, 'platform').setOrigin(0,0).setScale(0.4,0.5).refreshBody();
     this.movablePlatform2.body.allowGravity=false;
     this.movablePlatform2.body.immovable=true;
-    this.movablePlatform2.setDepth(2)
+    this.movablePlatform2.setDepth(2);
+    this.movablePlatform2.tint=0x180d06;
 
     //Nivel 1: icon to help our teammate with the platform
     this.movablePlatformIcon2=this.physics.add.sprite(50, 510, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
     this.movablePlatformIcon2.body.allowGravity=false;
     this.movablePlatformIcon2.body.immovable=true;
-    this.movablePlatformIcon2.setDepth(2)
+    this.movablePlatformIcon2.setDepth(2);
+    this.movablePlatformIcon2.tint=0x180d06;
 
     //Nivel 2
     this.ground.create(gameWidth/2-430, 455, 'platform').setOrigin(0,0).setScale(1.08,0.5).refreshBody();//left long
@@ -81,13 +83,15 @@ class GamePlayFa1 extends Phaser.Scene{
     this.movablePlatform=this.physics.add.sprite(450, 310, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();
     this.movablePlatform.body.allowGravity=false;
     this.movablePlatform.body.immovable=true;
-    this.movablePlatform.setDepth(2)
+    this.movablePlatform.setDepth(2);
+    this.movablePlatform.tint=0x180d06;
 
     //Nivel 3: icon to help our teammate with the platform
     this.movablePlatformIcon=this.physics.add.sprite(850, 220, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
     this.movablePlatformIcon.body.allowGravity=false;
     this.movablePlatformIcon.body.immovable=true;
-    this.movablePlatformIcon.setDepth(2)
+    this.movablePlatformIcon.setDepth(2);
+    this.movablePlatformIcon.tint=0x180d06;
 
     //Exits
     this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(1.07,0.5).refreshBody();
