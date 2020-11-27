@@ -116,8 +116,14 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundGOM', 'ASSETS/GameOverMenu/FondoGameOver.jpg');
 
     //SPRITES
-    this.load.spritesheet('chicken1', 'Assets/Placeholders/dude.png', { frameWidth: 32, frameHeight: 48 });
-    this.load.spritesheet('chicken2', 'Assets/Placeholders/dude.png', { frameWidth: 32, frameHeight: 48 });
+    //this.load.spritesheet('chicken1', 'Assets/Placeholders/dude.png', { frameWidth: 32, frameHeight: 48 });
+    //this.load.spritesheet('chicken2', 'Assets/Placeholders/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+    this.load.spritesheet('chicken1izq', 'Assets/Characters/Chickens/brown_chicken_walk_izq.png', { frameWidth: 87, frameHeight: 108 });
+    this.load.spritesheet('chicken2izq', 'Assets/Characters/Chickens/white_chicken_walk_izq.png', { frameWidth: 87, frameHeight: 108 });
+
+    this.load.spritesheet('chicken1dch', 'Assets/Characters/Chickens/brown_chicken_walk_dch.png', { frameWidth: 87, frameHeight: 108 });
+    this.load.spritesheet('chicken2dch', 'Assets/Characters/Chickens/white_chicken_walk_dch.png', { frameWidth: 87, frameHeight: 108 });
 
 
     /*this.backgroundPdM = this.add.image(0, 0, 'backgroundPdM');
@@ -127,7 +133,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('GamePlayFa2');
+      this.scene.start('GamePlayFa1');
     });
 
 
@@ -139,23 +145,23 @@ class PreloadMenu extends Phaser.Scene{
     //Aniamcion izq (no va)
     this.anims.create({
       key: 'move_left1',
-      frames: this.anims.generateFrameNumbers('chicken1',{start: 0, end:3}),
-      frameRate:24,
+      frames: this.anims.generateFrameNumbers('chicken1izq',{start: 0, end:3}),
+      frameRate:16,
       repeat:-1
 
     })
 
     this.anims.create({
       key: 'move_right1',
-      frames: this.anims.generateFrameNumbers('chicken1',{start: 5, end:8}),
-      frameRate:24,
+      frames: this.anims.generateFrameNumbers('chicken1dch',{start: 0, end:3}),
+      frameRate:16,
       repeat:-1
 
     })
 
     this.anims.create({
       key: 'stop1',
-      frames: this.anims.generateFrameNumbers('chicken1',{start: 4, end:4}),
+      frames: this.anims.generateFrameNumbers('chicken1dch',{start: 3, end:3}),
       frameRate:24,
       repeat:-1
 
@@ -163,23 +169,23 @@ class PreloadMenu extends Phaser.Scene{
 
     this.anims.create({
       key: 'move_left2',
-      frames: this.anims.generateFrameNumbers('chicken2',{start: 0, end:3}),
-      frameRate:24,
+      frames: this.anims.generateFrameNumbers('chicken2izq',{start: 0, end:3}),
+      frameRate:16,
       repeat:-1
 
     })
 
     this.anims.create({
       key: 'move_right2',
-      frames: this.anims.generateFrameNumbers('chicken2',{start: 5, end:8}),
-      frameRate:24,
+      frames: this.anims.generateFrameNumbers('chicken2dch',{start: 0, end:3}),
+      frameRate:16,
       repeat:-1
 
     })
 
     this.anims.create({
       key: 'stop2',
-      frames: this.anims.generateFrameNumbers('chicken2',{start: 4, end:4}),
+      frames: this.anims.generateFrameNumbers('chicken2dch',{start: 3, end:3}),
       frameRate:24,
       repeat:-1
 
