@@ -22,7 +22,7 @@ class GamePlayFa2 extends Phaser.Scene{
     // 1) BACKGROUND
     this.backgroundGM = this.add.image(0, 0, 'backgroundFa2');
     this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
-    this.backgroundGM.setDepth(0);
+    this.backgroundGM.setDepth(1);
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(200, 300, 'chicken1').setScale(0.8).setDepth(2);
@@ -31,13 +31,13 @@ class GamePlayFa2 extends Phaser.Scene{
     // 3) OBJETOS DE CONTROL DE FLUJO
     //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
     //this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
-    this.endTrigger1 = this.physics.add.sprite(1250, 56, 'basket1').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
+    this.endTrigger1 = this.physics.add.sprite(1250, 50, 'basket1').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
     this.endTrigger1.body.setAllowGravity(false);
     //this.endTrigger1.body.enable = false;
-    this.endTrigger1.setVisible(false);
+    //this.endTrigger1.setVisible(false);
     this.endTrigger2 = this.physics.add.sprite(1200, 70, 'basket2').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
     this.endTrigger2.body.setAllowGravity(false);
-    this.endTrigger2.setVisible(false);
+    //this.endTrigger2.setVisible(false);
     //this.endTrigger2.body.enable = false;
 
     // 4) FÍSICAS
@@ -228,8 +228,11 @@ class GamePlayFa2 extends Phaser.Scene{
     this.physics.add.overlap(this.player1, this.blockDeleteIcon, this.deleteBlock, null, this);
     this.physics.add.overlap(this.player2, this.stickDeleteIcon, this.moveStick, null, this);
 
-    if((this.end1Visible == true || this.end2Visible == true ) && (this.endsVisibles == 2)){
+    if(this.end1Visible == true) {
       this.physics.add.overlap(this.player1, this.endTrigger1, this.endArrived, null, this);
+    }
+
+    if(this.end2Visible == true){
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
@@ -263,9 +266,9 @@ class GamePlayFa2 extends Phaser.Scene{
 
     this.tweens.add({
       targets:egg,
-      duration:2000,
-      x:gameWidth/2-20,
-      y:170,
+      duration:2500,
+      x:this.levelWidth-200,
+      y:120,
       onComplete: () => egg.alpha=0
     })
 
@@ -277,7 +280,7 @@ class GamePlayFa2 extends Phaser.Scene{
     console.log(this.numEgssP1);
 
     if(this.numEgssP1 == 3){
-      this.endTrigger1.setVisible(true);
+      //this.endTrigger1.setVisible(true);
       this.endsVisibles ++;
       this.end1Visible = true;
     }
@@ -291,9 +294,9 @@ class GamePlayFa2 extends Phaser.Scene{
 
     this.tweens.add({
       targets:egg,
-      duration:2000,
-      x:gameWidth/2-20,
-      y:170,
+      duration:2500,
+      x:this.levelWidth-250,
+      y:120,
       onComplete: () => egg.alpha=0
     })
 
@@ -305,7 +308,7 @@ class GamePlayFa2 extends Phaser.Scene{
     console.log(this.numEgssP2);
 
     if(this.numEgssP2 == 3){
-      this.endTrigger2.setVisible(true);
+      //this.endTrigger2.setVisible(true);
       this.endsVisibles ++;
       this.end2Visible = true;
     }
