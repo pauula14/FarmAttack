@@ -7,6 +7,8 @@ class GamePlayEs1 extends Phaser.Scene{
       this.end1Visible = false;
       this.end2Visible = false;
       this.playersArrived = 0;
+      this.dir1 = 1; //0 = mirando izq, 1 = mirando der
+      this.dir2 = 0; //0 = izq, 1 = der
   }
 
   preload(){
@@ -24,8 +26,8 @@ class GamePlayEs1 extends Phaser.Scene{
     this.backgroundGM.setDepth(1);
 
     // 2) PLAYER
-    this.player1 = this.physics.add.sprite(60, 685, 'chicken1dch').setScale(0.8).setDepth(2);
-    this.player2 = this.physics.add.sprite(gameWidth-60, 685, 'chicken2dch').setScale(0.8).setDepth(2);
+    this.player1 = this.physics.add.sprite(60, 685, 'chicken1R').setScale(0.7).setDepth(2);
+    this.player2 = this.physics.add.sprite(gameWidth-60, 685, 'chicken2L').setScale(0.7).setDepth(2);
 
     // 3) OBJETOS DE CONTROL DE FLUJO
     //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
@@ -303,6 +305,8 @@ endArrived(player, end){
 
     this.player1.setVelocityX(-100);
     this.player1.anims.play('move_left1', true);
+    this.player1.flipX = false;
+    this.dir1 = 0;
 
   }
 
@@ -310,13 +314,21 @@ endArrived(player, end){
 
     this.player1.setVelocityX(100);
     this.player1.anims.play('move_right1', true);
+    //this.player1.flipX = true;
+    this.dir1 = 1;
 
   }
 
   player1Stop() {
 
     this.player1.setVelocityX(0);
-    this.player1.anims.play('stop1', true);
+
+    if(this.dir1 == 1){
+      this.player1.anims.play('stop1R', true);
+    }else{
+      this.player1.anims.play('stop1L', true);
+    }
+
 
     if(this.P1_leftButton.isDown){
       this.player1Left();
@@ -346,6 +358,8 @@ endArrived(player, end){
 
     this.player2.setVelocityX(-100);
     this.player2.anims.play('move_left2', true);
+    //this.player2.flipX = false;
+    this.dir2 = 0;
 
   }
 
@@ -353,13 +367,20 @@ endArrived(player, end){
 
     this.player2.setVelocityX(100);
     this.player2.anims.play('move_right2', true);
+    //this.player2.flipX = true;
+    this.dir2 = 1;
 
   }
 
   player2Stop() {
 
     this.player2.setVelocityX(0);
-    this.player2.anims.play('stop2', true);
+
+    if(this.dir2 == 1){
+      this.player2.anims.play('stop2R', true);
+    }else{
+      this.player2.anims.play('stop2L', true);
+    }
 
     if(this.P2_leftButton.isDown){
       this.player2Left();

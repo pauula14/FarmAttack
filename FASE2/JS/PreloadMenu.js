@@ -116,7 +116,11 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundGOM', 'ASSETS/GameOverMenu/FondoGameOver.jpg');
 
     //SPRITES
-    //this.load.spritesheet('chicken1', 'Assets/Placeholders/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+    this.load.spritesheet('chicken1L', 'Assets/Characters/Chickens/brown_stop_izq.png', { frameWidth: 87, frameHeight: 108 });
+    this.load.spritesheet('chicken1R', 'Assets/Characters/Chickens/brown_stop_dch.png', { frameWidth: 87, frameHeight: 108 });
+    this.load.spritesheet('chicken2L', 'Assets/Characters/Chickens/white_stop_izq.png', { frameWidth: 87, frameHeight: 108 });
+    this.load.spritesheet('chicken2R', 'Assets/Characters/Chickens/white_stop_dch.png', { frameWidth: 87, frameHeight: 108 });
     //this.load.spritesheet('chicken2', 'Assets/Placeholders/dude.png', { frameWidth: 32, frameHeight: 48 });
 
     this.load.spritesheet('chicken1izq', 'Assets/Characters/Chickens/brown_chicken_walk_izq.png', { frameWidth: 87, frameHeight: 108 });
@@ -133,7 +137,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('GamePlayEs2');
+      this.scene.start('GamePlayFa2');
     });
 
 
@@ -160,7 +164,15 @@ class PreloadMenu extends Phaser.Scene{
     })
 
     this.anims.create({
-      key: 'stop1',
+      key: 'stop1L',
+      frames: this.anims.generateFrameNumbers('chicken1izq',{start: 0, end:0}),
+      frameRate:24,
+      repeat:-1
+
+    })
+
+    this.anims.create({
+      key: 'stop1R',
       frames: this.anims.generateFrameNumbers('chicken1dch',{start: 3, end:3}),
       frameRate:24,
       repeat:-1
@@ -184,7 +196,15 @@ class PreloadMenu extends Phaser.Scene{
     })
 
     this.anims.create({
-      key: 'stop2',
+      key: 'stop2L',
+      frames: this.anims.generateFrameNumbers('chicken2izq',{start: 0, end:0}),
+      frameRate:24,
+      repeat:-1
+
+    })
+
+    this.anims.create({
+      key: 'stop2R',
       frames: this.anims.generateFrameNumbers('chicken2dch',{start: 3, end:3}),
       frameRate:24,
       repeat:-1
