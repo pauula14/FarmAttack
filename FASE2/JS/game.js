@@ -25,7 +25,7 @@ window.onload = function(){
     //URL del JUEGO
     //utl: "http://farmAttack.es",
 
-    scene: [PreloadMenu, InitMenu, MainMenu, OptionsMenu, TutorialMenu, CreditsMenu, SelectMap, GamePlayEs1, GamePlayEs2, GamePlayFa1, GamePlayFa2, PauseMenu, GameOver, Winner]
+    scene: [PreloadMenu, InitMenu, MainMenu, OptionsMenu, TutorialMenu, CreditsMenu, SelectMap, GamePlayEs1, GamePlayEs2, GamePlayFa1, GamePlayFa2, GamePlayFo1, PauseMenu, GameOver, Winner]
 
   }
 
@@ -38,14 +38,14 @@ var P2_controls = {  // Controles del jugador (teclado)
   up: Phaser.Input.Keyboard.KeyCodes.UP,
   left: Phaser.Input.Keyboard.KeyCodes.LEFT,
   right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-  interact: Phaser.Input.Keyboard.KeyCodes.CTRL,
+  //interact: Phaser.Input.Keyboard.KeyCodes.CTRL,
 };
 
 var P1_controls = {  // Controles del jugador (teclado)
   up: Phaser.Input.Keyboard.KeyCodes.W,
   left: Phaser.Input.Keyboard.KeyCodes.A,
   right: Phaser.Input.Keyboard.KeyCodes.D,
-  interact: Phaser.Input.Keyboard.KeyCodes.F,
+  //interact: Phaser.Input.Keyboard.KeyCodes.F,
 };
 
 var fpsTarget = 60;

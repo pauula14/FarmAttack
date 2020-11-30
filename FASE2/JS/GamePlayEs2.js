@@ -141,13 +141,13 @@ class GamePlayEs2 extends Phaser.Scene{
     this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up);
     this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left);
     this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right);
-    this.P1_interactButton = this.input.keyboard.addKey(P1_controls.interact);
+    //this.P1_interactButton = this.input.keyboard.addKey(P1_controls.interact);
 
     // 2) P2
     this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up);
     this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left);
     this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right);
-    this.P2_interactButton = this.input.keyboard.addKey(P2_controls.interact);
+    //this.P2_interactButton = this.input.keyboard.addKey(P2_controls.interact);
 
     this.testButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
 
@@ -158,8 +158,8 @@ class GamePlayEs2 extends Phaser.Scene{
     this.P1_leftButton.off('up');
     this.P1_rightButton.off('down');
     this.P1_rightButton.off('up');
-    this.P1_interactButton.off('down');
-    this.P1_interactButton.off('up');
+    //this.P1_interactButton.off('down');
+    //this.P1_interactButton.off('up');
 
     this.P2_jumpButton.off('down');
     this.P2_jumpButton.off('up');
@@ -167,8 +167,8 @@ class GamePlayEs2 extends Phaser.Scene{
     this.P2_leftButton.off('up');
     this.P2_rightButton.off('down');
     this.P2_rightButton.off('up');
-    this.P2_interactButton.off('down');
-    this.P2_interactButton.off('up');
+    //this.P2_interactButton.off('down');
+    //this.P2_interactButton.off('up');
 
     //Controles jugador 1
     this.P1_jumpButton.on('down',this.player1StartJump, this);
