@@ -8,18 +8,14 @@ class Winner extends Phaser.Scene{
   }
 
   create(){
-    //var wid = this.cameras.main.width; //ancho del canvas en el dispositivo
-    //var heig = this.cameras.main.height;
 
-    //var background = this.add.image(0, 0, 'backgroundOM');
-    //background.setScale(2/3);
-    //background.setPosition(wid/2, heig/2);
+    // 1) BACKGROUND
+    this.backgroundWM = this.add.image(gameWidth/2, gameHeight/2, 'backgroundWM');
 
-/*  //BOTON ATRAS
-    this.backButtonOM = this.add.image(wid*14/16, heig*14/16, 'backButtonOM');
-    this.backButtonOM.setScale(1.5/3);
-    this.backButtonOM.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.BackMainMenu());*/
+    //BOTON SALIR
+    this.backButtonWM = this.add.image(gameWidth/2, gameHeight*13/16, 'quitButtonWM');
+    this.backButtonWM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackMainMenu());
+    this.backButtonWM.setDepth(2);
   }
 
   BackMainMenu(){

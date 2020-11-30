@@ -21,14 +21,18 @@ class GamePlayEs2 extends Phaser.Scene{
     levelGameplay = 'GamePlayEs2';
 
     // 1) BACKGROUND
-    this.backgroundGM = this.add.image(0, 0, 'backgroundEs2');
-    this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
-    this.backgroundGM.setDepth(1);
+    this.backgroundEs2 = this.add.image(0, 0, 'backgroundEs2');
+    this.backgroundEs2.setPosition(gameWidth/2, gameHeight/2);
+    this.backgroundEs2.setDepth(1);
+
+    //Pre carga Nivel 3
+    this.preLevel3 = this.add.image(gameWidth/2, gameHeight/2, 'level3');
+    this.preLevel3.setDepth(3);
+    this.preLevel3.alpha = 0;
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(60, 155, 'chicken1R').setScale(0.7).setDepth(2);
     this.player2 = this.physics.add.sprite(gameWidth-60, 155, 'chicken2L').setScale(0.7).setDepth(2);
-
 
 
     // 3) OBJETOS DE CONTROL DE FLUJO
@@ -50,17 +54,18 @@ class GamePlayEs2 extends Phaser.Scene{
     this.player2.setCollideWorldBounds(false);
 
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
+
     //Bordes y palo del medio
-    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //abajo
-    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo medio
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody();//palo dcha
-    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo izq
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //arriba
+    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //abajo
+    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false); //palo medio
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false);//palo dcha
+    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false); //palo izq
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //arriba
 
     //Nivel 1
-    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();//left
-    this.ground.create(860, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody(); //right
-    this.ground.create(gameWidth/2-150, 592, 'platform').setOrigin(0,0).setScale(0.35,4.4).refreshBody(); //straw
+    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody().setVisible(false);//left
+    this.ground.create(860, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody().setVisible(false); //right
+    this.ground.create(gameWidth/2-150, 592, 'platform').setOrigin(0,0).setScale(0.35,4.4).refreshBody().setVisible(false); //straw
 
     //Nivel 1: straw that our teammate will help move it to the right
     this.movableStraw=this.physics.add.sprite(gameWidth-285, 488, 'platformBale').setOrigin(0,0).setScale(1,1).refreshBody();
@@ -75,10 +80,10 @@ class GamePlayEs2 extends Phaser.Scene{
     this.movableStrawIcon.setDepth(2)
 
     //Nivel 2
-    this.ground.create(124, 460, 'platform').setOrigin(0,0).setScale(1.46,0.5).refreshBody();//left long
-    this.ground.create(gameWidth/2+5, 460, 'platform').setOrigin(0,0).setScale(0.74,0.5).refreshBody();//right 1
-    this.ground.create(gameWidth/2+447, 460, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();//right 2
-    this.ground.create(1290, 365, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody();
+    this.ground.create(124, 460, 'platform').setOrigin(0,0).setScale(1.46,0.5).refreshBody().setVisible(false);//left long
+    this.ground.create(gameWidth/2+5, 460, 'platform').setOrigin(0,0).setScale(0.74,0.5).refreshBody().setVisible(false);//right 1
+    this.ground.create(gameWidth/2+447, 460, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody().setVisible(false);//right 2
+    this.ground.create(1290, 365, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody().setVisible(false);
 
     //Nivel 2: Platform that our teammate will destroy
     this.deletedPtf = this.physics.add.sprite(13, 460, 'platformBroken').setOrigin(0,0).setScale(1, 1).setDepth(2);
@@ -91,14 +96,14 @@ class GamePlayEs2 extends Phaser.Scene{
     this.deletedPtfIcon.body.immovable=true;
 
     //Nivel 3
-    this.ground.create(0, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();//left 1
-    this.ground.create(gameWidth/2-170, 330, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody();//left 2
-    this.ground.create(gameWidth/2, 290, 'platform').setOrigin(0,0).setScale(0.83,0.5).refreshBody();//right
-    this.ground.create(590, 230, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody();
+    this.ground.create(0, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody().setVisible(false);//left 1
+    this.ground.create(gameWidth/2-170, 330, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody().setVisible(false);//left 2
+    this.ground.create(gameWidth/2, 290, 'platform').setOrigin(0,0).setScale(0.83,0.5).refreshBody().setVisible(false);//right
+    this.ground.create(590, 230, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody().setVisible(false);
 
     //Exits
-    this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
-    this.ground.create(1180, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
+    this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false);
+    this.ground.create(1180, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false);
 
 
     //Grupo de huevos
@@ -343,9 +348,32 @@ endArrived(player, end){
   }
 
   FinNivelEs2(){
-    this.scene.stop('GamePlayEs2');
-    this.scene.sendToBack('GamePlayEs2');
-    this.scene.start('GamePlayFa1');
+
+    this.endTrigger1.setVisible(false);
+    this.endTrigger2.setVisible(false);
+    this.player1.setVisible(false);
+    this.player2.setVisible(false);
+    this.backgroundEs2.setVisible(false);
+
+    this.tweens.add({
+      targets: this.preLevel3,
+      duration: 1000,
+      alpha: 1,
+      yoyo: true,
+      hold: 4000,
+      completeDelay: 2000
+    });
+
+    this.time.addEvent({
+      delay: 6300,
+      callback: function() {
+        this.scene.stop('GamePlayEs2');
+        this.scene.sendToBack('GamePlayEs2');
+        this.scene.start('GamePlayFa1');
+      },
+    callbackScope: this
+    }, this);
+
   }
 
   //CAMBIOS ANIMACIÓN PLAYER 1

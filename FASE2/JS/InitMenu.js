@@ -19,9 +19,9 @@ class InitMenu extends Phaser.Scene{
     this.onlineButtonSel = this.add.image(gameWidth*8/16, gameHeight*9.4/16, 'onlineButtonSel');
     this.onlineButtonSel.setVisible(false);
 
-    this.onlineButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.GameOnline());
+    /*this.onlineButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.GameOnline());
     this.onlineButton.on('pointerover', function (pointer) {this.onlineButtonSel.setVisible(true);}, this);
-    this.onlineButton.on('pointerout', function (pointer) {this.onlineButtonSel.setVisible(false);}, this);
+    this.onlineButton.on('pointerout', function (pointer) {this.onlineButtonSel.setVisible(false);}, this);*/
 
     //OFFLINE
     this.offlineButton = this.add.image(gameWidth*8/16, gameHeight*12/16, 'offlineButton');

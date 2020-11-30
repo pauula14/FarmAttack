@@ -9,8 +9,15 @@ class MainMenu extends Phaser.Scene{
 
   create(){
 
+    this.cameras.main.fadeIn(2000, 0, 0, 0);
+
     this.backgroundMM = this.add.image(0, 0, 'backgroundMenus');
     this.backgroundMM.setPosition(gameWidth/2, gameHeight/2);
+
+    //Pre carga Nivel 1
+    this.preLevel1 = this.add.image(gameWidth/2, gameHeight/2, 'level1');
+    this.preLevel1.setDepth(3);
+    this.preLevel1.alpha = 0;
 
     //PLAY
     this.playButton = this.add.image(gameWidth*8/16, gameHeight*8.3/16, 'playButton');
@@ -54,12 +61,40 @@ class MainMenu extends Phaser.Scene{
     this.backButtonMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackInitMenu());
 
 
+
+
   }
 
   PlayGame(){
-    this.scene.stop("MainMenu");
-    this.scene.start("SelectMap");
+
+    //this.scene.start("SelectMap");
     prevScene = 'MainMenu';
+    this.backgroundMM.setVisible(false);
+    this.playButton.setVisible(false);
+    this.playButtonSel.setVisible(false);
+    this.tutorialButton.setVisible(false);
+    this.optionsButton.setVisible(false);
+    this.creditsButton.setVisible(false);
+    this.backButtonMM.setVisible(false);
+
+    this.tweens.add({
+      targets: this.preLevel1,
+      duration: 1000,
+      alpha: 1,
+      yoyo: true,
+      hold: 4000,
+      completeDelay: 2000
+    });
+
+      this.time.addEvent({
+        delay: 6500,
+        callback: function() {
+          this.scene.stop("MainMenu");
+          this.scene.start("GamePlayEs1");
+        },
+      callbackScope: this
+      }, this);
+
   }
 
   OptionsMenuMM(){

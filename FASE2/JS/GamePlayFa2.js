@@ -22,9 +22,14 @@ class GamePlayFa2 extends Phaser.Scene{
     levelGameplay = 'GamePlayFa2';
 
     // 1) BACKGROUND
-    this.backgroundGM = this.add.image(0, 0, 'backgroundFa2');
-    this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
-    this.backgroundGM.setDepth(1);
+    this.backgroundFa2 = this.add.image(0, 0, 'backgroundFa2');
+    this.backgroundFa2.setPosition(gameWidth/2, gameHeight/2);
+    this.backgroundFa2.setDepth(1);
+
+    //Pre carga Nivel 5
+    this.preLevel5 = this.add.image(gameWidth/2, gameHeight/2, 'level5');
+    this.preLevel5.setDepth(3);
+    this.preLevel5.alpha = 0;
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(60, 685, 'chicken1R').setScale(0.7).setDepth(2);
@@ -49,10 +54,10 @@ class GamePlayFa2 extends Phaser.Scene{
 
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
     //Bordes y palo del medio
-    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //abajo
+    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //abajo
 
-    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,6).refreshBody(); //palo medio 1
-    this.ground.create(gameWidth/2-10, 320, 'platform').setOrigin(0,0).setScale(0.05,13).refreshBody(); //palo medio 2
+    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,6).refreshBody().setVisible(false); //palo medio 1
+    this.ground.create(gameWidth/2-10, 320, 'platform').setOrigin(0,0).setScale(0.05,13).refreshBody().setVisible(false); //palo medio 2
     this.stickDelete=this.ground.create(gameWidth/2-10, 175, 'platform').setOrigin(0,0).setScale(0.05,5).refreshBody(); //palo medio removable
     this.stickDelete.tint=0x180d06;
 
@@ -63,14 +68,14 @@ class GamePlayFa2 extends Phaser.Scene{
     this.stickDeleteIcon.setDepth(2);
     this.stickDeleteIcon.tint=0x180d06;
 
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody();//palo dcha
-    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo izq
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //arriba
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false);//palo dcha
+    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false); //palo izq
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //arriba
 
     //Nivel 1
-    this.ground.create(150, 600, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();//left
-    this.ground.create(gameWidth/2, 600, 'platform').setOrigin(0,0).setScale(0.8,0.5).refreshBody(); //right
-    this.ground.create(gameWidth-240, 600, 'platform').setOrigin(0,0).setScale(0.57,0.5).refreshBody(); //right2
+    this.ground.create(150, 600, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody().setVisible(false);//left
+    this.ground.create(gameWidth/2, 600, 'platform').setOrigin(0,0).setScale(0.8,0.5).refreshBody().setVisible(false); //right
+    this.ground.create(gameWidth-240, 600, 'platform').setOrigin(0,0).setScale(0.57,0.5).refreshBody().setVisible(false); //right2
 
     //Nivel 1: platform that will move to left and right in loop
     this.movablePlatform2=this.physics.add.sprite(150, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody();
@@ -90,12 +95,12 @@ class GamePlayFa2 extends Phaser.Scene{
     this.movablePlatformIcon2.tint=0x180d06;
 
     //Nivel 2
-    this.ground.create(0, 455, 'platform').setOrigin(0,0).setScale(0.68,0.5).refreshBody();//left
-    this.ground.create(gameWidth/2-275, 455, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();//left2
-    this.ground.create(gameWidth/2+10, 455, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody();//right
+    this.ground.create(0, 455, 'platform').setOrigin(0,0).setScale(0.68,0.5).refreshBody().setVisible(false);//left
+    this.ground.create(gameWidth/2-275, 455, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false);//left2
+    this.ground.create(gameWidth/2+10, 455, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody().setVisible(false);//right
 
     //Nivel 2: platform that our teammate will help move it to the left
-    this.movablePlatform=this.physics.add.sprite(gameWidth-150, 455, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();
+    this.movablePlatform=this.physics.add.sprite(gameWidth-142, 455, 'platformBroken').setOrigin(0,0).setScale(1.1,1.1).refreshBody();
     this.movablePlatform.body.allowGravity=false;
     this.movablePlatform.body.immovable=true;
     this.movablePlatform.setDepth(2);
@@ -109,8 +114,8 @@ class GamePlayFa2 extends Phaser.Scene{
     this.movablePlatformIcon.tint=0x180d06;
 
     //Nivel 3
-    this.ground.create(260, 310, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody();//left
-    this.ground.create(gameWidth/2, 310, 'platform').setOrigin(0,0).setScale(0.9,0.5).refreshBody();//right
+    this.ground.create(260, 310, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody().setVisible(false);//left
+    this.ground.create(gameWidth/2, 310, 'platform').setOrigin(0,0).setScale(0.9,0.5).refreshBody().setVisible(false);//right
     this.blockDelete=this.ground.create(gameWidth/2+240, 220, 'platform').setOrigin(0,0).setScale(0.3,3).setDepth(2).refreshBody();//block that dont allow pass
     this.blockDelete.tint=0x180d06;
 
@@ -122,9 +127,9 @@ class GamePlayFa2 extends Phaser.Scene{
     this.blockDeleteIcon.tint=0x180d06;
 
     //Exit
-    this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(0.5,0.5).refreshBody();//left 1
-    this.ground.create(gameWidth/2-280, 170, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody(); //left 2
-    this.ground.create(gameWidth-285, 170, 'platform').setOrigin(0,0).setScale(0.68,0.5).refreshBody();
+    this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(0.5,0.5).refreshBody().setVisible(false);//left 1
+    this.ground.create(gameWidth/2-280, 170, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false); //left 2
+    this.ground.create(gameWidth-285, 170, 'platform').setOrigin(0,0).setScale(0.68,0.5).refreshBody().setVisible(false);
 
 
     //Grupo de huevos
@@ -350,6 +355,7 @@ endArrived(player, end){
     this.tweens.add({
       targets:this.movablePlatform,
       duration:2000,
+      alpha: 0,
       x:gameWidth-420,
     })
   }
@@ -383,6 +389,7 @@ endArrived(player, end){
     this.tweens.add({
       targets:this.stickDelete,
       duration:2000,
+      alpha: 0,
       y:320
     })
   }
@@ -395,9 +402,34 @@ endArrived(player, end){
   }
 
   FinNivelFa2(){
-    this.scene.stop('GamePlayFa2');
-    this.scene.sendToBack('GamePlayFa2');
-    this.scene.start('MainMenu');
+
+    this.endTrigger1.setVisible(false);
+    this.endTrigger2.setVisible(false);
+    this.player1.setVisible(false);
+    this.player2.setVisible(false);
+    this.backgroundFa2.setVisible(false);
+    this.movablePlatform2.setVisible(false);
+
+    this.tweens.add({
+      targets: this.preLevel5,
+      duration: 1000,
+      alpha: 1,
+      yoyo: true,
+      hold: 4000,
+      completeDelay: 2000
+    });
+
+    this.time.addEvent({
+      delay: 6300,
+      callback: function() {
+        this.scene.stop('GamePlayFa2');
+        this.scene.sendToBack('GamePlayFa2');
+        this.scene.start('GamePlayFo1');
+      },
+    callbackScope: this
+    }, this);
+
+
   }
 
   //CAMBIOS ANIMACIÓN PLAYER 1
@@ -436,7 +468,7 @@ endArrived(player, end){
   player1Stop() {
 
     this.player1.setVelocityX(0);
-    this.player1.anims.play('stop1', true);
+    //this.player1.anims.play('stop1', true);
 
     if(this.dir1 == 1){
       this.player1.anims.play('stop1R', true);
@@ -488,7 +520,7 @@ endArrived(player, end){
   player2Stop() {
 
     this.player2.setVelocityX(0);
-    this.player2.anims.play('stop2', true);
+    //this.player2.anims.play('stop2', true);
 
     if(this.dir2 == 1){
       this.player2.anims.play('stop2R', true);

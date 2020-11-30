@@ -22,9 +22,9 @@ class GamePlayFo1 extends Phaser.Scene{
     levelGameplay = 'GamePlayFo2';
 
     // 1) BACKGROUND
-    this.backgroundGM = this.add.image(0, 0, 'backgroundFa2');
-    this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
-    this.backgroundGM.setDepth(1);
+    this.backgroundFo1 = this.add.image(0, 0, 'backgroundFa2');
+    this.backgroundFo1.setPosition(gameWidth/2, gameHeight/2);
+    this.backgroundFo1.setDepth(1);
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(60, 685, 'chicken1R').setScale(0.7).setDepth(2);

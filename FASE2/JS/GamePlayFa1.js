@@ -21,9 +21,14 @@ class GamePlayFa1 extends Phaser.Scene{
     levelGameplay = 'GamePlayFa1';
 
     // 1) BACKGROUND
-    this.backgroundGM = this.add.image(0, 0, 'backgroundFa1');
-    this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
-    this.backgroundGM.setDepth(1);
+    this.backgroundFa1 = this.add.image(0, 0, 'backgroundFa1');
+    this.backgroundFa1.setPosition(gameWidth/2, gameHeight/2);
+    this.backgroundFa1.setDepth(1);
+
+    //Pre carga Nivel 4
+    this.preLevel4 = this.add.image(gameWidth/2, gameHeight/2, 'level4');
+    this.preLevel4.setDepth(3);
+    this.preLevel4.alpha = 0;
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(50, 690, 'chicken1R').setScale(0.7).setDepth(2);
@@ -47,57 +52,58 @@ class GamePlayFa1 extends Phaser.Scene{
     this.player2.setCollideWorldBounds(false);
 
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
+
     //Bordes y palo del medio
-    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //abajo
-    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo medio
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody();//palo dcha
-    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo izq
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //arriba
+    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //abajo
+    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false); //palo medio
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false);//palo dcha
+    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false); //palo izq
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //arriba
 
     //Nivel 1
-    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody();//left
-    this.ground.create(gameWidth/2, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody(); //right
+    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody().setVisible(false);//left
+    this.ground.create(gameWidth/2, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody().setVisible(false); //right
 
     //Nivel 1: platform that our teammate will help move it to the left
-    this.movablePlatform2=this.physics.add.sprite(gameWidth-160, 600, 'platform').setOrigin(0,0).setScale(0.4,0.5).refreshBody();
+    this.movablePlatform2=this.physics.add.sprite(gameWidth-150, 599, 'platformBroken').setOrigin(0,0).setScale(1.15,1.2).refreshBody();//.setVisible(false);
     this.movablePlatform2.body.allowGravity=false;
     this.movablePlatform2.body.immovable=true;
     this.movablePlatform2.setDepth(2);
     this.movablePlatform2.tint=0x180d06;
 
     //Nivel 1: icon to help our teammate with the platform
-    this.movablePlatformIcon2=this.physics.add.sprite(50, 510, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
+    this.movablePlatformIcon2=this.physics.add.sprite(50, 510, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();//.setVisible(false);
     this.movablePlatformIcon2.body.allowGravity=false;
     this.movablePlatformIcon2.body.immovable=true;
     this.movablePlatformIcon2.setDepth(2);
     this.movablePlatformIcon2.tint=0x180d06;
 
     //Nivel 2
-    this.ground.create(gameWidth/2-430, 455, 'platform').setOrigin(0,0).setScale(1.08,0.5).refreshBody();//left long
-    this.ground.create(gameWidth/2+270, 455, 'platform').setOrigin(0,0).setScale(0.74,0.5).refreshBody();//right
+    this.ground.create(gameWidth/2-430, 455, 'platform').setOrigin(0,0).setScale(1.08,0.5).refreshBody().setVisible(false);//left long
+    this.ground.create(gameWidth/2+270, 455, 'platform').setOrigin(0,0).setScale(0.74,0.5).refreshBody().setVisible(false);//right
 
     //Nivel 3
-    this.ground.create(0, 310, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody();//left 1
-    this.ground.create(gameWidth/2, 310, 'platform').setOrigin(0,0).setScale(0.9,0.5).refreshBody();//right
-    this.ground.create(gameWidth-180, 310, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody();//right 2
+    this.ground.create(0, 310, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody().setVisible(false);//left 1
+    this.ground.create(gameWidth/2, 310, 'platform').setOrigin(0,0).setScale(0.9,0.5).refreshBody().setVisible(false);//right
+    this.ground.create(gameWidth-180, 310, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody().setVisible(false);//right 2
 
     //Nivel 3: platform that our teammate will help move it to the left
-    this.movablePlatform=this.physics.add.sprite(450, 310, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();
+    this.movablePlatform=this.physics.add.sprite(460, 309, 'platformBroken').setOrigin(0,0).setScale(2.15,1.2).refreshBody();//.setVisible(false);
     this.movablePlatform.body.allowGravity=false;
     this.movablePlatform.body.immovable=true;
     this.movablePlatform.setDepth(2);
     this.movablePlatform.tint=0x180d06;
 
     //Nivel 3: icon to help our teammate with the platform
-    this.movablePlatformIcon=this.physics.add.sprite(850, 220, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
+    this.movablePlatformIcon=this.physics.add.sprite(850, 220, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();//.setVisible(false);
     this.movablePlatformIcon.body.allowGravity=false;
     this.movablePlatformIcon.body.immovable=true;
     this.movablePlatformIcon.setDepth(2);
     this.movablePlatformIcon.tint=0x180d06;
 
     //Exits
-    this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(1.07,0.5).refreshBody();
-    this.ground.create(gameWidth/2+10, 170, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
+    this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(1.07,0.5).refreshBody().setVisible(false);
+    this.ground.create(gameWidth/2+10, 170, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false);
 
 
     //Grupo de huevos
@@ -321,9 +327,12 @@ endArrived(player, end){
 
     this.tweens.add({
       targets:this.movablePlatform,
+      alpha: 0,
       duration:2000,
       x:0,
     })
+
+
   }
 
   movePltLeft2(){
@@ -332,9 +341,11 @@ endArrived(player, end){
 
     this.tweens.add({
       targets:this.movablePlatform2,
+      alpha: 0,
       duration:2000,
       x:gameWidth-360,
     })
+
   }
 
   PauseMenu(){
@@ -345,9 +356,32 @@ endArrived(player, end){
   }
 
   FinNivelFa1(){
-    this.scene.stop('GamePlayFa1');
-    this.scene.sendToBack('GamePlayFa1');
-    this.scene.start('GamePlayFa2');
+
+    this.endTrigger1.setVisible(false);
+    this.endTrigger2.setVisible(false);
+    this.player1.setVisible(false);
+    this.player2.setVisible(false);
+    this.backgroundFa1.setVisible(false);
+
+    this.tweens.add({
+      targets: this.preLevel4,
+      duration: 1000,
+      alpha: 1,
+      yoyo: true,
+      hold: 4000,
+      completeDelay: 2000
+    });
+
+    this.time.addEvent({
+      delay: 6300,
+      callback: function() {
+        this.scene.stop('GamePlayFa1');
+        this.scene.sendToBack('GamePlayFa1');
+        this.scene.start('GamePlayFa2');
+      },
+    callbackScope: this
+    }, this);
+
   }
 
   //CAMBIOS ANIMACIÓN PLAYER 1
@@ -385,7 +419,7 @@ endArrived(player, end){
   player1Stop() {
 
     this.player1.setVelocityX(0);
-    this.player1.anims.play('stop1', true);
+    //this.player1.anims.play('stop1', true);
 
     if(this.dir1 == 1){
       this.player1.anims.play('stop1R', true);
@@ -437,7 +471,7 @@ endArrived(player, end){
   player2Stop() {
 
     this.player2.setVelocityX(0);
-    this.player2.anims.play('stop2', true);
+    //this.player2.anims.play('stop2', true);
 
     if(this.dir2 == 1){
       this.player2.anims.play('stop2R', true);

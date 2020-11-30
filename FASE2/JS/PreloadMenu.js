@@ -51,6 +51,13 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('offlineButton', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/offline_button.png');
     this.load.image('offlineButtonSel', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/offline_button_selected.png');
 
+    //PRECARGA
+    this.load.image('level1', 'ASSETS/Interface/PreCarga/Nivel1.jpg');
+    this.load.image('level2', 'ASSETS/Interface/PreCarga/Nivel2.jpg');
+    this.load.image('level3', 'ASSETS/Interface/PreCarga/Nivel3.jpg');
+    this.load.image('level4', 'ASSETS/Interface/PreCarga/Nivel4.jpg');
+    this.load.image('level5', 'ASSETS/Interface/PreCarga/Nivel5.jpg');
+
     //MAIN MENU
     //this.load.image('backgroundMM', 'ASSETS/Interface/MainMenu/main_menu_buttons.jpg');
     //Play
@@ -110,10 +117,13 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('quitButtonPM', 'ASSETS/PauseMenu/BotonAbandonar.png');
 
     //WINNER
-    this.load.image('backgroundWM', 'ASSETS/WinnerMenu/FondoWinner.jpg');
+    this.load.image('backgroundWM', 'Assets/Interface/BackgroundWin.jpg');
+    this.load.image('quitButtonWM', 'Assets/Interface/BotonSalir.png');
 
     //GAME OVER
-    this.load.image('backgroundGOM', 'ASSETS/GameOverMenu/FondoGameOver.jpg');
+    this.load.image('backgroundGOM', 'Assets/Interface/BackgroundGameOver.jpg');
+    this.load.image('quitButtonGOM', 'Assets/Interface/BotonSalir.png');
+    this.load.image('retryButtonGOM', 'Assets/Interface/BotonReintentar.png');
 
     //SPRITES
 
@@ -137,7 +147,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('GamePlayFa1');
+      this.scene.start('Winner');
     });
 
 

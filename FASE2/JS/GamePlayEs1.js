@@ -21,9 +21,14 @@ class GamePlayEs1 extends Phaser.Scene{
     levelGameplay = 'GamePlayEs1';
 
     // 1) BACKGROUND
-    this.backgroundGM = this.add.image(0, 0, 'backgroundEs1');
-    this.backgroundGM.setPosition(gameWidth/2, gameHeight/2);
-    this.backgroundGM.setDepth(1);
+    this.backgroundEs1 = this.add.image(0, 0, 'backgroundEs1');
+    this.backgroundEs1.setPosition(gameWidth/2, gameHeight/2);
+    this.backgroundEs1.setDepth(1);
+
+    //Pre carga Nivel 2
+    this.preLevel2 = this.add.image(gameWidth/2, gameHeight/2, 'level2');
+    this.preLevel2.setDepth(3);
+    this.preLevel2.alpha = 0;
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(60, 685, 'chicken1R').setScale(0.7).setDepth(2);
@@ -48,29 +53,29 @@ class GamePlayEs1 extends Phaser.Scene{
 
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
     //Bordes y palo del medio
-    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //abajo
-    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo medio
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody();//palo dcha
-    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo izq
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //arriba
+    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //abajo
+    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false); //palo medio
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false);//palo dcha
+    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false); //palo izq
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //arriba
     //Nivel 1
-    this.ground.create(440, 600, 'platform').setOrigin(0,0).setScale(1.36,0.5).refreshBody();
-    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();
-    this.ground.create(1175, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody();
-    this.ground.create(830, 600, 'platform').setOrigin(0,0).setScale(0.4,4.2).refreshBody();
+    this.ground.create(440, 600, 'platform').setOrigin(0,0).setScale(1.36,0.5).refreshBody().setVisible(false);
+    this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody().setVisible(false);
+    this.ground.create(1175, 600, 'platform').setOrigin(0,0).setScale(0.63,0.5).refreshBody().setVisible(false);
+    this.ground.create(830, 600, 'platform').setOrigin(0,0).setScale(0.4,4.2).refreshBody().setVisible(false);
     //Nivel 2
-    this.ground.create(215, 460, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody();
-    this.ground.create(705, 460, 'platform').setOrigin(0,0).setScale(1.25,0.5).refreshBody();
+    this.ground.create(215, 460, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody().setVisible(false);
+    this.ground.create(705, 460, 'platform').setOrigin(0,0).setScale(1.25,0.5).refreshBody().setVisible(false);
     //Nivel 3
-    this.ground.create(570, 330, 'platform').setOrigin(0,0).setScale(0.35,0.5).refreshBody();
-    this.ground.create(1050, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();
-    this.ground.create(575, 230, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody();
-    this.ground.create(1060, 230, 'platform').setOrigin(0,0).setScale(0.7,3.2).refreshBody();
+    this.ground.create(570, 330, 'platform').setOrigin(0,0).setScale(0.35,0.5).refreshBody().setVisible(false);
+    this.ground.create(1050, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody().setVisible(false);
+    this.ground.create(575, 230, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody().setVisible(false);
+    this.ground.create(1060, 230, 'platform').setOrigin(0,0).setScale(0.7,3.2).refreshBody().setVisible(false);
     //Madera suelta
-    this.ground.create(160, 275, 'platform').setOrigin(0,0).setScale(0.6,0.5).refreshBody();
+    this.ground.create(160, 275, 'platform').setOrigin(0,0).setScale(0.6,0.5).refreshBody().setVisible(false);
     //Exits
-    this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
-    this.ground.create(1180, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
+    this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false);
+    this.ground.create(1180, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false);
 
 
     //Grupo de huevos
@@ -404,9 +409,32 @@ endArrived(player, end){
   }
 
   FinNivelEs1(){
-    this.scene.stop('GamePlayEs1');
-    this.scene.sendToBack('GamePlayEs1');
-    this.scene.start('GamePlayEs2');
+
+    this.endTrigger1.setVisible(false);
+    this.endTrigger2.setVisible(false);
+    this.player1.setVisible(false);
+    this.player2.setVisible(false);
+    this.backgroundEs1.setVisible(false);
+
+    this.tweens.add({
+      targets: this.preLevel2,
+      duration: 1000,
+      alpha: 1,
+      yoyo: true,
+      hold: 4000,
+      completeDelay: 2000
+    });
+
+    this.time.addEvent({
+      delay: 6300,
+      callback: function() {
+        this.scene.stop('GamePlayEs1');
+        this.scene.sendToBack('GamePlayEs1');
+        this.scene.start('GamePlayEs2');
+      },
+    callbackScope: this
+    }, this);
+
   }
 
 /*
