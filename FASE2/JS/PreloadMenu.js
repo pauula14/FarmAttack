@@ -36,8 +36,9 @@ class PreloadMenu extends Phaser.Scene{
 
     //CARGA DE ASSETS
 
-    //PRELOAD MENU
-
+    //BACK BUTTON
+    this.load.image('backButton', 'ASSETS/Interface/BackButton/back_button.png');
+    this.load.image('backButtonSel', 'ASSETS/Interface/BackButton/back_button_selected.png');
 
     //BACKGROUND MENUS
     this.load.image('backgroundMenus', 'ASSETS/Interface/Main_background.jpg');
@@ -73,15 +74,15 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('tutorialButton', 'ASSETS/Interface/MainMenu/Buttons/tutorial_button.png');
     this.load.image('tutorialButtonSel', 'ASSETS/Interface/MainMenu/Buttons/tutorial_button_selected.png');
 
-    this.load.image('backButtonMM', 'ASSETS/MainMenu/BotonAtras.png');
+    //this.load.image('backButtonMM', 'ASSETS/MainMenu/BotonAtras.png');
 
     //TUTORIAL MENU
     this.load.image('backgroundTM', 'ASSETS/TutorialMenu/FondoTutorialMenu.jpg');
     this.load.image('backButtonTM', 'ASSETS/TutorialMenu/BotonAtras.png');
 
     //CREDITS MENU
-    this.load.image('backgroundCM', 'ASSETS/CreditsMenu/FondoCreditsMenu.jpg');
-    this.load.image('backButtonCM', 'ASSETS/CreditsMenu/BotonAtras.png');
+    this.load.image('backgroundCM', 'Assets/Interface/CreditsMenu/credits_menu_buttons.jpg');
+    //this.load.image('backButtonCM', 'ASSETS/Interface/CreditsMenu/BotonAtras.png');
 
     //OPTIONS MENU
     this.load.image('backgroundOM', 'ASSETS/OptionsMenu/FondoOptionsMenu.jpg');
@@ -97,6 +98,8 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('platform', 'ASSETS/Placeholders/platform.png');
     this.load.image('platformBroken', 'ASSETS/Gameplay/Obstacles/broken_wood.png');//platform broken
     this.load.image('platformBale', 'ASSETS/Gameplay/Obstacles/hay_bale.png');//straw
+    this.load.image('pipeline', 'ASSETS/Gameplay/Obstacles/facade2_pipeline.png');
+    this.load.image('flowerPot', 'ASSETS/Gameplay/Obstacles/flower_pot.png');
     //this.load.image('chicken1Stop', 'ASSETS/Placeholders/dude.png');
     this.load.image('egg', 'ASSETS/Gameplay/Objects/egg.png');
     this.load.image('eggWhite', 'ASSETS/Gameplay/Objects/white_egg.png');
@@ -147,7 +150,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('Winner');
+      this.scene.start('GamePlayEs1');
     });
 
 

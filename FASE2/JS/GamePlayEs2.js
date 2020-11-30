@@ -225,6 +225,10 @@ class GamePlayEs2 extends Phaser.Scene{
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
+    if(this.initialTime < 0){
+      this.GameOverEs2();
+    }
+
   }
 
   formatTime(seconds){
@@ -348,6 +352,8 @@ endArrived(player, end){
   }
 
   FinNivelEs2(){
+
+    totalTime += 120 - this.initialTime;
 
     this.endTrigger1.setVisible(false);
     this.endTrigger2.setVisible(false);
@@ -482,6 +488,12 @@ endArrived(player, end){
   }
 
   eggCatched(){
+  }
+
+  GameOverEs2(){
+    this.scene.stop('GamePlayEs2');
+    this.scene.sendToBack('GamePlayEs2');
+    this.scene.start('GameOver');
   }
 
 

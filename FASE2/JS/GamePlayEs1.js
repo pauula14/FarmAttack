@@ -127,7 +127,7 @@ class GamePlayEs1 extends Phaser.Scene{
     this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right);
     //this.P2_interactButton = this.input.keyboard.addKey(P2_controls.interact);
 
-    this.testButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
+    //this.testButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
 
     // Reiniciamos eventos
     this.P1_jumpButton.off('down');
@@ -173,7 +173,7 @@ class GamePlayEs1 extends Phaser.Scene{
     this.scoreText.setDepth(2);
 
     //Timer
-    this.initialTime=120;
+    this.initialTime = 120;
 
     this.text = this.add.text(460, 250, this.formatTime(this.initialTime), { fontSize: '32px', fill: '#000' });
     this.text.setDepth(2);
@@ -195,6 +195,11 @@ class GamePlayEs1 extends Phaser.Scene{
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
+    if(this.initialTime < 0){
+      this.GameOverEs1();
+    }
+
+    //console.log(this.initialTime);
 
   }
 
@@ -410,6 +415,8 @@ endArrived(player, end){
 
   FinNivelEs1(){
 
+    totalTime += 120 - this.initialTime;
+
     this.endTrigger1.setVisible(false);
     this.endTrigger2.setVisible(false);
     this.player1.setVisible(false);
@@ -435,6 +442,12 @@ endArrived(player, end){
     callbackScope: this
     }, this);
 
+  }
+
+  GameOverEs1(){
+    this.scene.stop('GamePlayEs1');
+    this.scene.sendToBack('GamePlayEs1');
+    this.scene.start('GameOver');
   }
 
 /*

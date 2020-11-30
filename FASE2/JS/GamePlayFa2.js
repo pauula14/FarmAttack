@@ -56,10 +56,10 @@ class GamePlayFa2 extends Phaser.Scene{
     //Bordes y palo del medio
     this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //abajo
 
-    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,6).refreshBody().setVisible(false); //palo medio 1
-    this.ground.create(gameWidth/2-10, 320, 'platform').setOrigin(0,0).setScale(0.05,13).refreshBody().setVisible(false); //palo medio 2
-    this.stickDelete=this.ground.create(gameWidth/2-10, 175, 'platform').setOrigin(0,0).setScale(0.05,5).refreshBody(); //palo medio removable
-    this.stickDelete.tint=0x180d06;
+    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,13).refreshBody().setVisible(false); //palo medio 1
+    this.ground.create(gameWidth/2-10, 600, 'platform').setOrigin(0,0).setScale(0.05,4).refreshBody().setVisible(false); //palo medio 2
+    this.stickDelete=this.ground.create(gameWidth/2-10, 470, 'pipeline').setOrigin(0,0).setScale(1,1).setDepth(1).refreshBody(); //palo medio removable
+    ///this.stickDelete.tint=0x180d06;
 
     //Icon to help our teammate with the platform that block him to pass to otherside
     this.stickDeleteIcon=this.physics.add.sprite(gameWidth/2+100, 230, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
@@ -116,8 +116,8 @@ class GamePlayFa2 extends Phaser.Scene{
     //Nivel 3
     this.ground.create(260, 310, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody().setVisible(false);//left
     this.ground.create(gameWidth/2, 310, 'platform').setOrigin(0,0).setScale(0.9,0.5).refreshBody().setVisible(false);//right
-    this.blockDelete=this.ground.create(gameWidth/2+240, 220, 'platform').setOrigin(0,0).setScale(0.3,3).setDepth(2).refreshBody();//block that dont allow pass
-    this.blockDelete.tint=0x180d06;
+    this.blockDelete=this.ground.create(gameWidth/2+240, 142, 'flowerPot').setOrigin(0,0).setScale(1,1).setDepth(2).refreshBody();//block that dont allow pass
+  //  this.blockDelete.tint=0x180d06;
 
     //Nivel 3: icon to help our teammate with the block that block him to pass
     this.blockDeleteIcon=this.physics.add.sprite(gameWidth/2-100, 90, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
@@ -253,7 +253,12 @@ class GamePlayFa2 extends Phaser.Scene{
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
+    if(this.initialTime < 0){
+      this.GameOverFa2();
+    }
+
   }
+
 
   formatTime(seconds){
     // Minutes
@@ -403,6 +408,8 @@ endArrived(player, end){
 
   FinNivelFa2(){
 
+    totalTime += 120 - this.initialTime;
+
     this.endTrigger1.setVisible(false);
     this.endTrigger2.setVisible(false);
     this.player1.setVisible(false);
@@ -541,7 +548,11 @@ endArrived(player, end){
   eggCatched(){
   }
 
-
+  GameOverFa2(){
+    this.scene.stop('GamePlayFa2');
+    this.scene.sendToBack('GamePlayFa2');
+    this.scene.start('GameOver');
+  }
 /*
   startDrag(player, objects){
     this.input.off('down', this.startDrag,this);

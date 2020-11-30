@@ -224,6 +224,10 @@ class GamePlayFa1 extends Phaser.Scene{
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
+    if (this.initialTime < 0){
+      this.GameOverFa1();
+    }
+
   }
 
   formatTime(seconds){
@@ -356,6 +360,8 @@ endArrived(player, end){
   }
 
   FinNivelFa1(){
+
+    totalTime += 120 - this.initialTime;
 
     this.endTrigger1.setVisible(false);
     this.endTrigger2.setVisible(false);
@@ -492,6 +498,11 @@ endArrived(player, end){
   eggCatched(){
   }
 
+  GameOverFa1(){
+    this.scene.stop('GamePlayFa1');
+    this.scene.sendToBack('GamePlayFa1');
+    this.scene.start('GameOver');
+  }
 
 /*
   startDrag(player, objects){

@@ -395,9 +395,12 @@ endArrived(player, end){
   }
 
   FinNivelFa2(){
+
+    totalTime += 120 - this.initialTime;
+
     this.scene.stop('GamePlayFa2');
     this.scene.sendToBack('GamePlayFa2');
-    this.scene.start('MainMenu');
+    this.scene.start('Winner');
   }
 
   //CAMBIOS ANIMACIÓN PLAYER 1
