@@ -141,7 +141,7 @@ class GamePlayEs2 extends Phaser.Scene{
 
     // 1) BOTON PAUSA
     this.pauseButton = this.add.image(gameWidth/2, 30, 'pauseButton');
-    this.pauseButton.setScale(2/3);
+    this.pauseButton.setScale(2/3).setDepth(2);
     this.pauseButton.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.PauseMenu());
 

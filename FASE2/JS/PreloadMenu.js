@@ -97,6 +97,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundEs2', 'ASSETS/Gameplay/Maps/barn2.jpg'); //establo 2
     this.load.image('backgroundFa1', 'ASSETS/Gameplay/Maps/facade1.jpg'); //fachada 1
     this.load.image('backgroundFa2', 'ASSETS/Gameplay/Maps/facade2.jpg'); //fachada 2
+    this.load.image('backgroundFo', 'ASSETS/Gameplay/Maps/forest.jpg'); //forest
     this.load.image('pauseButton', 'ASSETS/Gameplay/botonPausa.png');
     this.load.image('platform', 'ASSETS/Placeholders/platform.png');
     this.load.image('platformBroken', 'ASSETS/Gameplay/Obstacles/broken_wood.png');//platform broken
@@ -164,7 +165,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('InitMenu');
+      this.scene.start('GamePlayFo1');
     });
 
 

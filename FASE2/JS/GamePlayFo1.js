@@ -27,22 +27,22 @@ class GamePlayFo1 extends Phaser.Scene{
     this.goalSound = this.sound.add('goalSound', this.EffectsConfig());
 
     // 1) BACKGROUND
-    this.backgroundFo1 = this.add.image(0, 0, 'backgroundFa2');
+    this.backgroundFo1 = this.add.image(0, 0, 'backgroundFo');
     this.backgroundFo1.setPosition(gameWidth/2, gameHeight/2);
     this.backgroundFo1.setDepth(1);
 
     // 2) PLAYER
-    this.player1 = this.physics.add.sprite(60, 685, 'chicken1R').setScale(0.7).setDepth(2);
-    this.player2 = this.physics.add.sprite(gameWidth-60, 685, 'chicken2L').setScale(0.7).setDepth(2);
+    this.player1 = this.physics.add.sprite(60, 130, 'chicken1R').setScale(0.7).setDepth(2);
+    this.player2 = this.physics.add.sprite(gameWidth-60, 265, 'chicken2L').setScale(0.7).setDepth(2);
 
     // 3) OBJETOS DE CONTROL DE FLUJO
     //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
     //this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
-    this.endTrigger1 = this.physics.add.sprite(1250, 50, 'basket1').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
+    this.endTrigger1 = this.physics.add.sprite(50, 610, 'basket1').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
     this.endTrigger1.body.setAllowGravity(false);
     //this.endTrigger1.body.enable = false;
     //this.endTrigger1.setVisible(false);
-    this.endTrigger2 = this.physics.add.sprite(1200, 70, 'basket2').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
+    this.endTrigger2 = this.physics.add.sprite(0, 630, 'basket2').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
     this.endTrigger2.body.setAllowGravity(false);
     //this.endTrigger2.setVisible(false);
     //this.endTrigger2.body.enable = false;
@@ -55,103 +55,47 @@ class GamePlayFo1 extends Phaser.Scene{
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
     //Bordes y palo del medio
     this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //abajo
-
-    this.ground.create(gameWidth/2-10, 0, 'platform').setOrigin(0,0).setScale(0.05,6).refreshBody(); //palo medio 1
-    this.ground.create(gameWidth/2-10, 320, 'platform').setOrigin(0,0).setScale(0.05,13).refreshBody(); //palo medio 2
-    this.stickDelete=this.ground.create(gameWidth/2-10, 175, 'platform').setOrigin(0,0).setScale(0.05,5).refreshBody(); //palo medio removable
-    this.stickDelete.tint=0x180d06;
-
-    //Icon to help our teammate with the platform that block him to pass to otherside
-    this.stickDeleteIcon=this.physics.add.sprite(gameWidth/2+100, 230, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
-    this.stickDeleteIcon.body.allowGravity=false;
-    this.stickDeleteIcon.body.immovable=true;
-    this.stickDeleteIcon.setDepth(2);
-    this.stickDeleteIcon.tint=0x180d06;
-
     this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody();//palo dcha
     this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo izq
     this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //arriba
 
     //Nivel 1
-    this.ground.create(150, 600, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody();//left
-    this.ground.create(gameWidth/2, 600, 'platform').setOrigin(0,0).setScale(0.8,0.5).refreshBody(); //right
-    this.ground.create(gameWidth-240, 600, 'platform').setOrigin(0,0).setScale(0.57,0.5).refreshBody(); //right2
-
-    //Nivel 1: platform that will move to left and right in loop
-    this.movablePlatform2=this.physics.add.sprite(150, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody();
-    this.movablePlatform2.body.allowGravity=false;
-    this.movablePlatform2.body.immovable=true;
-    this.movablePlatform2.setDepth(2);
-    this.movablePlatform2.tint=0x180d06;
-
-    this.pltToDelete=this.ground.create(0, 600, 'platform').setOrigin(0,0).setScale(0.5,0.5).setDepth(2).refreshBody();//left2
-    this.pltToDelete.tint=0x180d06;
-
-    //Nivel 1: icon to help our teammate with the platform that block him to pass
-    this.movablePlatformIcon2=this.physics.add.sprite(gameWidth/2+100, 510, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
-    this.movablePlatformIcon2.body.allowGravity=false;
-    this.movablePlatformIcon2.body.immovable=true;
-    this.movablePlatformIcon2.setDepth(2);
-    this.movablePlatformIcon2.tint=0x180d06;
+    this.ground.create(0, 601, 'platform').setOrigin(0,0).setScale(1.377,0.55).refreshBody();//left
+    this.ground.create(gameWidth/2+62, 601, 'platform').setOrigin(0,0).setScale(0.85,0.55).refreshBody(); //right
+    this.ground.create(gameWidth/2+62, 601, 'platform').setOrigin(0,0).setScale(0.045,4.2).refreshBody(); //stick vertical
 
     //Nivel 2
-    this.ground.create(0, 455, 'platform').setOrigin(0,0).setScale(0.68,0.5).refreshBody();//left
-    this.ground.create(gameWidth/2-275, 455, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();//left2
-    this.ground.create(gameWidth/2+10, 455, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody();//right
-
-    //Nivel 2: platform that our teammate will help move it to the left
-    this.movablePlatform=this.physics.add.sprite(gameWidth-150, 455, 'platform').setOrigin(0,0).setScale(0.65,0.5).refreshBody();
-    this.movablePlatform.body.allowGravity=false;
-    this.movablePlatform.body.immovable=true;
-    this.movablePlatform.setDepth(2);
-    this.movablePlatform.tint=0x180d06;
-
-    //Nivel 2: icon to help our teammate with the platform
-    this.movablePlatformIcon=this.physics.add.sprite(50, 375, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
-    this.movablePlatformIcon.body.allowGravity=false;
-    this.movablePlatformIcon.body.immovable=true;
-    this.movablePlatformIcon.setDepth(2);
-    this.movablePlatformIcon.tint=0x180d06;
+    this.ground.create(332, 461, 'platform').setOrigin(0,0).setScale(0.54,0.5).refreshBody();//left
+    this.ground.create(gameWidth/2-180, 461, 'platform').setOrigin(0,0).setScale(0.045,4.5).refreshBody();//stick vertical
+    this.ground.create(gameWidth/2+352, 461, 'platform').setOrigin(0,0).setScale(0.52,0.5).refreshBody();//right
 
     //Nivel 3
-    this.ground.create(260, 310, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody();//left
-    this.ground.create(gameWidth/2, 310, 'platform').setOrigin(0,0).setScale(0.9,0.5).refreshBody();//right
-    this.blockDelete=this.ground.create(gameWidth/2+240, 220, 'platform').setOrigin(0,0).setScale(0.3,3).setDepth(2).refreshBody();//block that dont allow pass
-    this.blockDelete.tint=0x180d06;
+    this.ground.create(332, 307, 'platform').setOrigin(0,0).setScale(0.5,0.5).refreshBody();//left
+    this.ground.create(gameWidth/2+220, 307, 'platform').setOrigin(0,0).setScale(1.2,0.5).refreshBody();//right
+    this.ground.create(332, 307, 'platform').setOrigin(0,0).setScale(0.045,5).refreshBody();//stick vertical
+    this.ground.create(gameWidth/2+352, 307, 'platform').setOrigin(0,0).setScale(0.045,5).refreshBody();//stick vertical 2
 
-    //Nivel 3: icon to help our teammate with the block that block him to pass
-    this.blockDeleteIcon=this.physics.add.sprite(gameWidth/2-100, 90, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
-    this.blockDeleteIcon.body.allowGravity=false;
-    this.blockDeleteIcon.body.immovable=true;
-    this.blockDeleteIcon.setDepth(2);
-    this.blockDeleteIcon.tint=0x180d06;
-
-    //Exit
-    this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(0.5,0.5).refreshBody();//left 1
-    this.ground.create(gameWidth/2-280, 170, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody(); //left 2
-    this.ground.create(gameWidth-285, 170, 'platform').setOrigin(0,0).setScale(0.68,0.5).refreshBody();
+    //Nivel 4
+    this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(0.62,0.5).refreshBody();//left 1
+    this.ground.create(gameWidth-295, 131, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
 
 
     //Grupo de huevos
     this.eggsP1 = this.physics.add.staticGroup();
-    this.eggsP1.create(290, 640, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
-    this.eggsP1.create(gameWidth/2-120, 350, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
-    this.eggsP1.create(20, 70, 'eggWhite').setOrigin(0,0).setScale(0.7).refreshBody().setDepth(2);
+    this.eggsP1.create(gameWidth/2+80, 630, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP1.create(gameWidth/2-350, 350, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP1.create(gameWidth-120, 30, 'eggWhite').setOrigin(0,0).setScale(0.7).refreshBody().setDepth(2);
 
     this.eggsP2 = this.physics.add.staticGroup();
-    this.eggsP2.create(gameWidth/2+100, 360, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
-    this.eggsP2.create(gameWidth-100, 230, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
-    this.eggsP2.create(gameWidth/2+50, 640, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP2.create(gameWidth/2+370, 360, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP2.create(130,70, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
+    this.eggsP2.create(430, 490, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
 
     this.physics.add.collider(this.player1, this.ground);
     this.physics.add.collider(this.eggsP1, this.ground);
-    this.physics.add.collider(this.player1, this.movablePlatform2);//collision platform move to left-right loop
-    //this.physics.add.overlap(this.player1, this.endTrigger, this.FinNivel, null, this);
 
     this.physics.add.collider(this.player2, this.ground);
     this.physics.add.collider(this.eggsP2, this.ground);
-    this.physics.add.collider(this.player2, this.movablePlatform);//collision platform move to left
-    //this.physics.add.overlap(this.player2, this.endTrigger, this.FinNivel, null, this);
 
     // 5) CÁMARA
     this.cameras.main.setBounds(0, 0, this.levelWidth, this.levelHeight);   // Límites cámara
@@ -161,7 +105,7 @@ class GamePlayFo1 extends Phaser.Scene{
 
     // 1) BOTON PAUSA
     this.pauseButton = this.add.image(gameWidth/2, 30, 'pauseButton');
-    this.pauseButton.setScale(2/3);
+    this.pauseButton.setScale(2/3).setDepth(2);
     this.pauseButton.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.PauseMenu());
 
@@ -239,12 +183,6 @@ class GamePlayFo1 extends Phaser.Scene{
     this.physics.add.overlap(this.player1, this.eggsP1, this.recogerHuevoP1, null, this);
     this.physics.add.overlap(this.player2, this.eggsP2, this.recogerHuevoP2, null, this);
 
-    this.physics.add.overlap(this.player1, this.movablePlatformIcon, this.movePltLeft, null, this);
-    this.physics.add.overlap(this.player2, this.movablePlatformIcon2, this.movePltLeft2, null, this);
-
-    this.physics.add.overlap(this.player1, this.blockDeleteIcon, this.deleteBlock, null, this);
-    this.physics.add.overlap(this.player2, this.stickDeleteIcon, this.moveStick, null, this);
-
     if(this.end1Visible == true) {
       this.physics.add.overlap(this.player1, this.endTrigger1, this.endArrived, null, this);
     }
@@ -285,8 +223,8 @@ class GamePlayFo1 extends Phaser.Scene{
     this.tweens.add({
       targets:egg,
       duration:2500,
-      x:this.levelWidth-200,
-      y:120,
+      x:100,
+      y:610,
       onComplete: () => egg.alpha=0
     })
 
@@ -314,8 +252,8 @@ class GamePlayFo1 extends Phaser.Scene{
     this.tweens.add({
       targets:egg,
       duration:2500,
-      x:this.levelWidth-250,
-      y:120,
+      x:30,
+      y:610,
       onComplete: () => egg.alpha=0
     })
 
@@ -347,50 +285,6 @@ endArrived(player, end){
     if (this.playersArrived == 2){
       this.FinNivelFa2();
     }
-  }
-
-  movePltLeft(){
-
-    this.movablePlatformIcon.disableBody(true,true);
-
-    this.tweens.add({
-      targets:this.movablePlatform,
-      duration:2000,
-      x:gameWidth-420,
-    })
-  }
-
-  movePltLeft2(){
-
-    this.movablePlatformIcon2.disableBody(true, true);
-    this.pltToDelete.disableBody(true, true);
-
-    this.tweens.add({
-      targets:this.movablePlatform2,
-      duration:2000,
-      x:0,
-      repeat:-1,
-      yoyo:true,
-    })
-  }
-
-  deleteBlock(){
-
-    this.blockDeleteIcon.disableBody(true, true);
-    this.blockDelete.disableBody(true, true);
-
-  }
-
-  moveStick(){
-
-    this.stickDeleteIcon.disableBody(true,true);
-    this.stickDelete.body.enable=false;
-
-    this.tweens.add({
-      targets:this.stickDelete,
-      duration:2000,
-      y:320
-    })
   }
 
   PauseMenu(){
