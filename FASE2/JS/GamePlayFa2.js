@@ -21,6 +21,11 @@ class GamePlayFa2 extends Phaser.Scene{
 
     levelGameplay = 'GamePlayFa2';
 
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+    this.handleSound = this.sound.add('handleSound', this.EffectsConfig());
+    this.eggSound = this.sound.add('eggSound', this.EffectsConfig());
+    this.goalSound = this.sound.add('goalSound', this.EffectsConfig());
+
     // 1) BACKGROUND
     this.backgroundFa2 = this.add.image(0, 0, 'backgroundFa2');
     this.backgroundFa2.setPosition(gameWidth/2, gameHeight/2);
@@ -78,7 +83,7 @@ class GamePlayFa2 extends Phaser.Scene{
     this.ground.create(gameWidth-240, 600, 'platform').setOrigin(0,0).setScale(0.57,0.5).refreshBody().setVisible(false); //right2
 
     //Nivel 1: platform that will move to left and right in loop
-    this.movablePlatform2=this.physics.add.sprite(150, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody();
+    this.movablePlatform2=this.physics.add.sprite(143, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody();
     this.movablePlatform2.body.allowGravity=false;
     this.movablePlatform2.body.immovable=true;
     this.movablePlatform2.setDepth(2);
@@ -100,11 +105,11 @@ class GamePlayFa2 extends Phaser.Scene{
     this.ground.create(gameWidth/2+10, 455, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody().setVisible(false);//right
 
     //Nivel 2: platform that our teammate will help move it to the left
-    this.movablePlatform=this.physics.add.sprite(gameWidth-142, 455, 'platformBroken').setOrigin(0,0).setScale(1.1,1.1).refreshBody();
+    this.movablePlatform=this.physics.add.sprite(gameWidth-145, 455, 'platformBroken').setOrigin(0,0).setScale(1.15,1.0).refreshBody();
     this.movablePlatform.body.allowGravity=false;
     this.movablePlatform.body.immovable=true;
     this.movablePlatform.setDepth(2);
-    this.movablePlatform.tint=0x180d06;
+  //  this.movablePlatform.tint=0x180d06;
 
     //Nivel 2: icon to help our teammate with the platform
     this.movablePlatformIcon=this.physics.add.sprite(50, 375, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
@@ -284,6 +289,7 @@ class GamePlayFa2 extends Phaser.Scene{
   recogerHuevoP1 (player, egg)
   {
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -312,6 +318,7 @@ class GamePlayFa2 extends Phaser.Scene{
   {
 
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -341,21 +348,21 @@ endArrived(player, end){
     console.log("Colas");
     console.log(player);
 
-      end.body.enable=false;
+    end.body.enable=false;
+    this.goalSound.play();
+    this.playersArrived++;
+    console.log(this.playersArrived);
+    console.log("Hola");
 
-      this.playersArrived++;
-      console.log(this.playersArrived);
-      console.log("Hola");
-
-
-      if (this.playersArrived == 2){
-        this.FinNivelFa2();
-      }
+    if (this.playersArrived == 2){
+      this.FinNivelFa2();
+    }
   }
 
   movePltLeft(){
 
     this.movablePlatformIcon.disableBody(true,true);
+    this.handleSound.play();
 
     this.tweens.add({
       targets:this.movablePlatform,
@@ -369,6 +376,7 @@ endArrived(player, end){
 
     this.movablePlatformIcon2.disableBody(true, true);
     this.pltToDelete.disableBody(true, true);
+    this.handleSound.play();
 
     this.tweens.add({
       targets:this.movablePlatform2,
@@ -383,6 +391,7 @@ endArrived(player, end){
 
     this.blockDeleteIcon.disableBody(true, true);
     this.blockDelete.disableBody(true, true);
+    this.handleSound.play();
 
   }
 
@@ -390,6 +399,7 @@ endArrived(player, end){
 
     this.stickDeleteIcon.disableBody(true,true);
     this.stickDelete.body.enable=false;
+    this.handleSound.play();
 
     this.tweens.add({
       targets:this.stickDelete,
@@ -400,6 +410,14 @@ endArrived(player, end){
   }
 
   PauseMenu(){
+
+    this.clickSound.play();
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
+
     this.scene.run('PauseMenu');
     this.scene.bringToTop('PauseMenu');
     this.scene.pause();
@@ -549,9 +567,26 @@ endArrived(player, end){
   }
 
   GameOverFa2(){
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
+
     this.scene.stop('GamePlayFa2');
     this.scene.sendToBack('GamePlayFa2');
     this.scene.start('GameOver');
+  }
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 /*
   startDrag(player, objects){

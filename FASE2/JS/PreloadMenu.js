@@ -87,6 +87,9 @@ class PreloadMenu extends Phaser.Scene{
     //OPTIONS MENU
     this.load.image('backgroundOM', 'ASSETS/OptionsMenu/FondoOptionsMenu.jpg');
     this.load.image('backButtonOM', 'ASSETS/OptionsMenu/BotonAtras.png');
+    this.load.image('volUpButton', 'ASSETS/Interface/Options/VolumeUp.png');
+    this.load.image('volDownButton', 'ASSETS/Interface/Options/VolumeDown.png');
+
 
     //GAME
     this.load.image('backgroundGM', 'ASSETS/Gameplay/FondoJuego.jpg');
@@ -142,15 +145,26 @@ class PreloadMenu extends Phaser.Scene{
     this.load.spritesheet('chicken1dch', 'Assets/Characters/Chickens/brown_chicken_walk_dch.png', { frameWidth: 87, frameHeight: 108 });
     this.load.spritesheet('chicken2dch', 'Assets/Characters/Chickens/white_chicken_walk_dch.png', { frameWidth: 87, frameHeight: 108 });
 
+    //MUSIC
+    this.load.audio('levelMusic', 'Assets/Music/Nivel.m4a');
+    this.load.audio('menuMusic', 'Assets/Music/Menu.m4a');
+    this.load.audio('handleSound', 'Assets/Music/SonidoPalanca.mp3');
+    this.load.audio('eggSound', 'Assets/Music/RecogerHuevo.mp3');
+    this.load.audio('clickSound', 'Assets/Music/click.mp3');
+    this.load.audio('goalSound', 'Assets/Music/LlegarCesta.mp3');
+
 
     /*this.backgroundPdM = this.add.image(0, 0, 'backgroundPdM');
     this.backgroundPdM.setPosition(gameWidth/2, gameHeight/2);*/
+
+
+
 
     //PASA AL MAIN MENU
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('GamePlayEs1');
+      this.scene.start('InitMenu');
     });
 
 
@@ -158,7 +172,6 @@ class PreloadMenu extends Phaser.Scene{
   }
 
   create(){
-
     //Aniamcion izq (no va)
     this.anims.create({
       key: 'move_left1',

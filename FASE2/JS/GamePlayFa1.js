@@ -20,6 +20,11 @@ class GamePlayFa1 extends Phaser.Scene{
 
     levelGameplay = 'GamePlayFa1';
 
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+    this.handleSound = this.sound.add('handleSound', this.EffectsConfig());
+    this.eggSound = this.sound.add('eggSound', this.EffectsConfig());
+    this.goalSound = this.sound.add('goalSound', this.EffectsConfig());
+
     // 1) BACKGROUND
     this.backgroundFa1 = this.add.image(0, 0, 'backgroundFa1');
     this.backgroundFa1.setPosition(gameWidth/2, gameHeight/2);
@@ -65,7 +70,7 @@ class GamePlayFa1 extends Phaser.Scene{
     this.ground.create(gameWidth/2, 600, 'platform').setOrigin(0,0).setScale(1.4,0.5).refreshBody().setVisible(false); //right
 
     //Nivel 1: platform that our teammate will help move it to the left
-    this.movablePlatform2=this.physics.add.sprite(gameWidth-150, 599, 'platformBroken').setOrigin(0,0).setScale(1.15,1.2).refreshBody();//.setVisible(false);
+    this.movablePlatform2=this.physics.add.sprite(gameWidth-151, 600, 'platformBroken').setOrigin(0,0).setScale(1.15,1.05).refreshBody();//.setVisible(false);
     this.movablePlatform2.body.allowGravity=false;
     this.movablePlatform2.body.immovable=true;
     this.movablePlatform2.setDepth(2);
@@ -88,7 +93,7 @@ class GamePlayFa1 extends Phaser.Scene{
     this.ground.create(gameWidth-180, 310, 'platform').setOrigin(0,0).setScale(0.42,0.5).refreshBody().setVisible(false);//right 2
 
     //Nivel 3: platform that our teammate will help move it to the left
-    this.movablePlatform=this.physics.add.sprite(460, 309, 'platformBroken').setOrigin(0,0).setScale(2.15,1.2).refreshBody();//.setVisible(false);
+    this.movablePlatform=this.physics.add.sprite(460, 310, 'platformBroken').setOrigin(0,0).setScale(2.05,1.15).refreshBody();//.setVisible(false);
     this.movablePlatform.body.allowGravity=false;
     this.movablePlatform.body.immovable=true;
     this.movablePlatform.setDepth(2);
@@ -254,6 +259,7 @@ class GamePlayFa1 extends Phaser.Scene{
   recogerHuevoP1 (player, egg)
   {
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -281,6 +287,7 @@ class GamePlayFa1 extends Phaser.Scene{
   {
 
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -309,25 +316,21 @@ endArrived(player, end){
     console.log("Colas");
     console.log(player);
 
-      end.body.enable=false;
+    end.body.enable=false;
+    this.goalSound.play();
+    this.playersArrived++;
+    console.log(this.playersArrived);
+    console.log("Hola");
 
-      this.playersArrived++;
-      console.log(this.playersArrived);
-      console.log("Hola");
-
-      if(player == null){
-
-
-      }
-
-      if (this.playersArrived == 2){
-          this.FinNivelFa1();
-      }
+    if (this.playersArrived == 2){
+        this.FinNivelFa1();
+    }
   }
 
   movePltLeft(){
 
     this.movablePlatformIcon.disableBody(true,true);
+    this.handleSound.play();
 
     this.tweens.add({
       targets:this.movablePlatform,
@@ -342,6 +345,7 @@ endArrived(player, end){
   movePltLeft2(){
 
     this.movablePlatformIcon2.disableBody(true,true);
+    this.handleSound.play();
 
     this.tweens.add({
       targets:this.movablePlatform2,
@@ -353,6 +357,14 @@ endArrived(player, end){
   }
 
   PauseMenu(){
+
+    this.clickSound.play();
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
+
     this.scene.run('PauseMenu');
     this.scene.bringToTop('PauseMenu');
     this.scene.pause();
@@ -499,9 +511,27 @@ endArrived(player, end){
   }
 
   GameOverFa1(){
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
+
     this.scene.stop('GamePlayFa1');
     this.scene.sendToBack('GamePlayFa1');
     this.scene.start('GameOver');
+  }
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 
 /*

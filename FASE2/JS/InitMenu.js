@@ -11,6 +11,24 @@ class InitMenu extends Phaser.Scene{
     //var wid = this.cameras.main.width; //ancho del canvas en el dispositivo
     //var heig = this.cameras.main.height;
 
+    let config = {
+      mute: false,
+      volume: volumeMusic/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: true,
+      delay: 0
+    };
+
+    musicMenu = this.sound.add('menuMusic', config);
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+
+    if (!musicMenu.isPlaying) {
+      musicMenu.play();
+    }
+  //  musicGameplay.play();
+
     this.backgroundIM = this.add.image(0, 0, 'backgroundMenus');
     this.backgroundIM.setPosition(gameWidth/2, gameHeight/2);
 
@@ -34,15 +52,32 @@ class InitMenu extends Phaser.Scene{
 
   }
 
+
   GameOnline(){
     prevScene = 'InitMenu';
     console.log("El modo online aún no está listo")
   }
 
   GameOffline(){
+    this.clickSound.play();
+
+    musicMenu.play();
     prevScene = 'InitMenu';
     this.scene.stop("InitMenu");
     this.scene.start("MainMenu");
+  }
+
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 
 }

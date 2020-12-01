@@ -20,6 +20,12 @@ class GamePlayEs1 extends Phaser.Scene{
 
     levelGameplay = 'GamePlayEs1';
 
+    //EFFECTS
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+    this.handleSound = this.sound.add('handleSound', this.EffectsConfig());
+    this.eggSound = this.sound.add('eggSound', this.EffectsConfig());
+    this.goalSound = this.sound.add('goalSound', this.EffectsConfig());
+
     // 1) BACKGROUND
     this.backgroundEs1 = this.add.image(0, 0, 'backgroundEs1');
     this.backgroundEs1.setPosition(gameWidth/2, gameHeight/2);
@@ -227,6 +233,7 @@ class GamePlayEs1 extends Phaser.Scene{
   recogerHuevoP1 (player, egg)
   {
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -253,6 +260,7 @@ class GamePlayEs1 extends Phaser.Scene{
   {
 
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -280,20 +288,15 @@ endArrived(player, end){
     console.log("Colas");
     console.log(player);
 
-      end.body.enable=false;
+    end.body.enable=false;
+    this.goalSound.play();
+    this.playersArrived++;
+    console.log(this.playersArrived);
+    console.log("Hola");
 
-      this.playersArrived++;
-      console.log(this.playersArrived);
-      console.log("Hola");
-
-      if(player == null){
-
-
-      }
-
-      if (this.playersArrived == 2){
-          this.FinNivelEs1();
-      }
+    if (this.playersArrived == 2){
+        this.FinNivelEs1();
+    }
   }
 
   //CAMBIOS ANIMACIÓN PLAYER 1
@@ -407,6 +410,13 @@ endArrived(player, end){
 
   //FUNCIONES BOTONES Y FLUJO DE JUEGO
   PauseMenu(){
+
+    this.clickSound.play();
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
     this.scene.run('PauseMenu');
     this.scene.bringToTop('PauseMenu');
     this.scene.pause();
@@ -444,10 +454,29 @@ endArrived(player, end){
 
   }
 
+  //GAME CONTROL
   GameOverEs1(){
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
+
     this.scene.stop('GamePlayEs1');
     this.scene.sendToBack('GamePlayEs1');
     this.scene.start('GameOver');
+  }
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 
 /*

@@ -21,6 +21,11 @@ class GamePlayFo1 extends Phaser.Scene{
 
     levelGameplay = 'GamePlayFo2';
 
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+    this.handleSound = this.sound.add('handleSound', this.EffectsConfig());
+    this.eggSound = this.sound.add('eggSound', this.EffectsConfig());
+    this.goalSound = this.sound.add('goalSound', this.EffectsConfig());
+
     // 1) BACKGROUND
     this.backgroundFo1 = this.add.image(0, 0, 'backgroundFa2');
     this.backgroundFo1.setPosition(gameWidth/2, gameHeight/2);
@@ -274,6 +279,7 @@ class GamePlayFo1 extends Phaser.Scene{
   recogerHuevoP1 (player, egg)
   {
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -302,6 +308,7 @@ class GamePlayFo1 extends Phaser.Scene{
   {
 
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -331,16 +338,15 @@ endArrived(player, end){
     console.log("Colas");
     console.log(player);
 
-      end.body.enable=false;
+    end.body.enable=false;
+    this.goalSound.play();
+    this.playersArrived++;
+    console.log(this.playersArrived);
+    console.log("Hola");
 
-      this.playersArrived++;
-      console.log(this.playersArrived);
-      console.log("Hola");
-
-
-      if (this.playersArrived == 2){
-        this.FinNivelFa2();
-      }
+    if (this.playersArrived == 2){
+      this.FinNivelFa2();
+    }
   }
 
   movePltLeft(){
@@ -388,6 +394,14 @@ endArrived(player, end){
   }
 
   PauseMenu(){
+
+    this.clickSound.play();
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
+
     this.scene.run('PauseMenu');
     this.scene.bringToTop('PauseMenu');
     this.scene.pause();
@@ -397,6 +411,11 @@ endArrived(player, end){
   FinNivelFa2(){
 
     totalTime += 120 - this.initialTime;
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
 
     this.scene.stop('GamePlayFa2');
     this.scene.sendToBack('GamePlayFa2');
@@ -510,6 +529,18 @@ endArrived(player, end){
   }
 
   eggCatched(){
+  }
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 
 

@@ -9,6 +9,8 @@ class PauseMenu extends Phaser.Scene{
 
   create(){
 
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+
     //BACKGROUND
     this.backgroundPM = this.add.image(0, 0, 'backgroundPM');
     this.backgroundPM.setPosition(gameWidth/2, gameHeight/2);
@@ -40,6 +42,13 @@ class PauseMenu extends Phaser.Scene{
   }
 
   BackGamePM(){
+    this.clickSound.play();
+
+    if(musicMenu.isPlaying){
+      musicMenu.stop();
+    }
+    musicGameplay.play();
+
     this.scene.stop('PauseMenu');
     this.scene.sendToBack('PauseMenu');
     this.scene.resume(levelGameplay);
@@ -47,6 +56,8 @@ class PauseMenu extends Phaser.Scene{
   }
 
   OptionsMenuPM(){
+    this.clickSound.play();
+
     this.scene.stop('PauseMenu');
     this.scene.bringToTop('OptionsMenu');
     this.scene.start('OptionsMenu');
@@ -54,6 +65,8 @@ class PauseMenu extends Phaser.Scene{
   }
 
   TutorialMenuPM(){
+    this.clickSound.play();
+
     this.scene.stop('PauseMenu');
     this.scene.bringToTop('TutorialMenu');
     this.scene.start('TutorialMenu');
@@ -61,10 +74,24 @@ class PauseMenu extends Phaser.Scene{
   }
 
   QuitGamePM(){
+    this.clickSound.play();
+
     this.scene.stop('PauseMenu');
     this.scene.stop(levelGameplay);
     this.scene.start('MainMenu');
     prevScene = 'PauseMenu';
+  }
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 
 }

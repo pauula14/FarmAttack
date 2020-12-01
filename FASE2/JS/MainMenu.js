@@ -9,6 +9,19 @@ class MainMenu extends Phaser.Scene{
 
   create(){
 
+    let config = {
+      mute: false,
+      volume: volumeMusic/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: true,
+      delay: 0
+    };
+
+    musicGameplay = this.sound.add('levelMusic', config);
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+
     this.cameras.main.fadeIn(2000, 0, 0, 0);
 
     this.backgroundMM = this.add.image(0, 0, 'backgroundMenus');
@@ -65,13 +78,19 @@ class MainMenu extends Phaser.Scene{
 
     //this.scene.start("SelectMap");
     prevScene = 'MainMenu';
+    this.clickSound.play();
+
     this.backgroundMM.setVisible(false);
     this.playButton.setVisible(false);
     this.playButtonSel.setVisible(false);
     this.tutorialButton.setVisible(false);
     this.optionsButton.setVisible(false);
     this.creditsButton.setVisible(false);
-    this.backButtonMM.setVisible(false);
+  //  this.backButtonMM.setVisible(false);
+
+  if(musicMenu.isPlaying){
+    musicMenu.stop();
+  }
 
     this.tweens.add({
       targets: this.preLevel1,
@@ -87,6 +106,7 @@ class MainMenu extends Phaser.Scene{
         callback: function() {
           this.scene.stop("MainMenu");
           this.scene.start("GamePlayEs1");
+          musicGameplay.play();
         },
       callbackScope: this
       }, this);
@@ -94,27 +114,48 @@ class MainMenu extends Phaser.Scene{
   }
 
   OptionsMenuMM(){
+    this.clickSound.play();
+
     this.scene.stop("MainMenu");
     this.scene.start("OptionsMenu");
     prevScene = 'MainMenu';
   }
 
   CreditsMenu(){
+    this.clickSound.play();
+
     this.scene.stop("MainMenu");
     this.scene.start("CreditsMenu");
     prevScene = 'MainMenu';
   }
 
   TutorialMenuMM(){
+    this.clickSound.play();
+
     this.scene.stop("MainMenu");
     this.scene.start("TutorialMenu");
     prevScene = 'MainMenu';
   }
 
   BackInitMenu(){
+    this.clickSound.play();
+
     this.scene.stop("MainMenu");
     this.scene.start("InitMenu");
     prevScene = 'MainMenu';
+  }
+
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 
 }

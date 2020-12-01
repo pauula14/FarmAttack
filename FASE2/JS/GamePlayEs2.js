@@ -20,6 +20,11 @@ class GamePlayEs2 extends Phaser.Scene{
 
     levelGameplay = 'GamePlayEs2';
 
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+    this.handleSound = this.sound.add('handleSound', this.EffectsConfig());
+    this.eggSound = this.sound.add('eggSound', this.EffectsConfig());
+    this.goalSound = this.sound.add('goalSound', this.EffectsConfig());
+
     // 1) BACKGROUND
     this.backgroundEs2 = this.add.image(0, 0, 'backgroundEs2');
     this.backgroundEs2.setPosition(gameWidth/2, gameHeight/2);
@@ -86,7 +91,7 @@ class GamePlayEs2 extends Phaser.Scene{
     this.ground.create(1290, 365, 'platform').setOrigin(0,0).setScale(0.3,3.2).refreshBody().setVisible(false);
 
     //Nivel 2: Platform that our teammate will destroy
-    this.deletedPtf = this.physics.add.sprite(13, 460, 'platformBroken').setOrigin(0,0).setScale(1, 1).setDepth(2);
+    this.deletedPtf = this.physics.add.sprite(13, 461, 'platformBroken').setOrigin(0,0).setScale(1, 1).setDepth(2);
     this.deletedPtf.body.allowGravity=false;
     this.deletedPtf.body.immovable=true;
 
@@ -255,6 +260,7 @@ class GamePlayEs2 extends Phaser.Scene{
   recogerHuevoP1 (player, egg)
   {
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -282,6 +288,7 @@ class GamePlayEs2 extends Phaser.Scene{
   {
 
     egg.body.enable=false;
+    this.eggSound.play();
     console.log("Huevo recogido");
 
     this.tweens.add({
@@ -310,25 +317,21 @@ endArrived(player, end){
     console.log("Colas");
     console.log(player);
 
-      end.body.enable=false;
+    end.body.enable=false;
+    this.goalSound.play();
+    this.playersArrived++;
+    console.log(this.playersArrived);
+    console.log("Hola");
 
-      this.playersArrived++;
-      console.log(this.playersArrived);
-      console.log("Hola");
-
-      if(player == null){
-
-
-      }
-
-      if (this.playersArrived == 2){
-          this.FinNivelEs2();
-      }
+    if (this.playersArrived == 2){
+        this.FinNivelEs2();
+    }
   }
 
   moveStrawRight(){
 
     this.movableStrawIcon.disableBody(true,true);
+    this.handleSound.play();
 
     this.tweens.add({
       targets:this.movableStraw,
@@ -340,11 +343,19 @@ endArrived(player, end){
   deletePlatform(){
 
     this.deletedPtfIcon.disableBody(true,true);
-
+    this.handleSound.play();
     this.deletedPtf.disableBody(true,true);
   }
 
   PauseMenu(){
+
+    this.clickSound.play();
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
+
     this.scene.run('PauseMenu');
     this.scene.bringToTop('PauseMenu');
     this.scene.pause();
@@ -360,6 +371,7 @@ endArrived(player, end){
     this.player1.setVisible(false);
     this.player2.setVisible(false);
     this.backgroundEs2.setVisible(false);
+    this.movableStraw.setVisible(false);
 
     this.tweens.add({
       targets: this.preLevel3,
@@ -491,9 +503,27 @@ endArrived(player, end){
   }
 
   GameOverEs2(){
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
+
     this.scene.stop('GamePlayEs2');
     this.scene.sendToBack('GamePlayEs2');
     this.scene.start('GameOver');
+  }
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 
 

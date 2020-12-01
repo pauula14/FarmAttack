@@ -9,6 +9,8 @@ class CreditsMenu extends Phaser.Scene{
 
   create(){
 
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+
     //BACKGROUND
     this.backgroundCM = this.add.image(0, 0, 'backgroundCM');
     this.backgroundCM.setPosition(gameWidth/2, gameHeight/2);
@@ -25,9 +27,23 @@ class CreditsMenu extends Phaser.Scene{
   }
 
   BackMainMenuCM(){
+    this.clickSound.play();
+
     prevScene = 'CreditsMenu';
     this.scene.stop('CreditsMenu');
     this.scene.start('MainMenu');
+  }
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 
 

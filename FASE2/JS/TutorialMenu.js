@@ -9,6 +9,8 @@ class TutorialMenu extends Phaser.Scene{
 
   create(){
 
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+
     //BACKGROUND
     this.backgroundTM = this.add.image(0, 0, 'backgroundTM');
     this.backgroundTM.setPosition(gameWidth/2, gameHeight/2);
@@ -22,10 +24,24 @@ class TutorialMenu extends Phaser.Scene{
   }
 
   BackMainMenuTM(){
+    this.clickSound.play();
+
     this.scene.stop('TutorialMenu');
     this.scene.start(prevScene);
     prevScene = 'TutorialMenu';
 
+  }
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
   }
 
 }

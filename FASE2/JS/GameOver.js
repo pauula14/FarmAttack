@@ -9,6 +9,8 @@ class GameOver extends Phaser.Scene{
 
   create(){
 
+    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+
     // 1) BACKGROUND
     this.backgroundWM = this.add.image(gameWidth/2, gameHeight/2, 'backgroundGOM');
 
@@ -25,14 +27,36 @@ class GameOver extends Phaser.Scene{
   }
 
   BackMainMenu(){
+    this.clickSound.play();
+
     this.scene.stop('GameOver');
     this.scene.sendToBack('GameOver');
     this.scene.start('MainMenu'); //Ver como hacer para que lleve a la anterior real
   }
 
   RetryGame(){
+    this.clickSound.play();
+
+    if(musicMenu.isPlaying){
+      musicMenu.stop();
+    }
+    musicGameplay.play();
+
     this.scene.stop('GameOver');
     this.scene.sendToBack('GameOver');
     this.scene.start(levelGameplay);
   }
+
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
+  }
+
 }
