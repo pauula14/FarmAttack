@@ -283,7 +283,7 @@ endArrived(player, end){
     console.log("Hola");
 
     if (this.playersArrived == 2){
-      this.FinNivelFa2();
+      this.FinNivelFo1();
     }
   }
 
@@ -302,7 +302,7 @@ endArrived(player, end){
     //prevScene = 'GamePlayEs2';
   }
 
-  FinNivelFa2(){
+  FinNivelFo1(){
 
     totalTime += 120 - this.initialTime;
 
@@ -311,8 +311,8 @@ endArrived(player, end){
     }
     musicMenu.play();
 
-    this.scene.stop('GamePlayFa2');
-    this.scene.sendToBack('GamePlayFa2');
+    this.scene.stop('GamePlayFo1');
+    this.scene.sendToBack('GamePlayFo1');
     this.scene.start('Winner');
   }
 
