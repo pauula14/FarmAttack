@@ -19,7 +19,7 @@ class GamePlayFo1 extends Phaser.Scene{
 
   create(){
 
-    levelGameplay = 'GamePlayFo2';
+    levelGameplay = 'GamePlayFo1';
 
     this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
     this.handleSound = this.sound.add('handleSound', this.EffectsConfig());
