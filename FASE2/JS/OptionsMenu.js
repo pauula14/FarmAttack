@@ -39,12 +39,13 @@ class OptionsMenu extends Phaser.Scene{
     this.downEfButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.EffectsDown());
 
 
-
     //BACK
     this.backButtonOM = this.add.image(gameWidth*14/16, gameHeight*14/16, 'backButtonOM');
     this.backButtonOM.setScale(2/3);
     this.backButtonOM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackMainMenuOM());
 
+    this.VolumenMusica.setText(volumeMusic);
+    this.VolumeEffects.setText(volumeEffects);
   }
 
   VolumeUp(){
