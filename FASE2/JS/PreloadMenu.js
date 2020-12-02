@@ -18,7 +18,7 @@ class PreloadMenu extends Phaser.Scene{
           text: "0 %",
           style: {
               fontSize: '25px',
-              fontFamily: 'Berlin Sans FB',
+              fontFamily: 'fort',
               fontStyle: 'bold',
               fill: '#ffffff'
           }
@@ -26,7 +26,7 @@ class PreloadMenu extends Phaser.Scene{
 
       percentText.setOrigin(0.5, 0.5);
       this.load.on("progress", function(value){
-          console.log(value);
+          //console.log(value);
           percentText.setText(parseInt(value * 100) + ' %');
           progressBar.clear();
           progressBar.fillStyle(0xCB2821, 1);
@@ -52,12 +52,12 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('offlineButton', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/offline_button.png');
     this.load.image('offlineButtonSel', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/offline_button_selected.png');
 
-    //PRECARGA
-    this.load.image('level1', 'ASSETS/Interface/PreCarga/Nivel1.jpg');
-    this.load.image('level2', 'ASSETS/Interface/PreCarga/Nivel2.jpg');
-    this.load.image('level3', 'ASSETS/Interface/PreCarga/Nivel3.jpg');
-    this.load.image('level4', 'ASSETS/Interface/PreCarga/Nivel4.jpg');
-    this.load.image('level5', 'ASSETS/Interface/PreCarga/Nivel5.jpg');
+    //PRELOAD IMAGES
+    this.load.image('level1', 'ASSETS/Interface/LevelPreload/level1.jpg');
+    this.load.image('level2', 'ASSETS/Interface/LevelPreload/level2.jpg');
+    this.load.image('level3', 'ASSETS/Interface/LevelPreload/level3.jpg');
+    this.load.image('level4', 'ASSETS/Interface/LevelPreload/level4.jpg');
+    this.load.image('level5', 'ASSETS/Interface/LevelPreload/level5.jpg');
 
     //MAIN MENU
     //this.load.image('backgroundMM', 'ASSETS/Interface/MainMenu/main_menu_buttons.jpg');
@@ -77,18 +77,20 @@ class PreloadMenu extends Phaser.Scene{
     //this.load.image('backButtonMM', 'ASSETS/MainMenu/BotonAtras.png');
 
     //TUTORIAL MENU
-    this.load.image('backgroundTM', 'ASSETS/TutorialMenu/FondoTutorialMenu.jpg');
-    this.load.image('backButtonTM', 'ASSETS/TutorialMenu/BotonAtras.png');
+    this.load.image('backgroundTM', 'ASSETS/Interface/TutorialMenu/tutorial_menu_background.jpg');
+    //this.load.image('backButtonTM', 'ASSETS/TutorialMenu/BotonAtras.png');
 
     //CREDITS MENU
     this.load.image('backgroundCM', 'Assets/Interface/CreditsMenu/credits_menu_buttons.jpg');
     //this.load.image('backButtonCM', 'ASSETS/Interface/CreditsMenu/BotonAtras.png');
 
     //OPTIONS MENU
-    this.load.image('backgroundOM', 'ASSETS/OptionsMenu/FondoOptionsMenu.jpg');
-    this.load.image('backButtonOM', 'ASSETS/OptionsMenu/BotonAtras.png');
-    this.load.image('volUpButton', 'ASSETS/Interface/Options/VolumeUp.png');
-    this.load.image('volDownButton', 'ASSETS/Interface/Options/VolumeDown.png');
+    this.load.image('backgroundOM', 'ASSETS/Interface/OptionsMenu/options_menu_background.jpg');
+    this.load.image('volDownButton', 'ASSETS/Interface/OptionsMenu/Buttons/less.png');
+    this.load.image('volUpButton', 'ASSETS/Interface/OptionsMenu/Buttons/more.png');
+    this.load.image('volDownButtonSel', 'ASSETS/Interface/OptionsMenu/Buttons/less_selected.png');
+    this.load.image('volUpButtonSel', 'ASSETS/Interface/OptionsMenu/Buttons/more_selected.png');
+    //this.load.image('backButtonOM', 'ASSETS/Interface/Options/VolumeDown.png');
 
 
     //GAME
@@ -108,8 +110,12 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('egg', 'ASSETS/Gameplay/Objects/egg.png');
     this.load.image('eggWhite', 'ASSETS/Gameplay/Objects/white_egg.png');
 
+    //GOAL
+    this.load.image('basketEmpty', 'ASSETS/Gameplay/Objects/empty_egg_counter.png');
     this.load.image('basket2', 'ASSETS/Gameplay/Objects/egg_counter.png');
     this.load.image('basket1', 'ASSETS/Gameplay/Objects/white_egg_counter.png');
+
+    this.load.image('clock', 'ASSETS/Gameplay/Objects/clock.png');
 
     //this.load.image('fondoMapa1', 'ASSETS/Placeholders/FondoProvisional.jpeg');
 
@@ -165,7 +171,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
-      this.scene.start('GamePlayFo1');
+      this.scene.start('InitMenu');
     });
 
 

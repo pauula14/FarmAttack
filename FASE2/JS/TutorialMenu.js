@@ -16,10 +16,13 @@ class TutorialMenu extends Phaser.Scene{
     this.backgroundTM.setPosition(gameWidth/2, gameHeight/2);
 
     //BACK
-    this.backButtonTM = this.add.image(gameWidth*14/16, gameHeight*14/16, 'backButtonTM');
-    this.backButtonTM.setScale(2/3);
-    this.backButtonTM.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.BackMainMenuTM());
+    this.backButtonOM = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'backButton');
+    this.backButtonOMSel = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'backButtonSel');
+    this.backButtonOMSel.setVisible(false);
+
+    this.backButtonOM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackMainMenuTM());
+    this.backButtonOM.on('pointerover', function (pointer) {this.backButtonOMSel.setVisible(true);}, this);
+    this.backButtonOM.on('pointerout', function (pointer) {this.backButtonOMSel.setVisible(false);}, this);
 
   }
 

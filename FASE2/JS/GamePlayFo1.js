@@ -38,13 +38,20 @@ class GamePlayFo1 extends Phaser.Scene{
     // 3) OBJETOS DE CONTROL DE FLUJO
     //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
     //this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
-    this.endTrigger1 = this.physics.add.sprite(50, 610, 'basket1').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
+    this.endTrigger1Empty = this.physics.add.sprite(90, 639, 'basketEmpty').setOrigin(0).setSize(100, 100).setDepth(2).setScale(1).refreshBody();
+    this.endTrigger1Empty.body.setAllowGravity(false);
+
+    this.endTrigger1 = this.physics.add.sprite(50, 620, 'basket1').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
     this.endTrigger1.body.setAllowGravity(false);
+    this.endTrigger1.setVisible(false);
     //this.endTrigger1.body.enable = false;
-    //this.endTrigger1.setVisible(false);
-    this.endTrigger2 = this.physics.add.sprite(0, 630, 'basket2').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
+    //
+    this.endTrigger2Empty = this.physics.add.sprite(20, 640, 'basketEmpty').setOrigin(0).setSize(100, 102).setDepth(2).setScale(1).refreshBody();
+    this.endTrigger2Empty.body.setAllowGravity(false);
+
+    this.endTrigger2 = this.physics.add.sprite(0, 640, 'basket2').setSize(100, 100).setOrigin(0).setDepth(2).refreshBody();
     this.endTrigger2.body.setAllowGravity(false);
-    //this.endTrigger2.setVisible(false);
+    this.endTrigger2.setVisible(false);
     //this.endTrigger2.body.enable = false;
 
     // 4) FÍSICAS
@@ -54,30 +61,30 @@ class GamePlayFo1 extends Phaser.Scene{
 
     this.ground = this.physics.add.staticGroup();    // Grupo de plataformas colisionables
     //Bordes y palo del medio
-    this.ground.create(0, 730, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //abajo
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody();//palo dcha
-    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody(); //palo izq
-    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody(); //arriba
+    this.ground.create(0, 740, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //abajo
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false);//palo dcha
+    this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false); //palo izq
+    this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(4,0.5).refreshBody().setVisible(false); //arriba
 
     //Nivel 1
-    this.ground.create(0, 601, 'platform').setOrigin(0,0).setScale(1.377,0.55).refreshBody();//left
-    this.ground.create(gameWidth/2+62, 601, 'platform').setOrigin(0,0).setScale(0.85,0.55).refreshBody(); //right
-    this.ground.create(gameWidth/2+62, 601, 'platform').setOrigin(0,0).setScale(0.045,4.2).refreshBody(); //stick vertical
+    this.ground.create(0, 601, 'platform').setOrigin(0,0).setScale(1.377,0.55).refreshBody().setVisible(false);//left
+    this.ground.create(gameWidth/2+62, 601, 'platform').setOrigin(0,0).setScale(0.85,0.55).refreshBody().setVisible(false); //right
+    this.ground.create(gameWidth/2+62, 601, 'platform').setOrigin(0,0).setScale(0.045,4.2).refreshBody().setVisible(false); //stick vertical
 
     //Nivel 2
-    this.ground.create(332, 461, 'platform').setOrigin(0,0).setScale(0.54,0.5).refreshBody();//left
-    this.ground.create(gameWidth/2-180, 461, 'platform').setOrigin(0,0).setScale(0.045,4.5).refreshBody();//stick vertical
-    this.ground.create(gameWidth/2+352, 461, 'platform').setOrigin(0,0).setScale(0.52,0.5).refreshBody();//right
+    this.ground.create(332, 461, 'platform').setOrigin(0,0).setScale(0.54,0.5).refreshBody().setVisible(false);//left
+    this.ground.create(gameWidth/2-180, 461, 'platform').setOrigin(0,0).setScale(0.045,4.5).refreshBody().setVisible(false);//stick vertical
+    this.ground.create(gameWidth/2+352, 461, 'platform').setOrigin(0,0).setScale(0.52,0.5).refreshBody().setVisible(false);//right
 
     //Nivel 3
-    this.ground.create(332, 307, 'platform').setOrigin(0,0).setScale(0.5,0.5).refreshBody();//left
-    this.ground.create(gameWidth/2+220, 307, 'platform').setOrigin(0,0).setScale(1.2,0.5).refreshBody();//right
-    this.ground.create(332, 307, 'platform').setOrigin(0,0).setScale(0.045,5).refreshBody();//stick vertical
-    this.ground.create(gameWidth/2+352, 307, 'platform').setOrigin(0,0).setScale(0.045,5).refreshBody();//stick vertical 2
+    this.ground.create(332, 307, 'platform').setOrigin(0,0).setScale(0.5,0.5).refreshBody().setVisible(false);//left
+    this.ground.create(gameWidth/2+220, 307, 'platform').setOrigin(0,0).setScale(1.2,0.5).refreshBody().setVisible(false);//right
+    this.ground.create(332, 307, 'platform').setOrigin(0,0).setScale(0.045,5).refreshBody().setVisible(false);//stick vertical
+    this.ground.create(gameWidth/2+352, 307, 'platform').setOrigin(0,0).setScale(0.045,5).refreshBody().setVisible(false);//stick vertical 2
 
     //Nivel 4
-    this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(0.62,0.5).refreshBody();//left 1
-    this.ground.create(gameWidth-295, 131, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody();
+    this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(0.62,0.5).refreshBody().setVisible(false);//left 1
+    this.ground.create(gameWidth-295, 131, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false);
 
 
     //Grupo de huevos
@@ -102,6 +109,13 @@ class GamePlayFo1 extends Phaser.Scene{
     //this.cameras.main.startFollow(this.player1, false, 1, 1, this.cameraOffsetX, 0); // Cámar sigue al personaje
 
     // --- HUD --- //
+    this.clockHUD = this.add.image(gameWidth/2, 720, 'clock');
+    this.clockHUD.setDepth(2);
+    //Timer
+    this.initialTime=120;
+
+    this.text = this.add.text(gameWidth/2 - 25, 720, this.formatTime(this.initialTime), {fontFamily: "forte", fontSize: '32px', fill: '#000' });
+    this.text.setDepth(2);
 
     // 1) BOTON PAUSA
     this.pauseButton = this.add.image(gameWidth/2, 30, 'pauseButton');
@@ -168,12 +182,6 @@ class GamePlayFo1 extends Phaser.Scene{
     this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
     this.scoreText.setDepth(2);
 
-    //Timer
-    this.initialTime=120;
-
-    this.text = this.add.text(460, 250, this.formatTime(this.initialTime), { fontSize: '32px', fill: '#000' });
-    this.text.setDepth(2);
-
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
 
@@ -190,6 +198,11 @@ class GamePlayFo1 extends Phaser.Scene{
     if(this.end2Visible == true){
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
+
+    if(this.initialTime < 0){
+      this.GameOverFo1();
+    }
+
 
   }
 
@@ -236,9 +249,17 @@ class GamePlayFo1 extends Phaser.Scene{
     console.log(this.numEgssP1);
 
     if(this.numEgssP1 == 3){
-      //this.endTrigger1.setVisible(true);
       this.endsVisibles ++;
       this.end1Visible = true;
+      this.time.addEvent({
+        delay: 2500,
+        callback: function() {
+          this.endTrigger1.setVisible(true);
+          this.endTrigger1Empty.setVisible(false);
+        },
+      callbackScope: this
+      }, this);
+
     }
   }
 
@@ -265,9 +286,16 @@ class GamePlayFo1 extends Phaser.Scene{
     console.log(this.numEgssP2);
 
     if(this.numEgssP2 == 3){
-      //this.endTrigger2.setVisible(true);
       this.endsVisibles ++;
       this.end2Visible = true;
+      this.time.addEvent({
+        delay: 2500,
+        callback: function() {
+          this.endTrigger2Empty.setVisible(false);
+          this.endTrigger2.setVisible(true);
+        },
+      callbackScope: this
+      }, this);
     }
   }
 
@@ -352,7 +380,7 @@ endArrived(player, end){
   player1Stop() {
 
     this.player1.setVelocityX(0);
-    this.player1.anims.play('stop1', true);
+    //this.player1.anims.play('stop1', true);
 
     if(this.dir1 == 1){
       this.player1.anims.play('stop1R', true);
@@ -404,7 +432,7 @@ endArrived(player, end){
   player2Stop() {
 
     this.player2.setVelocityX(0);
-    this.player2.anims.play('stop2', true);
+    //this.player2.anims.play('stop2', true);
 
     if(this.dir2 == 1){
       this.player2.anims.play('stop2R', true);
@@ -421,6 +449,18 @@ endArrived(player, end){
 
     //this.player.anims.stop();
   }
+
+
+    GameOverFo1(){
+      if(musicGameplay.isPlaying){
+        musicGameplay.stop();
+      }
+      musicMenu.play();
+
+      this.scene.stop('GamePlayFo1');
+      this.scene.sendToBack('GamePlayFo1');
+      this.scene.start('GameOver');
+    }
 
   eggCatched(){
   }

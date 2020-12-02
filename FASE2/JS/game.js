@@ -9,7 +9,7 @@ window.onload = function(){
     physics: {
       default: 'arcade',
       arcade: {
-         debug: false,
+         debug: true,
          fps: fpsTarget,
          gravity: { y: 500 }
       }
@@ -56,10 +56,11 @@ var gameHeight = 800;
 
 var totalTime = 0;
 
+
 var volumeMusic = 5;
 var volumeEffects = 5;
 var musicMenu;
-var musicGameplay;
+var musicGameplay;// = this.sound.add('levelMusic', config);
 
 var prevScene = 'PreloadMenu';
 var levelGameplay = 'GamePlayEs1';

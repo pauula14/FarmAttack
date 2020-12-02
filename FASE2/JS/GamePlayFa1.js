@@ -42,13 +42,20 @@ class GamePlayFa1 extends Phaser.Scene{
     // 3) OBJETOS DE CONTROL DE FLUJO
     //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
     //this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
+    this.endTrigger1Empty = this.physics.add.sprite(65, 65, 'basketEmpty').setOrigin(0).setSize(100, 100).setDepth(2).setScale(1).refreshBody();
+    this.endTrigger1Empty.body.setAllowGravity(false);
+
     this.endTrigger1 = this.physics.add.sprite(25, 50, 'basket1').setOrigin(0).setSize(100, 100).setDepth(2).refreshBody();
     this.endTrigger1.body.setAllowGravity(false);
+    this.endTrigger1.setVisible(false);
     //this.endTrigger1.body.enable = false;
-    //this.endTrigger1.setVisible(false);
+    //
+    this.endTrigger2Empty = this.physics.add.sprite(750, 70, 'basketEmpty').setOrigin(0).setSize(100, 102).setDepth(2).setScale(1).refreshBody();
+    this.endTrigger2Empty.body.setAllowGravity(false);
+
     this.endTrigger2 = this.physics.add.sprite(730, 70, 'basket2').setOrigin(0).setSize(100, 100).setDepth(2).refreshBody();
     this.endTrigger2.body.setAllowGravity(false);
-    //this.endTrigger2.setVisible(false);
+    this.endTrigger2.setVisible(false);
     //this.endTrigger2.body.enable = false;
 
     // 4) FÍSICAS
@@ -137,6 +144,13 @@ class GamePlayFa1 extends Phaser.Scene{
     //this.cameras.main.startFollow(this.player1, false, 1, 1, this.cameraOffsetX, 0); // Cámar sigue al personaje
 
     // --- HUD --- //
+    this.clockHUD = this.add.image(gameWidth/2, 720, 'clock');
+    this.clockHUD.setDepth(2);
+    //Timer
+    this.initialTime=120;
+
+    this.text = this.add.text(gameWidth/2 - 25, 720, this.formatTime(this.initialTime), {fontFamily: "forte", fontFamily: "forte", fontSize: '32px', fill: '#000' });
+    this.text.setDepth(2);
 
     // 1) BOTON PAUSA
     this.pauseButton = this.add.image(gameWidth/2, 30, 'pauseButton');
@@ -202,12 +216,6 @@ class GamePlayFa1 extends Phaser.Scene{
     this.score=0;
     this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
     this.scoreText.setDepth(2);
-
-    //Timer
-    this.initialTime=120;
-
-    this.text = this.add.text(460, 250, this.formatTime(this.initialTime), { fontSize: '32px', fill: '#000' });
-    this.text.setDepth(2);
 
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
@@ -280,6 +288,14 @@ class GamePlayFa1 extends Phaser.Scene{
     if(this.numEgssP1 == 3){
       //this.endTrigger1.setVisible(true);
       this.end1Visible = true;
+      this.time.addEvent({
+        delay: 2500,
+        callback: function() {
+          this.endTrigger1.setVisible(true);
+          this.endTrigger1Empty.setVisible(false);
+        },
+      callbackScope: this
+      }, this);
     }
   }
 
@@ -308,6 +324,14 @@ class GamePlayFa1 extends Phaser.Scene{
     if(this.numEgssP2 == 3){
       //this.endTrigger2.setVisible(true);
       this.end2Visible = true;
+      this.time.addEvent({
+        delay: 2500,
+        callback: function() {
+          this.endTrigger2Empty.setVisible(false);
+          this.endTrigger2.setVisible(true);
+        },
+      callbackScope: this
+      }, this);
     }
   }
 
@@ -380,6 +404,8 @@ endArrived(player, end){
     this.player1.setVisible(false);
     this.player2.setVisible(false);
     this.backgroundFa1.setVisible(false);
+    this.clockHUD.setVisible(false);
+    this.text.setVisible(false);
 
     this.tweens.add({
       targets: this.preLevel4,

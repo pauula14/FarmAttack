@@ -105,7 +105,7 @@ class MainMenu extends Phaser.Scene{
         delay: 6500,
         callback: function() {
           this.scene.stop("MainMenu");
-          this.scene.start("GamePlayEs1");
+          this.scene.start("GamePlayEs2");
           musicGameplay.play();
         },
       callbackScope: this
