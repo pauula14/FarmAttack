@@ -206,6 +206,10 @@ class GamePlayFo1 extends Phaser.Scene{
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
+    if(this.initialTime < 60){
+      this.text.setX(gameWidth/2 - 28);
+    }
+    
     if(this.initialTime < 0){
       this.GameOverFo1();
     }

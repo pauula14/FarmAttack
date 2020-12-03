@@ -55,21 +55,17 @@ class GamePlayEs1 extends Phaser.Scene{
     this.player2 = this.physics.add.sprite(gameWidth-60, 685, 'chicken2L').setScale(0.7).setDepth(2);
 
     // 3) OBJETOS DE CONTROL DE FLUJO
-    //this.endTrigger = this.physics.add.sprite(0, this.levelGroundHeight, 'star');  // Trigger de evento final de nivel
-    //this.endTrigger.body.setAllowGravity(false);    // Quitar gravedad
     this.endTrigger1Empty = this.physics.add.sprite(70, 99, 'basketEmpty').setOrigin(0).setSize(100, 100).setDepth(2).setScale(1).refreshBody();
     this.endTrigger1Empty.body.setAllowGravity(false);
     this.endTrigger1 = this.physics.add.sprite(30, 79, 'basket1').setOrigin(0).setSize(100, 100).setDepth(2).setScale(1).refreshBody();
     this.endTrigger1.body.setAllowGravity(false);
     this.endTrigger1.setVisible(false);
-    //this.endTrigger1.body.enable = false;
-    //
+
     this.endTrigger2Empty = this.physics.add.sprite(1240, 99, 'basketEmpty').setOrigin(0).setSize(100, 102).setDepth(2).setScale(1).refreshBody();
     this.endTrigger2Empty.body.setAllowGravity(false);
     this.endTrigger2 = this.physics.add.sprite(1220, 99, 'basket2').setOrigin(0).setSize(100, 102).setDepth(2).setScale(1).refreshBody();
     this.endTrigger2.body.setAllowGravity(false);
     this.endTrigger2.setVisible(false);
-    //this.endTrigger2.body.enable = false;
 
     // 4) FÍSICAS
     this.physics.world.setBounds(0, 0, this.levelWidth, this.levelHeight);  // Tamaño del nivel
@@ -108,27 +104,20 @@ class GamePlayEs1 extends Phaser.Scene{
     this.eggsP1.create(570, 620, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
     this.eggsP1.create(10, 490, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
     this.eggsP1.create(gameWidth/2-108, 350, 'eggWhite').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
-    //this.eggsP1.body.setSize(75, 75);
 
     this.eggsP2 = this.physics.add.staticGroup();
     this.eggsP2.create(gameWidth/2+10, 350, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
     this.eggsP2.create(gameWidth/2+50, 500, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
     this.eggsP2.create(900, 10, 'egg').setOrigin(0,0).setScale(0.7).setDepth(2).refreshBody();
 
-
-
-
     this.physics.add.collider(this.player1, this.ground);
     this.physics.add.collider(this.eggsP1, this.ground);
-    //this.physics.add.overlap(this.player1, this.endTrigger, this.FinNivel, null, this);
 
     this.physics.add.collider(this.player2, this.ground);
     this.physics.add.collider(this.eggsP2, this.ground);
-    //this.physics.add.overlap(this.player2, this.endTrigger, this.FinNivel, null, this);
 
     // 5) CÁMARA
-    this.cameras.main.setBounds(0, 0, this.levelWidth, this.levelHeight);   // Límites cámara
-    //this.cameras.main.startFollow(this.player1, false, 1, 1, this.cameraOffsetX, 0); // Cámar sigue al personaje
+    //this.cameras.main.setBounds(0, 0, this.levelWidth, this.levelHeight);   // Límites cámara
 
     // --- HUD --- //
     this.clockHUD = this.add.image(gameWidth/2, 720, 'clock');
@@ -160,15 +149,11 @@ class GamePlayEs1 extends Phaser.Scene{
     this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up);
     this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left);
     this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right);
-    //this.P1_interactButton = this.input.keyboard.addKey(P1_controls.interact);
 
     // 2) P2
     this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up);
     this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left);
     this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right);
-    //this.P2_interactButton = this.input.keyboard.addKey(P2_controls.interact);
-
-    //this.testButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
 
     // Reiniciamos eventos
     this.P1_jumpButton.off('down');
@@ -177,8 +162,6 @@ class GamePlayEs1 extends Phaser.Scene{
     this.P1_leftButton.off('up');
     this.P1_rightButton.off('down');
     this.P1_rightButton.off('up');
-    //this.P1_interactButton.off('down');
-    //this.P1_interactButton.off('up');
 
     this.P2_jumpButton.off('down');
     this.P2_jumpButton.off('up');
@@ -186,8 +169,6 @@ class GamePlayEs1 extends Phaser.Scene{
     this.P2_leftButton.off('up');
     this.P2_rightButton.off('down');
     this.P2_rightButton.off('up');
-    //this.P2_interactButton.off('down');
-    //this.P2_interactButton.off('up');
 
     //Controles jugador 1
     this.P1_jumpButton.on('down',this.player1StartJump, this);
@@ -205,14 +186,9 @@ class GamePlayEs1 extends Phaser.Scene{
     this.P2_rightButton.on('down',this.player2Right, this);
     this.P2_rightButton.on('up', this.player2Stop, this);
 
-    //this.P1_interactButton.on('down', () => console.log('interact ON'), this);
-    //this.P1_interactButton.on('up', () => console.log('interact OFF') , this);
 
     //Variable para saber los huevos recogidos
     this.score=0;
-    //this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
-    //this.scoreText.setDepth(2);
-
 
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
@@ -231,22 +207,20 @@ class GamePlayEs1 extends Phaser.Scene{
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
+    if(this.initialTime < 60){
+      this.text.setX(gameWidth/2 - 28);
+    }
+
     if(this.initialTime < 0){
       this.GameOverEs1();
     }
 
-    //console.log(this.initialTime);
-
   }
 
   formatTime(seconds){
-    // Minutes
     var minutes = Math.floor(seconds/60);
-    // Seconds
     var partInSeconds = seconds%60;
-    // Adds left zeros to seconds
     partInSeconds = partInSeconds.toString().padStart(2,'0');
-    // Returns formated time
     return `${minutes}:${partInSeconds}`;
   }
 
@@ -264,7 +238,6 @@ class GamePlayEs1 extends Phaser.Scene{
   {
     egg.body.enable=false;
     this.eggSound.play();
-    console.log("Huevo recogido");
 
     this.tweens.add({
       targets:egg,
@@ -275,11 +248,7 @@ class GamePlayEs1 extends Phaser.Scene{
     })
 
     this.score += 1;
-    //this.scoreText.setText('huevos: ' + this.score);
-    //console.log(player);
-
     this.numEgssP1 ++;
-    console.log(this.numEgssP1);
 
     if(this.numEgssP1 == 3){
       this.end1Visible = true;
@@ -299,10 +268,8 @@ class GamePlayEs1 extends Phaser.Scene{
 
   recogerHuevoP2 (player, egg)
   {
-
     egg.body.enable=false;
     this.eggSound.play();
-    console.log("Huevo recogido");
 
     this.tweens.add({
       targets:egg,
@@ -313,15 +280,10 @@ class GamePlayEs1 extends Phaser.Scene{
     })
 
     this.score += 1;
-    //this.scoreText.setText('huevos: ' + this.score);
-    console.log(player);
-
     this.numEgssP2 ++;
-    console.log(this.numEgssP2);
 
     if(this.numEgssP2 == 3){
       this.end2Visible = true;
-
       this.time.addEvent({
         delay: 2500,
         callback: function() {
@@ -335,55 +297,40 @@ class GamePlayEs1 extends Phaser.Scene{
 
 
 endArrived(player, end){
-    console.log("Colas");
-    console.log(player);
-
     end.body.enable=false;
     this.goalSound.play();
     this.playersArrived++;
-    console.log(this.playersArrived);
-    console.log("Hola");
 
     if (this.playersArrived == 2){
         this.FinNivelEs1();
     }
   }
 
-  //CAMBIOS ANIMACIÓN PLAYER 1
-
+//ANIMATIONS
+  //ANIMATIONS PLAYER 1
   player1StartJump(){
-
     this.player1.setVelocityY(-300);
-
   }
 
   player1StopJump(){
-
     this.player1.setVelocityY(0);
-
   }
 
 
   player1Left() {
-
     this.player1.setVelocityX(-160);
     this.player1.anims.play('move_left1', true);
     this.player1.flipX = false;
     this.dir1 = 0;
-
   }
 
   player1Right() {
-
     this.player1.setVelocityX(160);
     this.player1.anims.play('move_right1', true);
-    //this.player1.flipX = true;
     this.dir1 = 1;
-
   }
 
   player1Stop() {
-
     this.player1.setVelocityX(0);
 
     if(this.dir1 == 1){
@@ -392,7 +339,6 @@ endArrived(player, end){
       this.player1.anims.play('stop1L', true);
     }
 
-
     if(this.P1_leftButton.isDown){
       this.player1Left();
     }
@@ -400,20 +346,15 @@ endArrived(player, end){
       this.player1Right();
     }
 
-    //this.player.anims.stop();
   }
 
-  //CAMBIOS ANIMACION PLAYER 2
+  //ANIMATIONS PLAYER 2
   player2StartJump(){
-
     this.player2.setVelocityY(-300);
-
   }
 
   player2StopJump(){
-
     this.player2.setVelocityY(0);
-
   }
 
 
@@ -421,18 +362,14 @@ endArrived(player, end){
 
     this.player2.setVelocityX(-160);
     this.player2.anims.play('move_left2', true);
-    //this.player2.flipX = false;
     this.dir2 = 0;
-
   }
 
   player2Right() {
 
     this.player2.setVelocityX(160);
     this.player2.anims.play('move_right2', true);
-    //this.player2.flipX = true;
     this.dir2 = 1;
-
   }
 
   player2Stop() {
@@ -452,27 +389,9 @@ endArrived(player, end){
       this.player2Right();
     }
 
-    //this.player.anims.stop();
   }
 
-  eggCatched(){
-  }
-
-  //FUNCIONES BOTONES Y FLUJO DE JUEGO
-  PauseMenu(){
-
-    this.clickSound.play();
-
-    if(musicGameplay.isPlaying){
-      musicGameplay.stop();
-    }
-    musicMenu.play();
-    this.scene.run('PauseMenu');
-    this.scene.bringToTop('PauseMenu');
-    this.scene.pause();
-    //prevScene = 'GamePlayEs1';
-  }
-
+  //GAME CONTROL
   FinNivelEs1(){
 
     totalTime += 120 - this.initialTime;
@@ -480,6 +399,8 @@ endArrived(player, end){
 
     this.endTrigger1.setVisible(false);
     this.endTrigger2.setVisible(false);
+    this.endTrigger1Empty.setVisible(false);
+    this.endTrigger2Empty.setVisible(false);
     this.player1.setVisible(false);
     this.player2.setVisible(false);
     this.backgroundEs1.setVisible(false);
@@ -510,7 +431,7 @@ endArrived(player, end){
 
   }
 
-  //GAME CONTROL
+
   GameOverEs1(){
 
     if(musicGameplay.isPlaying){
@@ -529,6 +450,19 @@ endArrived(player, end){
     this.scene.start('GamePlayEs2');
   }
 
+  PauseMenu(){
+
+    this.clickSound.play();
+
+    if(musicGameplay.isPlaying){
+      musicGameplay.stop();
+    }
+    musicMenu.play();
+    this.scene.run('PauseMenu');
+    this.scene.bringToTop('PauseMenu');
+    this.scene.pause();
+  }
+
   EffectsConfig(){
     return {
       mute: false,
@@ -541,18 +475,4 @@ endArrived(player, end){
     };
   }
 
-
-
-/*
-  startDrag(player, objects){
-    this.input.off('down', this.startDrag,this);
-    this.dragObj = objects[0];
-    this.input.on('pointermove' , this.drag, this);
-  }
-
-  drag(){
-    this.dragObj.x=pointer.x;
-    this.dragObj.y=pointer.y;
-  }
-  */
 }

@@ -267,6 +267,10 @@ class GamePlayFa1 extends Phaser.Scene{
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
+    if(this.initialTime < 60){
+      this.text.setX(gameWidth/2 - 28);
+    }
+
     if (this.initialTime < 0){
       this.GameOverFa1();
     }
@@ -440,8 +444,8 @@ endArrived(player, end){
     this.backgroundFa1.setVisible(false);
     this.clockHUD.setVisible(false);
     this.text.setVisible(false);
-    this.movablePlatformIconAct2.setVisible(true);
-    this.movablePlatformIconAct.setVisible(true);
+    this.movablePlatformIconAct2.setVisible(false);
+    this.movablePlatformIconAct.setVisible(false);
 
     this.pauseButtonFa1.setVisible(false);
     this.skipButtonL4.setVisible(true);

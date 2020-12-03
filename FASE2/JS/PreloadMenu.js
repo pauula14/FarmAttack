@@ -13,7 +13,7 @@ class PreloadMenu extends Phaser.Scene{
       progressBox.fillRect(100, gameWidth-100, gameHeight-50, 50);
 
       var percentText = this.make.text({
-          x: 600,
+          x: gameWidth/2,
           y: 525,
           text: "0 %",
           style: {
@@ -26,11 +26,10 @@ class PreloadMenu extends Phaser.Scene{
 
       percentText.setOrigin(0.5, 0.5);
       this.load.on("progress", function(value){
-          //console.log(value);
           percentText.setText(parseInt(value * 100) + ' %');
           progressBar.clear();
           progressBar.fillStyle(0xCB2821, 1);
-          progressBar.fillRect(110, 510, 980 * value, 30);
+          progressBar.fillRect(210, 510, 980 * value, 30);
       });
 
 
