@@ -55,7 +55,7 @@ var gameWidth = 1425;
 var gameHeight = 800;
 
 var totalTime = 0;
-
+var finalPunt = 0;
 
 var volumeMusic = 5;
 var volumeEffects = 5;

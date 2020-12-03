@@ -23,27 +23,27 @@ class InitMenu extends Phaser.Scene{
 
     musicMenu = this.sound.add('menuMusic', config);
     this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
-
+/*
     if (!musicMenu.isPlaying) {
       musicMenu.play();
-    }
+    }*/
   //  musicGameplay.play();
 
     this.backgroundIM = this.add.image(0, 0, 'backgroundMenus');
     this.backgroundIM.setPosition(gameWidth/2, gameHeight/2);
 
     //ONLINE
-    this.onlineButton = this.add.image(gameWidth*8/16, gameHeight*9.4/16, 'onlineButton');
-    this.onlineButtonSel = this.add.image(gameWidth*8/16, gameHeight*9.4/16, 'onlineButtonSel');
-    this.onlineButtonSel.setVisible(false);
+    this.onlineButton = this.add.image(gameWidth*8/16, gameHeight*12/16, 'onlineButtonBloc');
+    //this.onlineButtonSel = this.add.image(gameWidth*8/16, gameHeight*12/16, 'onlineButtonSel');
+    //this.onlineButtonSel.setVisible(false);
 
     /*this.onlineButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.GameOnline());
     this.onlineButton.on('pointerover', function (pointer) {this.onlineButtonSel.setVisible(true);}, this);
     this.onlineButton.on('pointerout', function (pointer) {this.onlineButtonSel.setVisible(false);}, this);*/
 
     //OFFLINE
-    this.offlineButton = this.add.image(gameWidth*8/16, gameHeight*12/16, 'offlineButton');
-    this.offlineButtonSel = this.add.image(gameWidth*8/16, gameHeight*12/16, 'offlineButtonSel');
+    this.offlineButton = this.add.image(gameWidth*8/16, gameHeight*9.4/16, 'offlineButton');
+    this.offlineButtonSel = this.add.image(gameWidth*8/16, gameHeight*9.4/16, 'offlineButtonSel');
     this.offlineButtonSel.setVisible(false);
 
     this.offlineButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.GameOffline());

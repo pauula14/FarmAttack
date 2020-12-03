@@ -35,8 +35,20 @@ class GamePlayEs1 extends Phaser.Scene{
 
     //Pre carga Nivel 2
     this.preLevel2 = this.add.image(gameWidth/2, gameHeight/2, 'level2');
-    this.preLevel2.setDepth(3);
+    this.preLevel2.setDepth(2);
     this.preLevel2.alpha = 0;
+
+    //SKIP BUTTON
+    this.skipButtonL2 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
+    this.skipButtonL2.setVisible(false);
+    this.skipButtonL2.setDepth(2);
+    this.skipButtonL2Sel = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButtonSel');
+    this.skipButtonL2Sel.setVisible(false);
+    this.skipButtonL2Sel.setDepth(2);
+
+    this.skipButtonL2.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL2());
+    this.skipButtonL2.on('pointerover', function (pointer) {this.skipButtonL2Sel.setVisible(true);}, this);
+    this.skipButtonL2.on('pointerout', function (pointer) {this.skipButtonL2Sel.setVisible(false);}, this);
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(60, 685, 'chicken1R').setScale(0.7).setDepth(2);
@@ -130,9 +142,17 @@ class GamePlayEs1 extends Phaser.Scene{
 
 
     // 1) BOTON PAUSA
-    this.pauseButton = this.add.image(gameWidth/2, 30, 'pauseButton');
-    this.pauseButton.setScale(2/3).setDepth(2);
-    this.pauseButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.PauseMenu());
+    this.pauseButtonEs1 = this.add.image(gameWidth/2, 35, 'pauseButton');
+    this.pauseButtonEs1.setDepth(2);
+    this.pauseButtonEs1.setScale(2/3);
+    this.pauseButtonEs1Sel = this.add.image(gameWidth/2,35, 'pauseButtonSel');
+    this.pauseButtonEs1Sel.setVisible(false);
+    this.pauseButtonEs1Sel.setScale(2/3);
+    this.pauseButtonEs1Sel.setDepth(3);
+
+    this.pauseButtonEs1.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.PauseMenu());
+    this.pauseButtonEs1.on('pointerover', function (pointer) {this.pauseButtonEs1Sel.setVisible(true);}, this);
+    this.pauseButtonEs1.on('pointerout', function (pointer) {this.pauseButtonEs1Sel.setVisible(false);}, this);
 
     // --- CONTROLES --- //
 
@@ -190,8 +210,8 @@ class GamePlayEs1 extends Phaser.Scene{
 
     //Variable para saber los huevos recogidos
     this.score=0;
-    this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
-    this.scoreText.setDepth(2);
+    //this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
+    //this.scoreText.setDepth(2);
 
 
     // Each 1000 ms call onEvent
@@ -255,7 +275,7 @@ class GamePlayEs1 extends Phaser.Scene{
     })
 
     this.score += 1;
-    this.scoreText.setText('huevos: ' + this.score);
+    //this.scoreText.setText('huevos: ' + this.score);
     //console.log(player);
 
     this.numEgssP1 ++;
@@ -293,7 +313,7 @@ class GamePlayEs1 extends Phaser.Scene{
     })
 
     this.score += 1;
-    this.scoreText.setText('huevos: ' + this.score);
+    //this.scoreText.setText('huevos: ' + this.score);
     console.log(player);
 
     this.numEgssP2 ++;
@@ -346,7 +366,7 @@ endArrived(player, end){
 
   player1Left() {
 
-    this.player1.setVelocityX(-100);
+    this.player1.setVelocityX(-160);
     this.player1.anims.play('move_left1', true);
     this.player1.flipX = false;
     this.dir1 = 0;
@@ -355,7 +375,7 @@ endArrived(player, end){
 
   player1Right() {
 
-    this.player1.setVelocityX(100);
+    this.player1.setVelocityX(160);
     this.player1.anims.play('move_right1', true);
     //this.player1.flipX = true;
     this.dir1 = 1;
@@ -456,6 +476,7 @@ endArrived(player, end){
   FinNivelEs1(){
 
     totalTime += 120 - this.initialTime;
+    finalPunt = (totalTime * 5)/4
 
     this.endTrigger1.setVisible(false);
     this.endTrigger2.setVisible(false);
@@ -464,6 +485,9 @@ endArrived(player, end){
     this.backgroundEs1.setVisible(false);
     this.clockHUD.setVisible(false);
     this.text.setVisible(false);
+
+    this.pauseButtonEs1.setVisible(false);
+    this.skipButtonL2.setVisible(true);
 
     this.tweens.add({
       targets: this.preLevel2,
@@ -499,6 +523,12 @@ endArrived(player, end){
     this.scene.start('GameOver');
   }
 
+  SkipPreloadL2(){
+    this.scene.stop('GamePlayEs1');
+    this.scene.sendToBack('GamePlayEs1');
+    this.scene.start('GamePlayEs2');
+  }
+
   EffectsConfig(){
     return {
       mute: false,
@@ -510,6 +540,8 @@ endArrived(player, end){
       delay: 0
     };
   }
+
+
 
 /*
   startDrag(player, objects){

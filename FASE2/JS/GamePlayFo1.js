@@ -118,10 +118,17 @@ class GamePlayFo1 extends Phaser.Scene{
     this.text.setDepth(2);
 
     // 1) BOTON PAUSA
-    this.pauseButton = this.add.image(gameWidth/2, 30, 'pauseButton');
-    this.pauseButton.setScale(2/3).setDepth(2);
-    this.pauseButton.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.PauseMenu());
+    this.pauseButtonFo1 = this.add.image(gameWidth/2, 35, 'pauseButton');
+    this.pauseButtonFo1.setDepth(2);
+    this.pauseButtonFo1.setScale(2/3);
+    this.pauseButtonFo1Sel = this.add.image(gameWidth/2,35, 'pauseButtonSel');
+    this.pauseButtonFo1Sel.setVisible(false);
+    this.pauseButtonFo1Sel.setScale(2/3);
+    this.pauseButtonFo1Sel.setDepth(3);
+
+    this.pauseButtonFo1.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.PauseMenu());
+    this.pauseButtonFo1.on('pointerover', function (pointer) {this.pauseButtonFo1Sel.setVisible(true);}, this);
+    this.pauseButtonFo1.on('pointerout', function (pointer) {this.pauseButtonFo1Sel.setVisible(false);}, this);
 
     // --- CONTROLES --- //
 
@@ -179,8 +186,8 @@ class GamePlayFo1 extends Phaser.Scene{
 
     //Variable para saber los huevos recogidos
     this.score=0;
-    this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
-    this.scoreText.setDepth(2);
+    //this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
+    //this.scoreText.setDepth(2);
 
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
@@ -242,7 +249,7 @@ class GamePlayFo1 extends Phaser.Scene{
     })
 
     this.score += 1;
-    this.scoreText.setText('huevos: ' + this.score);
+    //this.scoreText.setText('huevos: ' + this.score);
     //console.log(player);
 
     this.numEgssP1 ++;
@@ -279,7 +286,7 @@ class GamePlayFo1 extends Phaser.Scene{
     })
 
     this.score += 1;
-    this.scoreText.setText('huevos: ' + this.score);
+    //this.scoreText.setText('huevos: ' + this.score);
     console.log(player);
 
     this.numEgssP2 ++;
@@ -333,6 +340,7 @@ endArrived(player, end){
   FinNivelFo1(){
 
     totalTime += 120 - this.initialTime;
+    finalPunt = (totalTime * 5);
 
     if(musicGameplay.isPlaying){
       musicGameplay.stop();
@@ -361,7 +369,7 @@ endArrived(player, end){
 
   player1Left() {
 
-    this.player1.setVelocityX(-100);
+    this.player1.setVelocityX(-160);
     this.player1.anims.play('move_left1', true);
     this.player1.flipX = false;
     this.dir1 = 0;
@@ -370,7 +378,7 @@ endArrived(player, end){
 
   player1Right() {
 
-    this.player1.setVelocityX(100);
+    this.player1.setVelocityX(160);
     this.player1.anims.play('move_right1', true);
     //this.player1.flipX = true;
     this.dir1 = 1;

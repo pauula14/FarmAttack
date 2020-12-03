@@ -27,10 +27,6 @@ class MainMenu extends Phaser.Scene{
     this.backgroundMM = this.add.image(0, 0, 'backgroundMenus');
     this.backgroundMM.setPosition(gameWidth/2, gameHeight/2);
 
-    //Pre carga Nivel 1
-    this.preLevel1 = this.add.image(gameWidth/2, gameHeight/2, 'level1');
-    this.preLevel1.setDepth(3);
-    this.preLevel1.alpha = 0;
 
     //PLAY
     this.playButton = this.add.image(gameWidth*8/16, gameHeight*8.3/16, 'playButton');
@@ -68,6 +64,25 @@ class MainMenu extends Phaser.Scene{
     this.creditsButton.on('pointerout', function (pointer) {this.creditsButtonSel.setVisible(false);}, this);
     this.creditsButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.CreditsMenu());
 
+    //Pre carga Nivel 1
+    this.preLevel1 = this.add.image(gameWidth/2, gameHeight/2, 'level1');
+    this.preLevel1.setDepth(2);
+    this.preLevel1.alpha = 0;
+
+    //SKIP BUTTON
+    this.skipButtonL1 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
+    this.skipButtonL1.setVisible(false);
+    this.skipButtonL1.setDepth(2);
+    this.skipButtonL1Sel = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButtonSel');
+    this.skipButtonL1Sel.setVisible(false);
+    this.skipButtonL1Sel.setDepth(2);
+
+    this.skipButtonL1.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL1());
+    this.skipButtonL1.on('pointerover', function (pointer) {this.skipButtonL1Sel.setVisible(true);}, this);
+    this.skipButtonL1.on('pointerout', function (pointer) {this.skipButtonL1Sel.setVisible(false);}, this);
+
+//0;
+
     //BACK
     /*this.backButtonMM = this.add.image(gameWidth*14/16, gameHeight*14/16, 'backButtonMM');
     this.backButtonMM.setScale(2/3);
@@ -86,6 +101,8 @@ class MainMenu extends Phaser.Scene{
     this.tutorialButton.setVisible(false);
     this.optionsButton.setVisible(false);
     this.creditsButton.setVisible(false);
+
+    this.skipButtonL1.setVisible(true);
   //  this.backButtonMM.setVisible(false);
 
   if(musicMenu.isPlaying){
@@ -111,6 +128,12 @@ class MainMenu extends Phaser.Scene{
       callbackScope: this
       }, this);
 
+  }
+
+  SkipPreloadL1(){
+    this.scene.stop("MainMenu");
+    this.scene.start("GamePlayEs1");
+    musicGameplay.play();
   }
 
   OptionsMenuMM(){

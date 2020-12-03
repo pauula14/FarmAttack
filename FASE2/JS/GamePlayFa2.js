@@ -33,8 +33,20 @@ class GamePlayFa2 extends Phaser.Scene{
 
     //Pre carga Nivel 5
     this.preLevel5 = this.add.image(gameWidth/2, gameHeight/2, 'level5');
-    this.preLevel5.setDepth(3);
+    this.preLevel5.setDepth(2);
     this.preLevel5.alpha = 0;
+
+    //SKIP BUTTON
+    this.skipButtonL5 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
+    this.skipButtonL5.setVisible(false);
+    this.skipButtonL5.setDepth(2);
+    this.skipButtonL5Sel = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButtonSel');
+    this.skipButtonL5Sel.setVisible(false);
+    this.skipButtonL5Sel.setDepth(2);
+
+    this.skipButtonL5.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL5());
+    this.skipButtonL5.on('pointerover', function (pointer) {this.skipButtonL5Sel.setVisible(true);}, this);
+    this.skipButtonL5.on('pointerout', function (pointer) {this.skipButtonL5Sel.setVisible(false);}, this);
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(60, 685, 'chicken1R').setScale(0.7).setDepth(2);
@@ -74,11 +86,17 @@ class GamePlayFa2 extends Phaser.Scene{
     ///this.stickDelete.tint=0x180d06;
 
     //Icon to help our teammate with the platform that block him to pass to otherside
-    this.stickDeleteIcon=this.physics.add.sprite(gameWidth/2+100, 230, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
+    this.stickDeleteIcon=this.physics.add.sprite(gameWidth/2+100, 245, 'leverR').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
     this.stickDeleteIcon.body.allowGravity=false;
     this.stickDeleteIcon.body.immovable=true;
     this.stickDeleteIcon.setDepth(2);
-    this.stickDeleteIcon.tint=0x180d06;
+
+    this.stickDeleteIconAct=this.physics.add.sprite(gameWidth/2+100, 245, 'leverL').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
+    this.stickDeleteIconAct.body.allowGravity=false;
+    this.stickDeleteIconAct.body.immovable=true;
+    this.stickDeleteIconAct.setDepth(2);
+    this.stickDeleteIconAct.setVisible(false);
+
 
     this.ground.create(0, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false);//palo dcha
     this.ground.create(gameWidth-20, 0, 'platform').setOrigin(0,0).setScale(0.05,23).refreshBody().setVisible(false); //palo izq
@@ -100,11 +118,17 @@ class GamePlayFa2 extends Phaser.Scene{
     this.pltToDelete.tint=0x180d06;
 
     //Nivel 1: icon to help our teammate with the platform that block him to pass
-    this.movablePlatformIcon2=this.physics.add.sprite(gameWidth/2+100, 510, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
+    this.movablePlatformIcon2=this.physics.add.sprite(gameWidth/2+100, 535, 'leverR').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
     this.movablePlatformIcon2.body.allowGravity=false;
     this.movablePlatformIcon2.body.immovable=true;
     this.movablePlatformIcon2.setDepth(2);
-    this.movablePlatformIcon2.tint=0x180d06;
+    //this.movablePlatformIcon2.tint=0x180d06;
+    this.movablePlatformIcon2Act=this.physics.add.sprite(gameWidth/2+100, 535, 'leverL').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
+    this.movablePlatformIcon2Act.body.allowGravity=false;
+    this.movablePlatformIcon2Act.body.immovable=true;
+    this.movablePlatformIcon2Act.setDepth(2);
+    this.movablePlatformIcon2Act.setVisible(false);
+
 
     //Nivel 2
     this.ground.create(0, 455, 'platform').setOrigin(0,0).setScale(0.68,0.5).refreshBody().setVisible(false);//left
@@ -119,11 +143,17 @@ class GamePlayFa2 extends Phaser.Scene{
   //  this.movablePlatform.tint=0x180d06;
 
     //Nivel 2: icon to help our teammate with the platform
-    this.movablePlatformIcon=this.physics.add.sprite(50, 375, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
+    this.movablePlatformIcon=this.physics.add.sprite(50, 390, 'leverR').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
     this.movablePlatformIcon.body.allowGravity=false;
     this.movablePlatformIcon.body.immovable=true;
     this.movablePlatformIcon.setDepth(2);
-    this.movablePlatformIcon.tint=0x180d06;
+    //this.movablePlatformIcon.tint=0x180d06;
+
+    this.movablePlatformIconAct=this.physics.add.sprite(50, 390, 'leverL').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
+    this.movablePlatformIconAct.body.allowGravity=false;
+    this.movablePlatformIconAct.body.immovable=true;
+    this.movablePlatformIconAct.setDepth(2);
+    this.movablePlatformIconAct.setVisible(false);
 
     //Nivel 3
     this.ground.create(260, 310, 'platform').setOrigin(0,0).setScale(1.15,0.5).refreshBody().setVisible(false);//left
@@ -132,11 +162,17 @@ class GamePlayFa2 extends Phaser.Scene{
   //  this.blockDelete.tint=0x180d06;
 
     //Nivel 3: icon to help our teammate with the block that block him to pass
-    this.blockDeleteIcon=this.physics.add.sprite(gameWidth/2-100, 90, 'platform').setOrigin(0,0).setScale(0.1,2).refreshBody();
+    this.blockDeleteIcon=this.physics.add.sprite(gameWidth/2-100, 105, 'leverL').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
     this.blockDeleteIcon.body.allowGravity=false;
     this.blockDeleteIcon.body.immovable=true;
     this.blockDeleteIcon.setDepth(2);
-    this.blockDeleteIcon.tint=0x180d06;
+    //this.blockDeleteIcon.tint=0x180d06;
+
+    this.blockDeleteIconAct=this.physics.add.sprite(gameWidth/2-100, 105, 'leverR').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
+    this.blockDeleteIconAct.body.allowGravity=false;
+    this.blockDeleteIconAct.body.immovable=true;
+    this.blockDeleteIconAct.setDepth(2);
+    this.blockDeleteIconAct.setVisible(false);
 
     //Exit
     this.ground.create(0, 170, 'platform').setOrigin(0,0).setScale(0.5,0.5).refreshBody().setVisible(false);//left 1
@@ -179,10 +215,17 @@ class GamePlayFa2 extends Phaser.Scene{
     this.text.setDepth(2);
 
     // 1) BOTON PAUSA
-    this.pauseButton = this.add.image(gameWidth/2, 30, 'pauseButton');
-    this.pauseButton.setScale(2/3).setDepth(2);
-    this.pauseButton.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.PauseMenu());
+    this.pauseButtonFa2 = this.add.image(gameWidth/2, 35, 'pauseButton');
+    this.pauseButtonFa2.setDepth(2);
+    this.pauseButtonFa2.setScale(2/3);
+    this.pauseButtonFa2Sel = this.add.image(gameWidth/2,35, 'pauseButtonSel');
+    this.pauseButtonFa2Sel.setVisible(false);
+    this.pauseButtonFa2Sel.setScale(2/3);
+    this.pauseButtonFa2Sel.setDepth(3);
+
+    this.pauseButtonFa2.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.PauseMenu());
+    this.pauseButtonFa2.on('pointerover', function (pointer) {this.pauseButtonFa2Sel.setVisible(true);}, this);
+    this.pauseButtonFa2.on('pointerout', function (pointer) {this.pauseButtonFa2Sel.setVisible(false);}, this);
 
     // --- CONTROLES --- //
 
@@ -240,8 +283,8 @@ class GamePlayFa2 extends Phaser.Scene{
 
     //Variable para saber los huevos recogidos
     this.score=0;
-    this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
-    this.scoreText.setDepth(2);
+    //this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
+    //this.scoreText.setDepth(2);
 
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
@@ -309,7 +352,7 @@ class GamePlayFa2 extends Phaser.Scene{
     })
 
     this.score += 1;
-    this.scoreText.setText('huevos: ' + this.score);
+    //this.scoreText.setText('huevos: ' + this.score);
     //console.log(player);
 
     this.numEgssP1 ++;
@@ -346,7 +389,7 @@ class GamePlayFa2 extends Phaser.Scene{
     })
 
     this.score += 1;
-    this.scoreText.setText('huevos: ' + this.score);
+    //this.scoreText.setText('huevos: ' + this.score);
     console.log(player);
 
     this.numEgssP2 ++;
@@ -393,7 +436,9 @@ endArrived(player, end){
       duration:2000,
       alpha: 0,
       x:gameWidth-420,
-    })
+    });
+
+    this.movablePlatformIconAct.setVisible(true);
   }
 
   movePltLeft2(){
@@ -408,7 +453,9 @@ endArrived(player, end){
       x:0,
       repeat:-1,
       yoyo:true,
-    })
+    });
+
+    this.movablePlatformIcon2Act.setVisible(true);
   }
 
   deleteBlock(){
@@ -416,6 +463,7 @@ endArrived(player, end){
     this.blockDeleteIcon.disableBody(true, true);
     this.blockDelete.disableBody(true, true);
     this.handleSound.play();
+    this.blockDeleteIconAct.setVisible(true);
 
   }
 
@@ -430,7 +478,9 @@ endArrived(player, end){
       duration:2000,
       alpha: 0,
       y:320
-    })
+    });
+
+    this.stickDeleteIconAct.setVisible(true);
   }
 
   PauseMenu(){
@@ -451,6 +501,7 @@ endArrived(player, end){
   FinNivelFa2(){
 
     totalTime += 120 - this.initialTime;
+    finalPunt = (totalTime * 5)/2;
 
     this.endTrigger1.setVisible(false);
     this.endTrigger2.setVisible(false);
@@ -460,6 +511,13 @@ endArrived(player, end){
     this.movablePlatform2.setVisible(false);
     this.clockHUD.setVisible(false);
     this.text.setVisible(false);
+    this.blockDeleteIconAct.setVisible(true);
+    this.movablePlatformIcon2Act.setVisible(false);
+    this.movablePlatformIconAct.setVisible(false);
+    this.stickDeleteIconAct.setVisible(false);
+
+    this.pauseButtonFa2.setVisible(false);
+    this.skipButtonL5.setVisible(true);
 
     this.tweens.add({
       targets: this.preLevel5,
@@ -483,6 +541,12 @@ endArrived(player, end){
 
   }
 
+  SkipPreloadL5(){
+    this.scene.stop('GamePlayFa2');
+    this.scene.sendToBack('GamePlayFa2');
+    this.scene.start('GamePlayFo1');
+  }
+
   //CAMBIOS ANIMACIÓN PLAYER 1
 
   player1StartJump(){
@@ -500,7 +564,7 @@ endArrived(player, end){
 
   player1Left() {
 
-    this.player1.setVelocityX(-100);
+    this.player1.setVelocityX(-160);
     this.player1.anims.play('move_left1', true);
     this.player1.flipX = false;
     this.dir1 = 0;

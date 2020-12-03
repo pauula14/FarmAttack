@@ -16,28 +16,41 @@ class PauseMenu extends Phaser.Scene{
     this.backgroundPM.setPosition(gameWidth/2, gameHeight/2);
 
     //RESUME
-    this.resumeButtonPM = this.add.image(gameWidth*8/16, gameHeight*5/16, 'resumeButtonPM');
-    this.resumeButtonPM.setScale(2/3);
-    this.resumeButtonPM.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.BackGamePM());
+    this.resumeButtonPM = this.add.image(gameWidth*8/16, gameHeight*8.35/16, 'resumeButtonPM');
+    this.resumeButtonPMSel = this.add.image(gameWidth*8/16, gameHeight*8.35/16, 'resumeButtonPMsel');
+    this.resumeButtonPMSel.setVisible(false);
 
-    //OPTIONS
-    this.optionsButtonPM = this.add.image(gameWidth*8/16, gameHeight*7/16, 'optionsButtonPM');
-    this.optionsButtonPM.setScale(2/3);
-    this.optionsButtonPM.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.OptionsMenuPM());
+    this.resumeButtonPM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackGamePM());
+    this.resumeButtonPM.on('pointerover', function (pointer) {this.resumeButtonPMSel.setVisible(true);}, this);
+    this.resumeButtonPM.on('pointerout', function (pointer) {this.resumeButtonPMSel.setVisible(false);}, this);
+
 
     //TUTORIAL
-    this.tutorialButtonPM = this.add.image(gameWidth*8/16, gameHeight*9/16, 'tutorialButtonPM');
-    this.tutorialButtonPM.setScale(2/3);
-    this.tutorialButtonPM.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.TutorialMenuPM());
+    this.tutorialButtonPM = this.add.image(gameWidth*8/16, gameHeight*10.35/16, 'tutorialButtonPM');
+    this.tutorialButtonPMSel = this.add.image(gameWidth*8/16, gameHeight*10.35/16, 'tutorialButtonPMsel');
+    this.tutorialButtonPMSel.setVisible(false);
+
+    this.tutorialButtonPM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.TutorialMenuPM());
+    this.tutorialButtonPM.on('pointerover', function (pointer) {this.tutorialButtonPMSel.setVisible(true);}, this);
+    this.tutorialButtonPM.on('pointerout', function (pointer) {this.tutorialButtonPMSel.setVisible(false);}, this);
+
+    //OPTIONS
+    this.optionsButtonPM = this.add.image(gameWidth*8/16, gameHeight*12.4/16, 'optionsButtonPM');
+    this.optionsButtonPMSel = this.add.image(gameWidth*8/16, gameHeight*12.4/16, 'optionsButtonPMsel');
+    this.optionsButtonPMSel.setVisible(false);
+
+    this.optionsButtonPM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.OptionsMenuPM());
+    this.optionsButtonPM.on('pointerover', function (pointer) {this.optionsButtonPMSel.setVisible(true);}, this);
+    this.optionsButtonPM.on('pointerout', function (pointer) {this.optionsButtonPMSel.setVisible(false);}, this);
 
     //QUIT
-    this.quitButtonPM = this.add.image(gameWidth*8/16, gameHeight*11/16, 'quitButtonPM');
-    this.quitButtonPM.setScale(2/3);
-    this.quitButtonPM.setInteractive({ useHandCursor: true  } )
-		.on('pointerdown', () => this.QuitGamePM());
+    this.quitButtonPM = this.add.image(gameWidth*8/16, gameHeight*14.4/16, 'quitButtonPM');
+    this.quitButtonPMSel = this.add.image(gameWidth*8/16, gameHeight*14.4/16, 'quitButtonPMsel');
+    this.quitButtonPMSel.setVisible(false);
+
+    this.quitButtonPM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.QuitGamePM());
+    this.quitButtonPM.on('pointerover', function (pointer) {this.quitButtonPMSel.setVisible(true);}, this);
+    this.quitButtonPM.on('pointerout', function (pointer) {this.quitButtonPMSel.setVisible(false);}, this);
 
   }
 

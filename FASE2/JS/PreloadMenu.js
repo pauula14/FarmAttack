@@ -47,6 +47,7 @@ class PreloadMenu extends Phaser.Scene{
     //this.load.image('backgroundIM', 'ASSETS/Interface/Main_background.jpg');
     //Online
     this.load.image('onlineButton', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/online_button.png');
+    this.load.image('onlineButtonBloc', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/online_button_blocked.png');
     this.load.image('onlineButtonSel', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/online_button_selected.png');
     //Offline
     this.load.image('offlineButton', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/offline_button.png');
@@ -58,6 +59,8 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('level3', 'ASSETS/Interface/LevelPreload/level3.jpg');
     this.load.image('level4', 'ASSETS/Interface/LevelPreload/level4.jpg');
     this.load.image('level5', 'ASSETS/Interface/LevelPreload/level5.jpg');
+    this.load.image('skipButton', 'ASSETS/Interface/LevelPreload/SkipButton/skip_button.png');
+    this.load.image('skipButtonSel', 'ASSETS/Interface/LevelPreload/SkipButton/skip_button_selected.png');
 
     //MAIN MENU
     //this.load.image('backgroundMM', 'ASSETS/Interface/MainMenu/main_menu_buttons.jpg');
@@ -100,7 +103,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundFa1', 'ASSETS/Gameplay/Maps/facade1.jpg'); //fachada 1
     this.load.image('backgroundFa2', 'ASSETS/Gameplay/Maps/facade2.jpg'); //fachada 2
     this.load.image('backgroundFo', 'ASSETS/Gameplay/Maps/forest.jpg'); //forest
-    this.load.image('pauseButton', 'ASSETS/Gameplay/botonPausa.png');
+
     this.load.image('platform', 'ASSETS/Placeholders/platform.png');
     this.load.image('platformBroken', 'ASSETS/Gameplay/Obstacles/broken_wood.png');//platform broken
     this.load.image('platformBale', 'ASSETS/Gameplay/Obstacles/hay_bale.png');//straw
@@ -109,6 +112,12 @@ class PreloadMenu extends Phaser.Scene{
     //this.load.image('chicken1Stop', 'ASSETS/Placeholders/dude.png');
     this.load.image('egg', 'ASSETS/Gameplay/Objects/egg.png');
     this.load.image('eggWhite', 'ASSETS/Gameplay/Objects/white_egg.png');
+    this.load.image('leverR', 'Assets/Gameplay/Objects/lever_right.png');
+    this.load.image('leverL', 'Assets/Gameplay/Objects/lever_left.png');
+
+    //HUD
+    this.load.image('pauseButton', 'ASSETS/Interface/PauseButton/pause_button.png');
+    this.load.image('pauseButtonSel', 'ASSETS/Interface/PauseButton/pause_button_selected.png');
 
     //GOAL
     this.load.image('basketEmpty', 'ASSETS/Gameplay/Objects/empty_egg_counter.png');
@@ -123,28 +132,33 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('star', 'ASSETS/Placeholders/star.png');
 
     //PAUSE MENU
-    this.load.image('backgroundPM', 'ASSETS/PauseMenu/FondoPauseMenu.jpg');
-    this.load.image('resumeButtonPM', 'ASSETS/PauseMenu/BotonReanudar.png');
-    this.load.image('optionsButtonPM', 'ASSETS/PauseMenu/BotonOpciones.png');
-    this.load.image('tutorialButtonPM', 'ASSETS/PauseMenu/BotonTutorial.png');
-    this.load.image('quitButtonPM', 'ASSETS/PauseMenu/BotonAbandonar.png');
+    this.load.image('backgroundPM', 'ASSETS/Interface/PauseMenu/pause_menu_buttons.png');
+    this.load.image('resumeButtonPM', 'ASSETS/Interface/PauseMenu/Buttons/resume_button.png');
+    this.load.image('optionsButtonPM', 'ASSETS/Interface/PauseMenu/Buttons/options_button.png');
+    this.load.image('tutorialButtonPM', 'ASSETS/Interface/PauseMenu/Buttons/tutorial_button.png');
+    this.load.image('quitButtonPM', 'ASSETS/Interface/PauseMenu/Buttons/quit_button.png');
+    this.load.image('resumeButtonPMsel', 'ASSETS/Interface/PauseMenu/Buttons/resume_button_selected.png');
+    this.load.image('optionsButtonPMsel', 'ASSETS/Interface/PauseMenu/Buttons/options_button_selected.png');
+    this.load.image('tutorialButtonPMsel', 'ASSETS/Interface/PauseMenu/Buttons/tutorial_button_selected.png');
+    this.load.image('quitButtonPMsel', 'ASSETS/Interface/PauseMenu/Buttons/quit_button_selected.png');
 
     //WINNER
-    this.load.image('backgroundWM', 'Assets/Interface/BackgroundWin.jpg');
-    this.load.image('quitButtonWM', 'Assets/Interface/BotonSalir.png');
+    this.load.image('backgroundWM', 'Assets/Interface/VictoryMenu/victory_menu_buttons.jpg');
+    this.load.image('quitButtonWM', 'Assets/Interface/VictoryMenu/Buttons/continue_button.png');
+    this.load.image('quitButtonWMsel', 'Assets/Interface/VictoryMenu/Buttons/continue_button_selected.png');
 
     //GAME OVER
-    this.load.image('backgroundGOM', 'Assets/Interface/BackgroundGameOver.jpg');
-    this.load.image('quitButtonGOM', 'Assets/Interface/BotonSalir.png');
-    this.load.image('retryButtonGOM', 'Assets/Interface/BotonReintentar.png');
+    this.load.image('backgroundGOM', 'Assets/Interface/GameOverMenu/game_over_menu_background.jpg');
+    this.load.image('quitButtonGOM', 'Assets/Interface/GameOverMenu/Buttons/quit_button.png');
+    this.load.image('retryButtonGOM', 'Assets/Interface/GameOverMenu/Buttons/retry_button.png');
+    this.load.image('quitButtonGOMsel', 'Assets/Interface/GameOverMenu/Buttons/quit_button_selected.png');
+    this.load.image('retryButtonGOMsel', 'Assets/Interface/GameOverMenu/Buttons/retry_button_selected.png');
 
     //SPRITES
-
     this.load.spritesheet('chicken1L', 'Assets/Characters/Chickens/brown_stop_izq.png', { frameWidth: 87, frameHeight: 108 });
     this.load.spritesheet('chicken1R', 'Assets/Characters/Chickens/brown_stop_dch.png', { frameWidth: 87, frameHeight: 108 });
     this.load.spritesheet('chicken2L', 'Assets/Characters/Chickens/white_stop_izq.png', { frameWidth: 87, frameHeight: 108 });
     this.load.spritesheet('chicken2R', 'Assets/Characters/Chickens/white_stop_dch.png', { frameWidth: 87, frameHeight: 108 });
-    //this.load.spritesheet('chicken2', 'Assets/Placeholders/dude.png', { frameWidth: 32, frameHeight: 48 });
 
     this.load.spritesheet('chicken1izq', 'Assets/Characters/Chickens/brown_chicken_walk_izq.png', { frameWidth: 87, frameHeight: 108 });
     this.load.spritesheet('chicken2izq', 'Assets/Characters/Chickens/white_chicken_walk_izq.png', { frameWidth: 87, frameHeight: 108 });

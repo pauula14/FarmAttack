@@ -32,8 +32,21 @@ class GamePlayEs2 extends Phaser.Scene{
 
     //Pre carga Nivel 3
     this.preLevel3 = this.add.image(gameWidth/2, gameHeight/2, 'level3');
-    this.preLevel3.setDepth(3);
+    this.preLevel3.setDepth(2);
     this.preLevel3.alpha = 0;
+
+    //SKIP BUTTON
+    this.skipButtonL3 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
+    this.skipButtonL3.setVisible(false);
+    this.skipButtonL3.setDepth(2);
+    this.skipButtonL3Sel = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButtonSel');
+    this.skipButtonL3Sel.setVisible(false);
+    this.skipButtonL3Sel.setDepth(2);
+
+    this.skipButtonL3.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL3());
+    this.skipButtonL3.on('pointerover', function (pointer) {this.skipButtonL3Sel.setVisible(true);}, this);
+    this.skipButtonL3.on('pointerout', function (pointer) {this.skipButtonL3Sel.setVisible(false);}, this);
+
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(60, 155, 'chicken1R').setScale(0.7).setDepth(2);
@@ -85,10 +98,17 @@ class GamePlayEs2 extends Phaser.Scene{
     this.movableStraw.setDepth(3)
 
     //Nivel 1: icon to help our teammate with the straw
-    this.movableStrawIcon=this.physics.add.sprite(gameWidth/2-100, 510, 'platformBale').setOrigin(0,0).setScale(0.5,0.5).refreshBody();
+    this.movableStrawIcon=this.physics.add.sprite(gameWidth/2-100, 529, 'leverL').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
     this.movableStrawIcon.body.allowGravity=false;
     this.movableStrawIcon.body.immovable=true;
     this.movableStrawIcon.setDepth(2)
+
+    this.movableStrawIconAct=this.physics.add.sprite(gameWidth/2-100, 529, 'leverR').setOrigin(0,0).setScale(0.6,0.6).refreshBody();
+    this.movableStrawIconAct.body.allowGravity=false;
+    this.movableStrawIconAct.body.immovable=true;
+    this.movableStrawIconAct.setDepth(2);
+    this.movableStrawIconAct.setVisible(false);
+
 
     //Nivel 2
     this.ground.create(124, 460, 'platform').setOrigin(0,0).setScale(1.46,0.5).refreshBody().setVisible(false);//left long
@@ -102,9 +122,14 @@ class GamePlayEs2 extends Phaser.Scene{
     this.deletedPtf.body.immovable=true;
 
     //Nivel 2: icon to destroy our teammate block platform
-    this.deletedPtfIcon = this.physics.add.sprite(gameWidth/2+50, 360, 'platformBroken').setOrigin(0,0).setScale(0.35, 4.5).setDepth(2);
+    this.deletedPtfIcon = this.physics.add.sprite(gameWidth/2+50, 395, 'leverR').setOrigin(0,0).setScale(0.6,0.6).setDepth(2);
     this.deletedPtfIcon.body.allowGravity=false;
     this.deletedPtfIcon.body.immovable=true;
+
+    this.deletedPtfIconAct2 = this.physics.add.sprite(gameWidth/2+50, 395, 'leverL').setOrigin(0,0).setScale(0.6,0.6).setDepth(2);
+    this.deletedPtfIconAct2.body.allowGravity=false;
+    this.deletedPtfIconAct2.body.immovable=true;
+    this.deletedPtfIconAct2.setVisible(false);
 
     //Nivel 3
     this.ground.create(0, 330, 'platform').setOrigin(0,0).setScale(1,0.5).refreshBody().setVisible(false);//left 1
@@ -146,6 +171,7 @@ class GamePlayEs2 extends Phaser.Scene{
     // --- HUD --- //
     this.clockHUD = this.add.image(gameWidth/2, 720, 'clock');
     this.clockHUD.setDepth(2);
+
     //Timer
     this.initialTime=120;
 
@@ -153,10 +179,17 @@ class GamePlayEs2 extends Phaser.Scene{
     this.text.setDepth(2);
 
     // 1) BOTON PAUSA
-    this.pauseButton = this.add.image(gameWidth/2, 30, 'pauseButton');
-    this.pauseButton.setScale(2/3).setDepth(2);
-    this.pauseButton.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.PauseMenu());
+    this.pauseButtonEs2 = this.add.image(gameWidth/2, 35, 'pauseButton');
+    this.pauseButtonEs2.setDepth(2);
+    this.pauseButtonEs2.setScale(2/3);
+    this.pauseButtonEs2Sel = this.add.image(gameWidth/2,35, 'pauseButtonSel');
+    this.pauseButtonEs2Sel.setVisible(false);
+    this.pauseButtonEs2Sel.setScale(2/3);
+    this.pauseButtonEs2Sel.setDepth(3);
+
+    this.pauseButtonEs2.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.PauseMenu());
+    this.pauseButtonEs2.on('pointerover', function (pointer) {this.pauseButtonEs2Sel.setVisible(true);}, this);
+    this.pauseButtonEs2.on('pointerout', function (pointer) {this.pauseButtonEs2Sel.setVisible(false);}, this);
 
     // --- CONTROLES --- //
 
@@ -214,8 +247,8 @@ class GamePlayEs2 extends Phaser.Scene{
 
     //Variable para saber los huevos recogidos
     this.score=0;
-    this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
-    this.scoreText.setDepth(2);
+    //this.scoreText = this.add.text(460, 200, 'huevos: 0', { fontSize: '32px', fill: '#000' });
+    //this.scoreText.setDepth(2);
 
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
@@ -279,7 +312,7 @@ class GamePlayEs2 extends Phaser.Scene{
     })
 
     this.score += 1;
-    this.scoreText.setText('huevos: ' + this.score);
+    //this.scoreText.setText('huevos: ' + this.score);
     //console.log(player);
 
     this.numEgssP1 ++;
@@ -315,7 +348,7 @@ class GamePlayEs2 extends Phaser.Scene{
     })
 
     this.score += 1;
-    this.scoreText.setText('huevos: ' + this.score);
+    //this.scoreText.setText('huevos: ' + this.score);
     console.log(player);
 
     this.numEgssP2 ++;
@@ -361,7 +394,10 @@ endArrived(player, end){
       targets:this.movableStraw,
       duration:2000,
       x:gameWidth-140,
-    })
+    });
+
+      this.movableStrawIconAct.setVisible(true);
+
   }
 
   deletePlatform(){
@@ -369,6 +405,7 @@ endArrived(player, end){
     this.deletedPtfIcon.disableBody(true,true);
     this.handleSound.play();
     this.deletedPtf.disableBody(true,true);
+    this.deletedPtfIconAct2.setVisible(true);
   }
 
   PauseMenu(){
@@ -389,6 +426,7 @@ endArrived(player, end){
   FinNivelEs2(){
 
     totalTime += 120 - this.initialTime;
+    finalPunt = (totalTime * 5)/3;
 
     this.endTrigger1.setVisible(false);
     this.endTrigger2.setVisible(false);
@@ -398,6 +436,11 @@ endArrived(player, end){
     this.movableStraw.setVisible(false);
     this.clockHUD.setVisible(false);
     this.text.setVisible(false);
+    this.movableStrawIconAct.setVisible(true);
+    this.deletedPtfIconAct2.setVisible(false);
+
+    this.pauseButtonEs2.setVisible(false);
+    this.skipButtonL3.setVisible(true);
 
     this.tweens.add({
       targets: this.preLevel3,
@@ -420,6 +463,12 @@ endArrived(player, end){
 
   }
 
+  SkipPreloadL3(){
+    this.scene.stop('GamePlayEs2');
+    this.scene.sendToBack('GamePlayEs2');
+    this.scene.start('GamePlayFa1');
+  }
+
   //CAMBIOS ANIMACIÓN PLAYER 1
 
   player1StartJump(){
@@ -437,7 +486,7 @@ endArrived(player, end){
 
   player1Left() {
 
-    this.player1.setVelocityX(-100);
+    this.player1.setVelocityX(-160);
     this.player1.anims.play('move_left1', true);
     this.player1.flipX = false;
     this.dir1 = 0;
@@ -446,7 +495,7 @@ endArrived(player, end){
 
   player1Right() {
 
-    this.player1.setVelocityX(100);
+    this.player1.setVelocityX(160);
     this.player1.anims.play('move_right1', true);
     //this.player1.flipX = true;
     this.dir1 = 1;
