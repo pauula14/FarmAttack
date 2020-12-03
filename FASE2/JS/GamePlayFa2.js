@@ -617,7 +617,7 @@ endArrived(player, end){
 
   player2Left() {
 
-    this.player2.setVelocityX(-100);
+    this.player2.setVelocityX(-160);
     this.player2.anims.play('move_left2', true);
     //this.player2.flipX = false;
     this.dir2 = 0;
@@ -626,7 +626,7 @@ endArrived(player, end){
 
   player2Right() {
 
-    this.player2.setVelocityX(100);
+    this.player2.setVelocityX(160);
     this.player2.anims.play('move_right2', true);
     //this.player2.flipX = true;
     this.dir2 = 1;
