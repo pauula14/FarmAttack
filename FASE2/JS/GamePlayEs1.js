@@ -124,7 +124,7 @@ class GamePlayEs1 extends Phaser.Scene{
     this.clockHUD.setDepth(2);
 
     //Timer
-    this.initialTime = 120;
+    this.initialTime = 35;
 
     this.text = this.add.text(gameWidth/2 - 25, 720, this.formatTime(this.initialTime), { fontFamily: "forte", fontSize: '32px', fill: '#000' });
     this.text.setDepth(2);
@@ -359,21 +359,18 @@ endArrived(player, end){
 
 
   player2Left() {
-
     this.player2.setVelocityX(-160);
     this.player2.anims.play('move_left2', true);
     this.dir2 = 0;
   }
 
   player2Right() {
-
     this.player2.setVelocityX(160);
     this.player2.anims.play('move_right2', true);
     this.dir2 = 1;
   }
 
   player2Stop() {
-
     this.player2.setVelocityX(0);
 
     if(this.dir2 == 1){
@@ -388,13 +385,12 @@ endArrived(player, end){
     if(this.P2_rightButton.isDown){
       this.player2Right();
     }
-
   }
 
   //GAME CONTROL
   FinNivelEs1(){
 
-    totalTime += 120 - this.initialTime;
+    totalTime += 35 - this.initialTime;
     finalPunt = (totalTime * 5)/4
 
     this.endTrigger1.setVisible(false);

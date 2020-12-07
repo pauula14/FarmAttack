@@ -168,7 +168,7 @@ class GamePlayEs2 extends Phaser.Scene{
     this.clockHUD.setDepth(2);
 
     //Timer
-    this.initialTime=120;
+    this.initialTime= 45;
 
     this.text = this.add.text(gameWidth/2 - 25, 720, this.formatTime(this.initialTime), {fontFamily: "forte", fontSize: '32px', fill: '#000' });
     this.text.setDepth(2);
@@ -455,13 +455,9 @@ endArrived(player, end){
     }
   }
 
-  eggCatched(){
-  }
-
 //GAME CONTROL
 
   PauseMenu(){
-
     this.clickSound.play();
 
     if(musicGameplay.isPlaying){
@@ -475,8 +471,7 @@ endArrived(player, end){
   }
 
   FinNivelEs2(){
-
-    totalTime += 120 - this.initialTime;
+    totalTime += 35 - this.initialTime;
     finalPunt = (totalTime * 5)/3;
 
     this.endTrigger1.setVisible(false);
@@ -491,7 +486,6 @@ endArrived(player, end){
     this.text.setVisible(false);
     this.movableStrawIconAct.setVisible(false);
     this.deletedPtfIconAct2.setVisible(false);
-
     this.pauseButtonEs2.setVisible(false);
     this.skipButtonL3.setVisible(true);
 
@@ -513,7 +507,6 @@ endArrived(player, end){
       },
     callbackScope: this
     }, this);
-
   }
 
   SkipPreloadL3(){
@@ -524,7 +517,6 @@ endArrived(player, end){
 
 
   GameOverEs2(){
-
     if(musicGameplay.isPlaying){
       musicGameplay.stop();
     }
@@ -546,18 +538,4 @@ endArrived(player, end){
       delay: 0
     };
   }
-
-
-/*
-  startDrag(player, objects){
-    this.input.off('down', this.startDrag,this);
-    this.dragObj = objects[0];
-    this.input.on('pointermove' , this.drag, this);
-  }
-
-  drag(){
-    this.dragObj.x=pointer.x;
-    this.dragObj.y=pointer.y;
-  }
-  */
 }

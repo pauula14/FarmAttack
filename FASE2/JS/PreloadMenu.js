@@ -28,7 +28,7 @@ class PreloadMenu extends Phaser.Scene{
       this.load.on("progress", function(value){
           percentText.setText(parseInt(value * 100) + ' %');
           progressBar.clear();
-          progressBar.fillStyle(0xCB2821, 1);
+          progressBar.fillStyle(0x000000, 1);
           progressBar.fillRect(210, 510, 980 * value, 30);
       });
 
@@ -43,7 +43,6 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundMenus', 'ASSETS/Interface/Main_background.jpg');
 
     //INIT MENU
-    //this.load.image('backgroundIM', 'ASSETS/Interface/Main_background.jpg');
     //Online
     this.load.image('onlineButton', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/online_button.png');
     this.load.image('onlineButtonBloc', 'ASSETS/Interface/OnlineOfflineMenu/Buttons/online_button_blocked.png');
@@ -62,7 +61,6 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('skipButtonSel', 'ASSETS/Interface/LevelPreload/SkipButton/skip_button_selected.png');
 
     //MAIN MENU
-    //this.load.image('backgroundMM', 'ASSETS/Interface/MainMenu/main_menu_buttons.jpg');
     //Play
     this.load.image('playButton', 'ASSETS/Interface/MainMenu/Buttons/play_button.png');
     this.load.image('playButtonSel', 'ASSETS/Interface/MainMenu/Buttons/play_button_selected.png');
@@ -76,15 +74,11 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('tutorialButton', 'ASSETS/Interface/MainMenu/Buttons/tutorial_button.png');
     this.load.image('tutorialButtonSel', 'ASSETS/Interface/MainMenu/Buttons/tutorial_button_selected.png');
 
-    //this.load.image('backButtonMM', 'ASSETS/MainMenu/BotonAtras.png');
-
     //TUTORIAL MENU
     this.load.image('backgroundTM', 'ASSETS/Interface/TutorialMenu/tutorial_menu_background.jpg');
-    //this.load.image('backButtonTM', 'ASSETS/TutorialMenu/BotonAtras.png');
 
     //CREDITS MENU
     this.load.image('backgroundCM', 'Assets/Interface/CreditsMenu/credits_menu_buttons.jpg');
-    //this.load.image('backButtonCM', 'ASSETS/Interface/CreditsMenu/BotonAtras.png');
 
     //OPTIONS MENU
     this.load.image('backgroundOM', 'ASSETS/Interface/OptionsMenu/options_menu_background.jpg');
@@ -92,7 +86,6 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('volUpButton', 'ASSETS/Interface/OptionsMenu/Buttons/more.png');
     this.load.image('volDownButtonSel', 'ASSETS/Interface/OptionsMenu/Buttons/less_selected.png');
     this.load.image('volUpButtonSel', 'ASSETS/Interface/OptionsMenu/Buttons/more_selected.png');
-    //this.load.image('backButtonOM', 'ASSETS/Interface/Options/VolumeDown.png');
 
 
     //GAME
@@ -108,7 +101,6 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('platformBale', 'ASSETS/Gameplay/Obstacles/hay_bale.png');//straw
     this.load.image('pipeline', 'ASSETS/Gameplay/Obstacles/facade2_pipeline.png');
     this.load.image('flowerPot', 'ASSETS/Gameplay/Obstacles/flower_pot.png');
-    //this.load.image('chicken1Stop', 'ASSETS/Placeholders/dude.png');
     this.load.image('egg', 'ASSETS/Gameplay/Objects/egg.png');
     this.load.image('eggWhite', 'ASSETS/Gameplay/Objects/white_egg.png');
     this.load.image('leverR', 'Assets/Gameplay/Objects/lever_right.png');
@@ -124,8 +116,6 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('basket1', 'ASSETS/Gameplay/Objects/white_egg_counter.png');
 
     this.load.image('clock', 'ASSETS/Gameplay/Objects/clock.png');
-
-    //this.load.image('fondoMapa1', 'ASSETS/Placeholders/FondoProvisional.jpeg');
 
     //SELECT MAP
     this.load.image('star', 'ASSETS/Placeholders/star.png');
@@ -172,8 +162,9 @@ class PreloadMenu extends Phaser.Scene{
     this.load.audio('eggSound', 'Assets/Music/RecogerHuevo.mp3');
     this.load.audio('clickSound', 'Assets/Music/click.mp3');
     this.load.audio('goalSound', 'Assets/Music/LlegarCesta.mp3');
+    this.load.audio('player_jump', 'Assets/Music/aleteo.mp3');
 
-
+    this.load.image('logo', 'Assets/Logo_KimeraGames.jpeg')
     /*this.backgroundPdM = this.add.image(0, 0, 'backgroundPdM');
     this.backgroundPdM.setPosition(gameWidth/2, gameHeight/2);*/
 
@@ -181,12 +172,18 @@ class PreloadMenu extends Phaser.Scene{
 
 
     //PASA AL MAIN MENU
-    this.load.on("complete", () => {
+    /*this.load.on("complete", () => {
       //prevScene = 'PreloadMenu';
       console.log("Complete");
       this.scene.start('InitMenu');
-    });
+    });*/
 
+
+    this.load.on("complete", () => {
+      percentText.destroy();
+      progressBar.destroy();
+      progressBox.destroy();
+	  });
 
 
   }
@@ -255,6 +252,20 @@ class PreloadMenu extends Phaser.Scene{
       frameRate:24,
       repeat:-1
 
+    });
+
+    this.logo = this.add.sprite(gameWidth*8/16, gameHeight*8/16, 'logo');
+    this.logo.setScale(2/3);
+    this.logo.alpha = 0;
+
+    this.tweens.add({
+      targets:this.logo,
+      duration: 2000,
+      alpha: 1,
+      yoyo: true,
+      hold: 2000,
+      completeDelay: 500,
+      onComplete:()=>this.scene.start('InitMenu')
     })
 
 
