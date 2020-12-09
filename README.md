@@ -130,6 +130,8 @@ El final de nivel se marcará con la palabra YOU WIN / YOU LOSE en función de s
 En esta pantalla el jugador podrá subir, bajar o muitear el volumen de la música.
 * __Controles:__ En esta pantalla el jugador podrá ver las mecánicas básicas y botones que debe utilizar para el movimiento.
 
+![DiagramaFlujo](https://github.com/pauula14/FarmAttack/blob/Fase2/FASE2/GDD/Diagrama%20de%20Flujo.PNG)
+
 ## 6. Arte 
 
 El arte será bastante simple, con un estilo similar al cartoon como se ha comentado en el apartado de estilo visual.
