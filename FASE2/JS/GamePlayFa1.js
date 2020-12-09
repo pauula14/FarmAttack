@@ -18,6 +18,14 @@ class GamePlayFa1 extends Phaser.Scene{
 
   create(){
 
+    this.dir1 = 1;
+    this.dir2 = 0;
+    this.numEgssP1 = 0;
+    this.numEgssP2 = 0;
+    this.end1Visible = false;
+    this.end2Visible = false;
+    this.playersArrived = 0;
+
     levelGameplay = 'GamePlayFa1';
 
     this.clickSound = this.sound.add('clickSound', this.EffectsConfig());

@@ -11,6 +11,8 @@ class GamePlayEs1 extends Phaser.Scene{
       this.dir2 = 0; //0 = izq, 1 = der
       this.endTrigger2Empty;
       this.endTrigger1Empty;
+      this.endTrigger2;
+      this.endTrigger1;
   }
 
   preload(){
@@ -19,6 +21,14 @@ class GamePlayEs1 extends Phaser.Scene{
   }
 
   create(){
+
+    this.dir1 = 1; 
+    this.dir2 = 0;
+    this.numEgssP1 = 0;
+    this.numEgssP2 = 0;
+    this.end1Visible = false;
+    this.end2Visible = false;
+    this.playersArrived = 0;
 
     levelGameplay = 'GamePlayEs1';
 
@@ -57,12 +67,14 @@ class GamePlayEs1 extends Phaser.Scene{
     // 3) OBJETOS DE CONTROL DE FLUJO
     this.endTrigger1Empty = this.physics.add.sprite(70, 99, 'basketEmpty').setOrigin(0).setSize(100, 100).setDepth(2).setScale(1).refreshBody();
     this.endTrigger1Empty.body.setAllowGravity(false);
+
     this.endTrigger1 = this.physics.add.sprite(30, 79, 'basket1').setOrigin(0).setSize(100, 100).setDepth(2).setScale(1).refreshBody();
     this.endTrigger1.body.setAllowGravity(false);
     this.endTrigger1.setVisible(false);
 
     this.endTrigger2Empty = this.physics.add.sprite(1240, 99, 'basketEmpty').setOrigin(0).setSize(100, 102).setDepth(2).setScale(1).refreshBody();
     this.endTrigger2Empty.body.setAllowGravity(false);
+
     this.endTrigger2 = this.physics.add.sprite(1220, 99, 'basket2').setOrigin(0).setSize(100, 102).setDepth(2).setScale(1).refreshBody();
     this.endTrigger2.body.setAllowGravity(false);
     this.endTrigger2.setVisible(false);
@@ -252,7 +264,6 @@ class GamePlayEs1 extends Phaser.Scene{
 
     if(this.numEgssP1 == 3){
       this.end1Visible = true;
-
       this.time.addEvent({
         delay: 2500,
         callback: function() {
