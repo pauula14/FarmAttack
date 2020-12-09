@@ -156,13 +156,13 @@ Al igual que las gallinas, habrá dos sprites distintos, indicando de esta forma
 Además, estos huevos se irán almacenando en dos cestas distintas, las cuáles se llenarán cuando se recogan los 3 huevos referentes a cada cesta, respectivamente.
 
 ![empty_egg_counter](https://user-images.githubusercontent.com/55493193/101579529-7267ef80-39da-11eb-8338-3716746b6ce4.png)
-![white_egg](https://user-images.githubusercontent.com/55493193/101578070-084f4a80-39da-11eb-90ed-440fcc65c010.png)
-![white_egg_counter](https://user-images.githubusercontent.com/55493193/101580588-be1a9900-39da-11eb-9a83-80ac05866648.png)
-![egg](https://user-images.githubusercontent.com/55493193/101578074-084f4a80-39da-11eb-84e0-3e9adc9e8d90.png)
 ![egg_counter](https://user-images.githubusercontent.com/55493193/101579633-798efd80-39da-11eb-8347-903bb76704e2.png)
+![white_egg_counter](https://user-images.githubusercontent.com/55493193/101580588-be1a9900-39da-11eb-9a83-80ac05866648.png)
+![white_egg](https://user-images.githubusercontent.com/55493193/101578070-084f4a80-39da-11eb-90ed-440fcc65c010.png)
+![egg](https://user-images.githubusercontent.com/55493193/101578074-084f4a80-39da-11eb-84e0-3e9adc9e8d90.png)
 
 ### 6.2. Audio  
-El audio lo separaremos en dos ámbitos  
+El audio lo separaremos en dos:  
 * __Menús:__ Esta música ambiental no muy enérgica y con un loop corto ya que el jugador no pasará mucho tiempo.   
 * __In-Game:__ Esta música por el contrario tendrá un énfasis más elevado y con mayor ritmo. Tendrá pequeñas variaciones en función del mapa que se elija pero con un trasfondo común.
 
