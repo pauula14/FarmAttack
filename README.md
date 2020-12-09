@@ -41,7 +41,6 @@ Diego Pérez Pérez         d.perezp.2017@alumnos.urjc.es   diegoperezp2@gmail.c
 6. Arte   
       1. Arte 2D   
       2. Audio 
-7. Referencias  
 
 ## 1. Cambios
 
@@ -170,6 +169,10 @@ Pantalla que aparecerá en el caso de que se haya acabado el tiempo en el nivel 
 ## 6. Arte 
 
 El arte será bastante simple, con un estilo similar al cartoon como se ha comentado en el apartado de estilo visual.
+Antes de centrarnos en los distintos elementos que componen el arte del juego, se mostrará un concept art que se realizó para el gameplay:
+
+![Boceto escenario](https://user-images.githubusercontent.com/55493193/101650916-c4416180-3a3c-11eb-9d7b-854e880fec22.jpg)
+
 El fondo será estático y del tamaño del canvas. A medida que vayamos avanzando en el juego nos encontraremos con tres temáticas distintas de escenarios.
 Los dos primeros niveles se desarrollarán en un corral o gallinero,  con un fondo de madera, fardos de heno y cajas como obstáculos y paja sobre algunas de las plataformas. A continuación se muestra el diseño de dicho mapa:
 
@@ -203,6 +206,3 @@ Podemos encontrar audio en nuestro juego de las siguientes formas:
 * __Efectos de sonido:__ Hemos añadido efectos sonoros para las principales acciones del juego, como el sonido al pulsan un botón de la pantalla, el sonidocuando el pèrsonaje recoge un huevo y el sonido cuando el personaje desbloquea la meta.
 * __Menús:__ Esta música ambiental no muy enérgica y con un loop corto ya que el jugador no pasará mucho tiempo.   
 * __In-Game:__ Esta música por el contrario tendrá un énfasis más elevado y con mayor ritmo. Tendrá pequeñas variaciones en función del mapa que se elija pero con un trasfondo común.
-
-
-## 7. Referencias  
