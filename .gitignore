@@ -1,3 +1,2 @@
-
-FASE2/.vscode/launch.json
-debug.log
+*.log
+.vscode/*
