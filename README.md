@@ -47,7 +47,7 @@ Diego Pérez Pérez         d.perezp.2017@alumnos.urjc.es   diegoperezp2@gmail.c
 
 Esta es la primera fase de desarrollo del juego, así que de momento no se ha aplicado ningún cambio.
 
-##2. Introducción
+## 2. Introducción
 
 Este es el documento de diseño del juego titulado “Farm Attack”. Este escrito tiene como objetivo principal plasmar los elementos que debe incluir Farm Attack y servir de carta de presentación en caso de buscar colaboradores en un futuro. Para el desarrollo del juego utilizaremos Phaser 3 como motor de renderizado. 
 
