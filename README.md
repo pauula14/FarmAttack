@@ -165,7 +165,7 @@ Además, estos huevos se irán almacenando en dos cestas distintas, las cuáles 
 
 ### 6.2. Audio  
 Podemos encontrar audio en nuestro juego de las siguientes formas:
-* __Efectos de sonido:__ 
+* __Efectos de sonido:__ Hemos añadido efectos sonoros para las principales acciones del juego, como el sonido al pulsan un botón de la pantalla, el sonidocuando el pèrsonaje recoge un huevo y el sonido cuando el personaje desbloquea la meta.
 * __Menús:__ Esta música ambiental no muy enérgica y con un loop corto ya que el jugador no pasará mucho tiempo.   
 * __In-Game:__ Esta música por el contrario tendrá un énfasis más elevado y con mayor ritmo. Tendrá pequeñas variaciones en función del mapa que se elija pero con un trasfondo común.
 
