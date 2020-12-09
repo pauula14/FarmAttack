@@ -157,6 +157,9 @@ Además, estos huevos se irán almacenando en dos cestas distintas, las cuáles 
 
 ![white_egg](https://user-images.githubusercontent.com/55493193/101578070-084f4a80-39da-11eb-90ed-440fcc65c010.png)
 ![egg](https://user-images.githubusercontent.com/55493193/101578074-084f4a80-39da-11eb-84e0-3e9adc9e8d90.png)
+![empty_egg_counter](https://user-images.githubusercontent.com/55493193/101579529-7267ef80-39da-11eb-8338-3716746b6ce4.png)
+![white_egg_counter](https://user-images.githubusercontent.com/55493193/101579608-77c53a00-39da-11eb-8e38-9df6553f1735.png)
+![egg_counter](https://user-images.githubusercontent.com/55493193/101579633-798efd80-39da-11eb-8347-903bb76704e2.png)
 
 ### 6.2. Audio  
 El audio lo separaremos en dos ámbitos  
