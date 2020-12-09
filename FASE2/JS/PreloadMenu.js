@@ -87,9 +87,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('volDownButtonSel', 'ASSETS/Interface/OptionsMenu/Buttons/less_selected.png');
     this.load.image('volUpButtonSel', 'ASSETS/Interface/OptionsMenu/Buttons/more_selected.png');
 
-
     //GAME
-    this.load.image('backgroundGM', 'ASSETS/Gameplay/FondoJuego.jpg');
     this.load.image('backgroundEs1', 'ASSETS/Gameplay/Maps/barn1.jpg'); //establo 1
     this.load.image('backgroundEs2', 'ASSETS/Gameplay/Maps/barn2.jpg'); //establo 2
     this.load.image('backgroundFa1', 'ASSETS/Gameplay/Maps/facade1.jpg'); //fachada 1
@@ -116,9 +114,6 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('basket1', 'ASSETS/Gameplay/Objects/white_egg_counter.png');
 
     this.load.image('clock', 'ASSETS/Gameplay/Objects/clock.png');
-
-    //SELECT MAP
-    this.load.image('star', 'ASSETS/Placeholders/star.png');
 
     //PAUSE MENU
     this.load.image('backgroundPM', 'ASSETS/Interface/PauseMenu/pause_menu_buttons.png');
@@ -164,20 +159,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.audio('goalSound', 'Assets/Music/LlegarCesta.mp3');
     this.load.audio('player_jump', 'Assets/Music/aleteo.mp3');
 
-    this.load.image('logo', 'Assets/Logo_KimeraGames.jpeg')
-    /*this.backgroundPdM = this.add.image(0, 0, 'backgroundPdM');
-    this.backgroundPdM.setPosition(gameWidth/2, gameHeight/2);*/
-
-
-
-
-    //PASA AL MAIN MENU
-    /*this.load.on("complete", () => {
-      //prevScene = 'PreloadMenu';
-      console.log("Complete");
-      this.scene.start('InitMenu');
-    });*/
-
+    this.load.image('logo', 'Assets/Logo_KimeraGames.jpeg');
 
     this.load.on("complete", () => {
       percentText.destroy();
@@ -266,16 +248,11 @@ class PreloadMenu extends Phaser.Scene{
       hold: 2000,
       completeDelay: 500,
       onComplete:()=>this.scene.start('InitMenu')
-    })
-
-
-
+    });
 
   }
 
-  update(){
 
-  }
 
 
 }
