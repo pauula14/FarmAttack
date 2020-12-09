@@ -162,7 +162,8 @@ Además, estos huevos se irán almacenando en dos cestas distintas, las cuáles 
 ![egg](https://user-images.githubusercontent.com/55493193/101578074-084f4a80-39da-11eb-84e0-3e9adc9e8d90.png)
 
 ### 6.2. Audio  
-El audio lo separaremos en dos:  
+Podemos encontrar audio en nuestro juego de las siguientes formas:
+* __Efectos de sonido:__ 
 * __Menús:__ Esta música ambiental no muy enérgica y con un loop corto ya que el jugador no pasará mucho tiempo.   
 * __In-Game:__ Esta música por el contrario tendrá un énfasis más elevado y con mayor ritmo. Tendrá pequeñas variaciones en función del mapa que se elija pero con un trasfondo común.
 
