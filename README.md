@@ -148,8 +148,14 @@ El último nivel se desarrollará en el bosque, donde se escondería el zorro en
 
 Las gallinas, o personajes jugables, tendrán un estilo definido y simple, con unos cuerpos estilizados que, combinados con el uso de colores planos y contornos en negro, las harán más adorables, graciosas y atractivas visualmente. Las dos gallinas tienen la misma forma del cuerpo y las mismas animaciones, pero distintos colores en el plumaje para diferenciarlas.
 
+![white_chicken_walk](https://user-images.githubusercontent.com/55493193/101577982-01c0d300-39da-11eb-99b0-da32735798f8.png)
+![brown_chicken_walk](https://user-images.githubusercontent.com/55493193/101577992-02596980-39da-11eb-8037-781c543f74db.png)
+
 Los huevos conservarán la misma estética de las gallinas empleando contornos en negro, pero, emitirán un sueve brillo para que resalten un poco más en el mapa.
 Al igual que las gallinas, habrá dos sprites distintos, indicando de esta forma qué huevos corresponden a cada gallina. Así, la gallina marrón recogerá los huevos blancos, los cuáles tienen un brillo más marrón; y la gallina blanca recogerá los huevos marrones, que a diferencia de los anteriores tienen un brillo blanco.
+
+![white_egg](https://user-images.githubusercontent.com/55493193/101578070-084f4a80-39da-11eb-90ed-440fcc65c010.png)
+![egg](https://user-images.githubusercontent.com/55493193/101578074-084f4a80-39da-11eb-84e0-3e9adc9e8d90.png)
 
 ### 6.2. Audio  
 El audio lo separaremos en dos ámbitos  
