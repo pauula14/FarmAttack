@@ -153,6 +153,7 @@ Las gallinas, o personajes jugables, tendrán un estilo definido y simple, con u
 
 Los huevos conservarán la misma estética de las gallinas empleando contornos en negro, pero, emitirán un sueve brillo para que resalten un poco más en el mapa.
 Al igual que las gallinas, habrá dos sprites distintos, indicando de esta forma qué huevos corresponden a cada gallina. Así, la gallina marrón recogerá los huevos blancos, los cuáles tienen un brillo más marrón; y la gallina blanca recogerá los huevos marrones, que a diferencia de los anteriores tienen un brillo blanco.
+Además, estos huevos se irán almacenando en dos cestas distintas, las cuáles se llenarán cuando se recogan los 3 huevos referentes a cada cesta, respectivamente.
 
 ![white_egg](https://user-images.githubusercontent.com/55493193/101578070-084f4a80-39da-11eb-90ed-440fcc65c010.png)
 ![egg](https://user-images.githubusercontent.com/55493193/101578074-084f4a80-39da-11eb-84e0-3e9adc9e8d90.png)
