@@ -34,11 +34,8 @@ Diego Pérez Pérez         d.perezp.2017@alumnos.urjc.es   diegoperezp2@gmail.c
                  3.2 Controles  
 4. Interfaz   
 5. Diagrama de flujo   
-       1. Menú principal   
-       2. Selección de nivel   
-       3. Nivel   
-       4. Fin de nivel   
-6. Arte   
+6. Diagrama de navegación 
+7. Arte   
       1. Arte 2D   
       2. Audio 
 
@@ -162,11 +159,12 @@ Pantalla que aparecerá en el caso de que se haya acabado el tiempo en el nivel 
 
 ![DiagramaFlujo](https://github.com/pauula14/FarmAttack/blob/Fase2/FASE2/GDD/Diagrama%20de%20Flujo.PNG)
 
-## 5. Diagrama de navegación 
+## 6. Diagrama de navegación 
 
 ![DiagramaNavegacion](https://github.com/pauula14/FarmAttack/blob/main/FASE2/GDD/Diagrama%20de%20navegaci%C3%B3n.jpg)
 
-## 6. Arte 
+## 7. Arte 
+### 7.1. Arte 2D 
 
 El arte será bastante simple, con un estilo similar al cartoon como se ha comentado en el apartado de estilo visual.
 Antes de centrarnos en los distintos elementos que componen el arte del juego, se mostrará un concept art que se realizó para el gameplay:
@@ -201,7 +199,7 @@ Además, estos huevos se irán almacenando en dos cestas distintas, las cuáles 
 ![white_egg](https://user-images.githubusercontent.com/55493193/101578070-084f4a80-39da-11eb-90ed-440fcc65c010.png)
 ![egg](https://user-images.githubusercontent.com/55493193/101578074-084f4a80-39da-11eb-84e0-3e9adc9e8d90.png)
 
-### 6.2. Audio  
+### 7.2. Audio  
 Podemos encontrar audio en nuestro juego de las siguientes formas:
 * __Efectos de sonido:__ Hemos añadido efectos sonoros para las principales acciones del juego, como el sonido al pulsan un botón de la pantalla, el sonidocuando el pèrsonaje recoge un huevo y el sonido cuando el personaje desbloquea la meta.
 * __Menús:__ Esta música ambiental no muy enérgica y con un loop corto ya que el jugador no pasará mucho tiempo.   
