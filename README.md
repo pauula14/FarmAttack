@@ -139,6 +139,12 @@ Pantalla que aparecerá en el caso de que se haya acabado el tiempo en el nivel 
 
 ![DiagramaFlujo](https://github.com/pauula14/FarmAttack/blob/Fase2/FASE2/GDD/Diagrama%20de%20Flujo.PNG)
 
+## 5. Diagrama de navegación 
+
+
+
+![DiagramaNavegacion](https://github.com/pauula14/FarmAttack/blob/main/FASE2/GDD/Diagrama%20de%20navegaci%C3%B3n.jpg)
+
 ## 6. Arte 
 
 El arte será bastante simple, con un estilo similar al cartoon como se ha comentado en el apartado de estilo visual.
