@@ -113,22 +113,29 @@ Habrá tres personajes, pero sólo dos serán jugables:
 
    La interfaz tendrá un estilo minimalista y simple. Los menús serán poco cargados y muy intuitivos, inspirados en un corral, compuestos de un fondo de madera con algunas plumas encima, un título y unos botones. Estos últimos tendrán un color algo más claro que el fondo y unas letras cartoon blancas, las cuáles cambiarán a rojo cuando se pase el ratón por encima del botón en cuestión, dándole un feedback visual al jugador.
    Al inicio de cada nivel se mostrará una pantalla con los controles y consejos para superarlo, una vez desaparezca o saltemos esta pantalla, para tener una interfaz sencilla y simple,durante el gameplay únicamente se mostrarán el botón de pausa y el indicador del tiempo en el HUD, de modo que los jugadores no tengan que preocuparse en estar atentos a demasiados elementos y así centrarse más en la resolución de los propios niveles.
+   
+   * __Menú inicial__  
+Pantalla que incluirá el título del videojuego en la que se elegirá el modo de juego (OFFLINE / ONLINE)  
+* __Menú principal__  
+Pantalla con el mismo fondo que el menú inicial en la que se podrá elegir entre PLAY, TUTORIAL, OPTIONS o CREDITS.  
+* __Menú tutorial__  
+Pantalla que nos mostrará los controles y dinámicas principales del gameplay, se podrá volver al menú principal mediante un botón BACK.
+* __Menú opciones:__
+Pantalla en la que el jugador podrá subir, bajar o mutear el volumen de la música, se podrá volver al menú principal mediante un botón BACK.
+* __Créditos:__
+Pantalla en la que se mostrarán los nombres de los desarrolladores de Farm Attack, se podrá volver al menú principal mediante un botón BACK.
+* __Inicio nivel__   
+Pantalla que aparecerá al inicio de cada nivel y nos mostrará algunos consejos para superarlo, se podrá saltar mediante un botón SKIP.
+* __Menú pausa__  
+Pantalla que aparecerá cuando pausemos el gameplay, se podrá elegir entre RESUME, TUTORIAL, OPTIONS o QUIT. 
+* __You win__  
+Pantalla que aparecerá una vez hayamos completado el último nivel del juego, nos mostrará el tiempo total invertido, la puntuación, y nos dará la opción de continuar mediante el botón CONTINUE.
+* __Game over__  
+Pantalla que aparecerá en el caso de que se haya acabado el tiempo en el nivel que se esté jugando, se podrá reintentar el nivel mediante el botón RETRY y volver al menú principal mediante el botón QUIT.
 
 ## 5. Diagrama de flujo 
 
-* __Menú inicial__
-Pantalla con la carátula del juego en la que el jugador sólo debe hacer click en cualquier parte
-* __Menú Selección__  
-Pantalla simple en la que se elegirá el modo de juego. (OFFLINE / ONLINE)  
-* __Menú Principal__  
-Pantalla con el mismo fondo que el menú de selección en el que se debe elegir entre Jugar, opciones, controles y salir.  
-* __Nivel__   
-El nivel tendrá un fondo minimalista ambientado en una granja para dar mayor importancia a los personajes de los jugadores.  
-* __Fin de nivel__  
-El final de nivel se marcará con la palabra YOU WIN / YOU LOSE en función de si los jugadores han logrado recuperar todos los huevos o por el contrario, se les ha acabado el tiempo. Tras aceptar dicha pantalla volverás al menú principal.
-* __Opciones:__
-En esta pantalla el jugador podrá subir, bajar o muitear el volumen de la música.
-* __Controles:__ En esta pantalla el jugador podrá ver las mecánicas básicas y botones que debe utilizar para el movimiento.
+
 
 ![DiagramaFlujo](https://github.com/pauula14/FarmAttack/blob/Fase2/FASE2/GDD/Diagrama%20de%20Flujo.PNG)
 
