@@ -146,9 +146,10 @@ El último nivel se desarrollará en el bosque, donde se escondería el zorro en
 
 ![forest](https://user-images.githubusercontent.com/55493193/101559296-1fce0980-39c1-11eb-9f17-80ce484432da.jpg)
 
-Los personajes serán una complexión estilo 'Phineas y Ferb' definidos y visualmente atractivos.
-Por otro lado, los escenarios variarán según el momento del juego en que nos encontremos.
-Los huevos serán iguales en todo el mapa, bastante simples.
+Las gallinas, o personajes jugables, tendrán un estilo definido y simple, con unos cuerpos estilizados que, combinados con el uso de colores planos y contornos en negro, las harán más adorables, graciosas y atractivas visualmente. Las dos gallinas tienen la misma forma del cuerpo y las mismas animaciones, pero distintos colores en el plumaje para diferenciarlas.
+
+Los huevos conservarán la misma estética de las gallinas empleando contornos en negro, pero, emitirán un sueve brillo para que resalten un poco más en el mapa.
+Al igual que las gallinas, habrá dos sprites distintos, indicando de esta forma qué huevos corresponden a cada gallina. Así, la gallina marrón recogerá los huevos blancos, los cuáles tienen un brillo más marrón; y la gallina blanca recogerá los huevos marrones, que a diferencia de los anteriores tienen un brillo blanco.
 
 ### 6.2. Audio  
 El audio lo separaremos en dos ámbitos  
