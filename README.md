@@ -136,10 +136,15 @@ El arte será bastante simple, con un estilo similar al cartoon como se ha comen
 El fondo será estático y del tamaño del canvas. A medida que vayamos avanzando en el juego nos encontraremos con tres temáticas distintas de escenarios.
 Los dos primeros niveles se desarrollarán en un corral o gallinero,  con un fondo de madera, fardos de heno y cajas como obstáculos y paja sobre algunas de las plataformas. A continuación se muestra el diseño de dicho mapa:
 
+![barn2](https://user-images.githubusercontent.com/55493193/101559271-15137480-39c1-11eb-881d-bd8a7505b4a9.jpg)
+
 En el tercer y cuarto nivel los jugadores se desplazarán a la fachada de la granja, con un fondo clásico formado por ladrillos rojos adosados, algunas flores y plantas a modo de decoración, macetas como obstáculos y una tubería encargada de dividir las zonas transitables por cada jugador.
+
+![facade2](https://user-images.githubusercontent.com/55493193/101559288-1d6baf80-39c1-11eb-803c-30b9f28bad00.jpg)
 
 El último nivel se desarrollará en el bosque, donde se escondería el zorro en futuras actualizaciones, este escenario está compuesto de un fondo formado por distintos arbustos colocados a diferentes profundidades, ramas a modo de plataformas y hojas e hierba como decoración.
 
+![forest](https://user-images.githubusercontent.com/55493193/101559296-1fce0980-39c1-11eb-9f17-80ce484432da.jpg)
 
 Los personajes serán una complexión estilo 'Phineas y Ferb' definidos y visualmente atractivos.
 Por otro lado, los escenarios variarán según el momento del juego en que nos encontremos.
