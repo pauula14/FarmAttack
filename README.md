@@ -116,32 +116,54 @@ Habrá tres personajes, pero sólo dos serán jugables:
    
    * __Menú inicial__  
 Pantalla que incluirá el título del videojuego en la que se elegirá el modo de juego (OFFLINE / ONLINE)  
+
+![onlin_offline_menu_buttons](https://user-images.githubusercontent.com/55493193/101650400-2cdc0e80-3a3c-11eb-9043-7137a001b38e.jpg)
+
 * __Menú principal__  
 Pantalla con el mismo fondo que el menú inicial en la que se podrá elegir entre PLAY, TUTORIAL, OPTIONS o CREDITS.  
+
+![main_menu_buttons](https://user-images.githubusercontent.com/55493193/101650388-29e11e00-3a3c-11eb-8c0c-ad88ff9cc3d7.jpg)
+
 * __Menú tutorial__  
 Pantalla que nos mostrará los controles y dinámicas principales del gameplay, se podrá volver al menú principal mediante un botón BACK.
+
+![tutorial_menu_background](https://user-images.githubusercontent.com/55493193/101650448-38c7d080-3a3c-11eb-906b-72dfba16089e.jpg)
+
 * __Menú opciones:__
 Pantalla en la que el jugador podrá subir, bajar o mutear el volumen de la música, se podrá volver al menú principal mediante un botón BACK.
+
+![options_menu_buttons](https://user-images.githubusercontent.com/55493193/101650413-2fd6ff00-3a3c-11eb-9123-8dfc1e2f7107.jpg)
+
 * __Créditos:__
 Pantalla en la que se mostrarán los nombres de los desarrolladores de Farm Attack, se podrá volver al menú principal mediante un botón BACK.
+
+![credits_menu_buttons](https://user-images.githubusercontent.com/55493193/101650356-20f04c80-3a3c-11eb-97d6-5d797aca3dd9.jpg)
+
 * __Inicio nivel__   
 Pantalla que aparecerá al inicio de cada nivel y nos mostrará algunos consejos para superarlo, se podrá saltar mediante un botón SKIP.
+
+![level1](https://user-images.githubusercontent.com/55493193/101650378-277ec400-3a3c-11eb-8878-8f9d5df78961.jpg)
+
 * __Menú pausa__  
 Pantalla que aparecerá cuando pausemos el gameplay, se podrá elegir entre RESUME, TUTORIAL, OPTIONS o QUIT. 
+
+![pause_menu_buttons](https://user-images.githubusercontent.com/55493193/101650430-35cce000-3a3c-11eb-8c53-7899d3ec6905.png)
+
 * __You win__  
 Pantalla que aparecerá una vez hayamos completado el último nivel del juego, nos mostrará el tiempo total invertido, la puntuación, y nos dará la opción de continuar mediante el botón CONTINUE.
+
+![victory_menu_buttons](https://user-images.githubusercontent.com/55493193/101650459-3bc2c100-3a3c-11eb-8b43-476d0bc5a6b4.jpg)
+
 * __Game over__  
 Pantalla que aparecerá en el caso de que se haya acabado el tiempo en el nivel que se esté jugando, se podrá reintentar el nivel mediante el botón RETRY y volver al menú principal mediante el botón QUIT.
 
+![game_over_menu_buttons](https://user-images.githubusercontent.com/55493193/101650365-23eb3d00-3a3c-11eb-9932-fb778f21533f.jpg)
+
 ## 5. Diagrama de flujo 
-
-
 
 ![DiagramaFlujo](https://github.com/pauula14/FarmAttack/blob/Fase2/FASE2/GDD/Diagrama%20de%20Flujo.PNG)
 
 ## 5. Diagrama de navegación 
-
-
 
 ![DiagramaNavegacion](https://github.com/pauula14/FarmAttack/blob/main/FASE2/GDD/Diagrama%20de%20navegaci%C3%B3n.jpg)
 
