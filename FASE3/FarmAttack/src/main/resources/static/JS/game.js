@@ -25,7 +25,7 @@ window.onload = function(){
     //URL del JUEGO
     //utl: "http://farmAttack.es",
 
-    scene: [PreloadMenu, InitMenu, Chat, MainMenu, OptionsMenu, TutorialMenu, CreditsMenu, GamePlayEs1, GamePlayEs2, GamePlayFa1, GamePlayFa2, GamePlayFo1, PauseMenu, GameOver, Winner]
+    scene: [PreloadMenu, InitMenu, NickName, Chat, MainMenu, OptionsMenu, TutorialMenu, CreditsMenu, GamePlayEs1, GamePlayEs2, GamePlayFa1, GamePlayFa2, GamePlayFo1, PauseMenu, GameOver, Winner]
 
   }
 
@@ -64,3 +64,48 @@ var musicGameplay;// = this.sound.add('levelMusic', config);
 
 var prevScene = 'PreloadMenu';
 var levelGameplay = 'GamePlayEs1';
+
+
+function Alive(){
+  var url = game.url+'/'+game.name;
+  $.ajax({
+  method: "GET",
+  url:url,
+  }).done(function(value){
+    console.log("Todo va bien");
+  }).fail(function (value) {
+    if(value.status == 200){
+      console.log("Todo va bien");
+    }else if(value.status == 0){
+     console.log("Servidor caido");
+     game.scene.start('ServidorCaido');
+   }else{
+     console.log("Fallo de conexion con el servidor");
+   }
+  });
+
+  var url = game.url;
+  $.ajax({
+	  method: "GET",
+	  url:url,
+	  }).done(function(value){
+      getonline(value);
+	  }).fail(function (value) {
+	    if(value.status == 200){
+	      getonline(value);
+	    }else{
+	     console.log("ERROR");
+	     game.scene.sendToBack('Juego');
+	 	 game.scene.stop('Juego');
+	 	 game.scene.bringToTop('ServidorCaido');
+	   }
+	  });
+}
+
+function getonline(value){
+  for(var i=0 ; i<value.length;i++){
+    if(value[i].online){
+      console.log(value[i].name +" is online");
+    }
+  }
+}

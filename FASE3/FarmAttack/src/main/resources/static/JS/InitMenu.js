@@ -61,8 +61,7 @@ class InitMenu extends Phaser.Scene{
     prevScene = 'InitMenu';
     
     this.scene.stop("InitMenu");
-    this.scene.start("Chat");
-    console.log("El modo online aún no está listo")
+    this.scene.start("NickName");
   }
 
   GameOffline(){
