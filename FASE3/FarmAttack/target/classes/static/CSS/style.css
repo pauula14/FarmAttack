@@ -51,14 +51,6 @@
   margin: 25px;
 }
 
-.info{
-  padding: 25px;
-  padding-top: 1px;
-  padding-bottom: 50px;
-  background-image: url(../assets/img/asus01.png);
-  text-align: center;
-  size: 480px,720px;
-}
 
 .info em {
   font-size: 200%;

@@ -14,6 +14,9 @@ window.onload = function(){
          gravity: { y: 500 }
       }
     },
+    dom: {
+        createContainer: true
+    },
     scale:{
       mode: Phaser.Scale.FIT, //hace que se adapte a cambios de tamaño
       autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -64,6 +67,10 @@ var musicGameplay;// = this.sound.add('levelMusic', config);
 
 var prevScene = 'PreloadMenu';
 var levelGameplay = 'GamePlayEs1';
+
+//Nickname
+var url = String(window.location+'users');
+var name = null;
 
 
 function Alive(){

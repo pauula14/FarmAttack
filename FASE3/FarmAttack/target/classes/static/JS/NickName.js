@@ -13,26 +13,30 @@ class NickName extends Phaser.Scene{
 
  create ()
 {
-
+    
     //background image and rescale
-    this.scene.background =this.add.image(gameWidth/2,gameHeight/2,"fondo");
-    this.scene.background.displayHeight = gameHeight;
-    this.scene.background.scaleY = this.scene.background.scaleX;
+    this.background =this.add.image(gameWidth/2,gameHeight/2,"fondo");
+    //this.background.setDepth(-1);
+    //this.scene.background.displayHeight = gameHeight;
+   // this.scene.background.scaleY = this.scene.background.scaleX;
 
     //Font style for leters
-    var style = {fontFamily: "Maiandra GD",fontSize:55, color: '#ffcc00', boundsAlignH: "center", boundsAlignV: "middle", stroke:'#000000', strokeThickness: 5};
-
+    var style = {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#000000", stroke: "#000000"};
+    
     //+ to check center
     //game.scene.text = this.add.text(gameWidth/2,gameHeight/2,'+',style);
 
-    this.text = this.add.text(gameWidth*0.6, gameHeight*1.75, 'Introduzca su Nickname',style);
+    this.text = this.add.text(gameWidth*5/16, gameHeight*10/16, 'Introduzca su Nickname',style);
+   // this.text = this.add.text(gameWidth*8.2/16, gameHeight*9.2/16,  'Introduzca su Nickname', {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#000000", stroke: "#000000"});
+    
 
     //Animation for input name and loginButton
-    this.element = this.add.dom(gameWidth, gameHeight/2).createFromCache('nameform');
-/*
-    this.tweens.add({
+    this.nickname = this.add.dom(gameWidth*8/16, gameHeight*7/16).createFromCache('nameform');
+    this.nickname.setDepth(2);
+
+  /*  this.tweens.add({
         targets: this.element,
-        y: gameHeight*0.8,
+        y: this.levelHeight*0.8,
         duration: 1000,
         ease: 'Power3'
     });
@@ -44,8 +48,8 @@ class NickName extends Phaser.Scene{
 
   update(){
       jQuery.ajaxSetup({async:false});
-      this.element.addListener('click');
-      this.element.on('click', function (event) {
+      this.nickname.addListener('click');
+      this.nickname.on('click', function (event) {
          if (event.target.name === 'loginButton')
          {
            if(!this.chekcing){
@@ -54,14 +58,15 @@ class NickName extends Phaser.Scene{
            //-------------------------------------------------------DEBUG-----------------------------------------------------------
            //document.getElementById('nickname').value = "Prothoky";
            //-------------------------------------------------------DEBUG-----------------------------------------------------------
-           game.nick = document.getElementById('nickname');
-             if (game.nick.value != '')
+           this.nick = document.getElementById('nickname'); //todos en los que pone this.nick antes ponia game.nick
+           
+             if (this.nick.value != '')
              {
-               let data = {ip: '', name: game.nick.value, score:0, online:false, lastconection : Date.now()};
+               let data = {ip: '', name: this.nick.value, score:0, online:false, lastconection : Date.now()};
 
                $.ajax({
                  method: "POST",
-                 url:game.url,
+                 url:this.url,
                  data: JSON.stringify(data),
                  processData: false,
                  async:false,
@@ -69,29 +74,29 @@ class NickName extends Phaser.Scene{
                  contentType: 'application/json',
                }).done(function (){
                  console.log("Register success");
-                 game.name = game.nick.value;
+                 this.name = this.nick.value;
                  goMenuPrincipal();
              }).fail(function (value) {
                  if(value.status == 201){
                    console.log("Register success");
-                   game.name=game.nick.value;
+                   this.name=this.nick.value;
                    goMenuPrincipal();
                  }
                  else{
                    //text.text = "El usuario ya existe";
-                   var url = game.url+'/'+game.nick.value;
+                   var url = this.url+'/'+this.nick.value;
                    $.ajax({
                    method: "GET",
                    async:false,
                    url:url,
                    }).done(function(value){
                      console.log("Login");
-                     game.name = game.nick.value;
+                     this.name = this.nick.value;
                      goMenuPrincipal();
                    }).fail(function (value) {
                      if(value.status == 200){
                        console.log("Login");
-                       game.name = game.nick.value;
+                       this.name = this.nick.value;
                        goMenuPrincipal();
                      }else if(value.status == 0){
                       console.log("Servidor caido");
@@ -126,7 +131,6 @@ class NickName extends Phaser.Scene{
 
 function goMenuPrincipal(){
   console.log("ENVIADO")
-
 }
 
 function register(url, data){
