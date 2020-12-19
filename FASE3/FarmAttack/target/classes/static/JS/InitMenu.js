@@ -65,7 +65,6 @@ class InitMenu extends Phaser.Scene{
 
   GameOffline(){
     this.clickSound.play();
-
     musicMenu.play();
     prevScene = 'InitMenu';
     this.scene.stop("InitMenu");

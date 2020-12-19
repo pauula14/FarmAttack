@@ -11,142 +11,125 @@ class NickName extends Phaser.Scene{
 	    this.load.image('fondo', 'Assets/Interface/Main_background.jpg'); //FONDO
 	}
 
- create ()
-{
-    
-    //background image and rescale
-    this.background =this.add.image(gameWidth/2,gameHeight/2,"fondo");
-    //this.background.setDepth(-1);
-    //this.scene.background.displayHeight = gameHeight;
-   // this.scene.background.scaleY = this.scene.background.scaleX;
-
-    //Font style for leters
-    var style = {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#000000", stroke: "#000000"};
-    
-    //+ to check center
-    //game.scene.text = this.add.text(gameWidth/2,gameHeight/2,'+',style);
-
-    this.text = this.add.text(gameWidth*5/16, gameHeight*10/16, 'Introduzca su Nickname',style);
-   // this.text = this.add.text(gameWidth*8.2/16, gameHeight*9.2/16,  'Introduzca su Nickname', {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#000000", stroke: "#000000"});
-    
-
-    //Animation for input name and loginButton
-    this.nickname = this.add.dom(gameWidth*8/16, gameHeight*7/16).createFromCache('nameform');
-    this.nickname.setDepth(2);
-
-  /*  this.tweens.add({
-        targets: this.element,
-        y: this.levelHeight*0.8,
-        duration: 1000,
-        ease: 'Power3'
-    });
-*/
-    this.checking=false;
-    console.log('CREATE FINISH');
-
-  }
-
-  update(){
-      jQuery.ajaxSetup({async:false});
-      this.nickname.addListener('click');
-      this.nickname.on('click', function (event) {
-         if (event.target.name === 'loginButton')
-         {
-           if(!this.chekcing){
-           console.log('CLICK EVENT ACTIVATE');
-           this.chekcing=true;
-           //-------------------------------------------------------DEBUG-----------------------------------------------------------
-           //document.getElementById('nickname').value = "Prothoky";
-           //-------------------------------------------------------DEBUG-----------------------------------------------------------
-           this.nick = document.getElementById('nickname'); //todos en los que pone this.nick antes ponia game.nick
-           
-             if (this.nick.value != '')
-             {
-               let data = {ip: '', name: this.nick.value, score:0, online:false, lastconection : Date.now()};
-
-               $.ajax({
-                 method: "POST",
-                 url:this.url,
-                 data: JSON.stringify(data),
-                 processData: false,
-                 async:false,
-                 dataType: 'json',
-                 contentType: 'application/json',
-               }).done(function (){
-                 console.log("Register success");
-                 this.name = this.nick.value;
-                 goMenuPrincipal();
-             }).fail(function (value) {
-                 if(value.status == 201){
-                   console.log("Register success");
-                   this.name=this.nick.value;
-                   goMenuPrincipal();
-                 }
-                 else{
-                   //text.text = "El usuario ya existe";
-                   var url = this.url+'/'+this.nick.value;
-                   $.ajax({
-                   method: "GET",
-                   async:false,
-                   url:url,
-                   }).done(function(value){
-                     console.log("Login");
-                     this.name = this.nick.value;
-                     goMenuPrincipal();
-                   }).fail(function (value) {
-                     if(value.status == 200){
-                       console.log("Login");
-                       this.name = this.nick.value;
-                       goMenuPrincipal();
-                     }else if(value.status == 0){
-                      console.log("Servidor caido");
-                      this.chekcing=false;
-                    }else{
-                      console.log("Fallo no contemplado");
-                      this.chekcing=false;
-                    }
-                   });
-
-                 }
-             });
-         }
-         else
-         {
-           this.scene.text.setText("Tienes que introducir un nombre de usuario");
-           this.scene.text.setFontSize(50);
-           this.scene.text.setPosition(gameWidth*0.2,gameHeight*0.9);
-           this.chekcing=false;
-         }
-
-       }
-
-       }
-     });
-     jQuery.ajaxSetup({async:true});
+	 create ()
+	{
+	    
+	    //background image and rescale
+	    this.background =this.add.image(gameWidth/2,gameHeight/2,"fondo");
+	    //this.background.setDepth(-1);
+	    //this.scene.background.displayHeight = gameHeight;
+	   // this.scene.background.scaleY = this.scene.background.scaleX;
+	
+	    //Font style for leters
+	    var style = {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#000000", stroke: "#000000"};
+	    
+	    //+ to check center
+	    //game.scene.text = this.add.text(gameWidth/2,gameHeight/2,'+',style);
+	
+	    this.text = this.add.text(gameWidth*5/16, gameHeight*10/16, 'Introduzca su Nickname',style);
+	   // this.text = this.add.text(gameWidth*8.2/16, gameHeight*9.2/16,  'Introduzca su Nickname', {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#000000", stroke: "#000000"});
+	    
+	
+	    //Animation for input name and loginButton
+	    this.nickname = this.add.dom(gameWidth*8/16, gameHeight*7/16).createFromCache('nameform');
+	    this.nickname.setDepth(2);
+	
+	  /*  this.tweens.add({
+	        targets: this.element,
+	        y: this.levelHeight*0.8,
+	        duration: 1000,
+	        ease: 'Power3'
+	    });
+	*/
+	    this.checking=false;
+	    console.log('CREATE FINISH');
+	
+	  }
 
 
-  }
-
-}
-
-function goMenuPrincipal(){
-  console.log("ENVIADO")
-}
-
-function register(url, data){
-  var j;
-  $.ajax({
-     method: "POST",
-     url:url,
-     data: JSON.stringify(data),
-     processData: false,
-     dataType: 'json',
-     contentType: 'application/json',
-    }).done(function () {
-        j = true;
-    }).fail(function () {
-        j = false;
-    });
-    console.log(j);
-    return j;
+	
+ update(){
+	jQuery.ajaxSetup({async:false});
+	  this.nickname.addListener('click');
+	  this.nickname.on('click', function (event) {
+	     if (event.target.name === 'loginButton')
+	     {
+	       if(!this.chekcing){
+	       console.log('CLICK EVENT ACTIVATE');
+	       this.chekcing=true;
+	       //-------------------------------------------------------DEBUG-----------------------------------------------------------
+	       //document.getElementById('nickname').value = "Prothoky";
+	       //-------------------------------------------------------DEBUG-----------------------------------------------------------
+	       this.nick = document.getElementById('nickname'); //todos en los que pone this.nick antes ponia game.nick
+	       var localNick  = this.nick.value;
+	         if (localNick != '')
+	         {
+	           let data = {ip: '', name: this.nick.value, score:0, online:false, lastconection : Date.now()};
+	
+	           $.ajax({
+	             method: "POST",
+	             url:url,
+	             data: JSON.stringify(data),
+	             processData: false,
+	             async:false,
+	             dataType: 'json',
+	             contentType: 'application/json',
+	           }).done(function (){
+	             console.log("Register success");
+	             this.name = this.nick.value;
+	             this.goChat();
+	         }).fail(function (value) {
+	             if(value.status == 201){
+	               console.log("Register success");
+	               name = localNick;
+	               this.goChat();
+	             }
+	             else{
+	               //text.text = "El usuario ya existe";
+	               var localUrl = url+'/'+ localNick;
+	               $.ajax({
+	               method: "GET",
+	               async:false,
+	               url:localUrl,
+	               }).done(function(value){
+	                 console.log("Login");
+	                 name = localNick;
+	                 this.goChat();
+	               }).fail(function (value) {
+	                 if(value.status == 200){
+	                   console.log("Login");
+	                   name = localNick;
+	                   this.goChat();
+	                 }else if(value.status == 0){
+	                  console.log("Servidor caido");
+	                  this.chekcing=false;
+	                }else{
+	                  console.log("Fallo no contemplado");
+	                  this.chekcing=false;
+	                }
+	               });
+	
+	             }
+	         });
+	     }
+	     else
+	     {
+	       this.scene.text.setText("Tienes que introducir un nombre de usuario");
+	       this.scene.text.setFontSize(50);
+	       this.scene.text.setPosition(gameWidth*0.2,gameHeight*0.9);
+	       this.chekcing=false;
+	     }
+	
+	   }
+	
+	   }
+	 });
+	 jQuery.ajaxSetup({async:true});
+	
+	}
+	goChat(){
+	  	prevScene = 'NickName';
+		this.scene.stop("NickName");
+		this.scene.start("ChatMenu");
+	}
 }

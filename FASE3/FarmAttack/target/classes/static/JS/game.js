@@ -36,7 +36,11 @@ window.onload = function(){
 
 }
 
+
 // Variables globales
+ url = String(window.location+'users');
+ name = "";
+
 var P2_controls = {  // Controles del jugador (teclado)
   up: Phaser.Input.Keyboard.KeyCodes.UP,
   left: Phaser.Input.Keyboard.KeyCodes.LEFT,
