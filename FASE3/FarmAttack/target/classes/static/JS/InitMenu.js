@@ -51,8 +51,7 @@ class InitMenu extends Phaser.Scene{
     this.offlineButton.on('pointerout', function (pointer) {this.offlineButtonSel.setVisible(false);}, this);
 
   }
-
-
+  
   GameOnline(){
   
     this.clickSound.play();

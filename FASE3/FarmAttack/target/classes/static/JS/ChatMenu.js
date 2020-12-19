@@ -1,7 +1,7 @@
-class Chat extends Phaser.Scene{
+class ChatMenu extends Phaser.Scene{
 
     constructor(){
-        super("Chat");
+        super("ChatMenu");
     }
     
 
@@ -15,6 +15,7 @@ class Chat extends Phaser.Scene{
             sceneKey: 'rexUI'
         });      
     }
+    
     create() {
     
         mainPanel = this.CreateMainPanel(this, {
