@@ -20,12 +20,12 @@ class NickName extends Phaser.Scene{
 		// this.scene.background.scaleY = this.scene.background.scaleX;
 
 		//Font style for leters
-		var style = {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#000000", stroke: "#000000"};
+		var style = {fontFamily: 'fort', fontSize: "30px", align: 'center', fill: "#000000", stroke: "#000000"};
 
 		//+ to check center
 		//game.scene.text = this.add.text(gameWidth/2,gameHeight/2,'+',style);
 
-		this.text = this.add.text(gameWidth*5/16, gameHeight*10/16, 'Introduzca su Nickname',style);
+		this.text = this.add.text(gameWidth*5/16, gameHeight*14/16, 'Introduzca su Nickname', style);
 		// this.text = this.add.text(gameWidth*8.2/16, gameHeight*9.2/16,  'Introduzca su Nickname', {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#000000", stroke: "#000000"});
 
 
