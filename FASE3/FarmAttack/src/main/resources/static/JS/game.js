@@ -32,10 +32,9 @@ window.onload = function(){
 
   }
 
-  var game = new Phaser.Game(config);
+  game = new Phaser.Game(config);
 
 }
-
 
 // Variables globales
  url = String(window.location+'users');
@@ -73,15 +72,15 @@ var prevScene = 'PreloadMenu';
 var levelGameplay = 'GamePlayEs1';
 
 //Nickname
-var url = String(window.location+'users');
+var url = String(window.location+"users");
 var name = null;
 
 
-function Alive(){
-  var url = game.url+'/'+game.name;
+function alive(){
+  var localurl = url+'/'+ name;
   $.ajax({
   method: "GET",
-  url:url,
+  url:localurl,
   }).done(function(value){
     console.log("Todo va bien");
   }).fail(function (value) {
@@ -89,13 +88,12 @@ function Alive(){
       console.log("Todo va bien");
     }else if(value.status == 0){
      console.log("Servidor caido");
-     game.scene.start('ServidorCaido');
+     //game.scene.start('ServidorCaido');
    }else{
      console.log("Fallo de conexion con el servidor");
    }
   });
 
-  var url = game.url;
   $.ajax({
 	  method: "GET",
 	  url:url,
@@ -106,9 +104,9 @@ function Alive(){
 	      getonline(value);
 	    }else{
 	     console.log("ERROR");
-	     game.scene.sendToBack('Juego');
-	 	 game.scene.stop('Juego');
-	 	 game.scene.bringToTop('ServidorCaido');
+	     //game.scene.sendToBack('Juego');
+	 	 //game.scene.stop('Juego');
+	 	 //game.scene.bringToTop('ServidorCaido');
 	   }
 	  });
 }
