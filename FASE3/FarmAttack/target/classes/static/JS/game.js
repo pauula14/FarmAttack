@@ -39,6 +39,7 @@ window.onload = function(){
 // Variables globales
  url = String(window.location+'users');
  name = "";
+ usersConnected = "";
 
 var P2_controls = {  // Controles del jugador (teclado)
   up: Phaser.Input.Keyboard.KeyCodes.UP,
@@ -82,7 +83,7 @@ function alive(){
   method: "GET",
   url:localurl,
   }).done(function(value){
-    console.log("Todo va bien");
+    //console.log("Todo va bien");
   }).fail(function (value) {
     if(value.status == 200){
       console.log("Todo va bien");
@@ -98,10 +99,12 @@ function alive(){
 	  method: "GET",
 	  url:url,
 	  }).done(function(value){
+      usersConnected = value;
       getonline(value);
 	  }).fail(function (value) {
 	    if(value.status == 200){
-	      getonline(value);
+        usersConnected = value;
+        getonline(value);
 	    }else{
 	     console.log("ERROR");
 	     //game.scene.sendToBack('Juego');
@@ -114,7 +117,7 @@ function alive(){
 function getonline(value){
   for(var i=0 ; i<value.length;i++){
     if(value[i].online){
-      console.log(value[i].name +" is online");
+      //console.log(value[i].name +" is online");
     }
   }
 }

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ public class UsersController {
 	//Constructor inicial (cojemos usuarios ya creados)
 	private static Map<String,User> users  = new ConcurrentHashMap<String, User>();
 	private List<String> userlist = new ArrayList<String>();
+	private Stack<String> chatTexts = new Stack<String>();
 	private int usersconected;
 	public UsersController(){
 		TakeInfo();
@@ -146,6 +148,25 @@ public class UsersController {
 			lista.add((User) users.values().toArray()[i]);
 		}
 		return new ResponseEntity<>(lista, HttpStatus.OK);
+	}
+	
+	@GetMapping("/Chat")
+	public ResponseEntity<Stack<String>> getChat() {
+		return new ResponseEntity<>(chatTexts, HttpStatus.OK);
+	}
+	
+	@PostMapping("/Chat")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<String> newMessage(@RequestBody String message) {
+		
+		if(message != "") {
+			chatTexts.push(message);
+			return ResponseEntity.status(HttpStatus.CREATED).body(message.toString());
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("The message is empty");
+		}
+
 	}
 
 	@DeleteMapping("/{name}")
