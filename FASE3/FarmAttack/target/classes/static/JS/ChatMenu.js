@@ -28,11 +28,13 @@ class ChatMenu extends Phaser.Scene{
         this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         
         this.enterKey.on("down", event => {
-            let text = this.textInput.value;
-            console.log(text);
-            if (text != "") {
-                this.sendMessage(text);
-                this.textInput.value = "";
+        	let text = document.getElementById('message');
+            //let text = this.textInput.value;
+            //this.nick = document.getElementById('nickname');
+            console.log(text.value);
+            if (text.value != "write a message") {
+                this.sendMessage(text.value);
+                text.value = "";
             }
         })
     }
@@ -82,7 +84,10 @@ class ChatMenu extends Phaser.Scene{
             dataType: 'json',
             contentType: 'application/json',
           }).done(function (){
-                console.log("Message sended");
+        	  //this.chatStack[this.indexChat] = message;
+        	  //this.indexChat ++;
+        	  console.log(message);
+              console.log("Message sended");
           }).fail(function (value) {
                 console.log("Don't sended");
             }
