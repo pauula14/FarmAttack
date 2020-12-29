@@ -53,9 +53,6 @@ class NickName extends Phaser.Scene{
 			    if(!this.chekcing){
 			      console.log('CLICK EVENT ACTIVATE');
 			      this.chekcing=true;
-			      //-------------------------------------------------------DEBUG-----------------------------------------------------------
-			      //document.getElementById('nickname').value = "Prothoky";
-			      //-------------------------------------------------------DEBUG-----------------------------------------------------------
 			      this.nick = document.getElementById('nickname');
 			      var localnick = this.nick.value;
 			      if (localnick != '')
@@ -110,15 +107,17 @@ class NickName extends Phaser.Scene{
 			      else
 			      {
 			        this.text.setText("Tienes que introducir un nombre de usuario");
-			        this.text.setFontSize(50);
-			        this.text.setPosition(gameWidth*0.2,gameHeight*0.9);
-			        this.chekcing=false;
+					this.text.setFontSize(50);
+					this.text.setPosition(gameWidth*0.2,gameHeight*0.9);
+					this.chekcing=false;
 			      }
 			    }
 			}
       	});
 		jQuery.ajaxSetup({async:true});
 	}
+
+	
 }
 
 function goChat(nickScene){

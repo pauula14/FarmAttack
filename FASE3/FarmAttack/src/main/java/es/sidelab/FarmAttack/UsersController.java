@@ -58,7 +58,6 @@ public class UsersController {
 				bw.write("[{\"ip\":\"0:0:0:0:0:0:0:1\",\"name\":\"Prothoky\",\"score\":0,\"online\":false,\"lastconection\":\"Dec 11, 2019 11:25:54 PM\"}]");
 				bw.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			System.out.println(createfile.exists());
@@ -152,6 +151,7 @@ public class UsersController {
 	
 	@GetMapping("/Chat")
 	public ResponseEntity<Stack<String>> getChat() {
+		System.out.println(chatTexts);
 		return new ResponseEntity<>(chatTexts, HttpStatus.OK);
 	}
 	
@@ -228,5 +228,8 @@ public class UsersController {
 		}
 		System.out.println("Hay " + num + " usuarios conectados");
 		usersconected = num;
+		if(usersconected == 0) {
+			chatTexts.clear();
+		}
 	}
 }

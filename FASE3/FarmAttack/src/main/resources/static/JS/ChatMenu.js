@@ -4,17 +4,17 @@ class ChatMenu extends Phaser.Scene{
         super("ChatMenu");
     }
 
-
     preload() { 
     	this.load.html('chatform', 'Assets/LogInform/chat.html');
     }
     
     create() {
-        
-        this.chatStack = [""];
+
+        this.chatStack = [];
+        this.localStack = [];
         this.indexChat = 0;
         this.chatText = "";
-    
+
     	//this.textInput = this.add.dom(1135, 690).createFromCache("chatform").setOrigin(0.5);
     	this.textInput = this.add.dom(gameWidth*6/16, gameHeight*10/16).createFromCache('chatform');
     	
@@ -29,10 +29,7 @@ class ChatMenu extends Phaser.Scene{
         
         this.enterKey.on("down", event => {
         	let text = document.getElementById('message');
-            //let text = this.textInput.value;
-            //this.nick = document.getElementById('nickname');
-            console.log(text.value);
-            if (text.value != "write a message") {
+            if (text.value != "") {
                 this.sendMessage(text.value);
                 text.value = "";
             }
@@ -42,6 +39,7 @@ class ChatMenu extends Phaser.Scene{
     update() {
         alive();
         this.updateUsersConected();
+        this.getChat();
         this.updateChat();
     }
 
@@ -55,41 +53,44 @@ class ChatMenu extends Phaser.Scene{
         this.usersConnectedText.setText(text);
     }
 
-    updateChat(){
+    getChat(){
+        let stack
         $.ajax({
             method: "GET",
             url:url + "/Chat",
-            }).done(function(value){
-                this.chatStack = value;
+            async:false,
+            }).done(function(value) {
+                stack = value;
             }).fail(function (value) {
                 console.log("ERROR");
             });
-            //console.log(this.chatStack);
-        
-		/*
+            this.chatStack = stack;
+    }
+
+    updateChat(){
         while(this.chatStack.length != this.indexChat){
-            this.chatText += this.chatStack.pop();
+            let TEXT = this.chatStack[this.indexChat];
+            this.localStack.push(TEXT);
+            this.chatText+=TEXT.toString() + " \n";
             this.indexChat++;
         }
-        */
+        this.chat.setText(this.chatText);
     }
+
 
     sendMessage(message){
         $.ajax({
             method: "POST",
             url:url+"/Chat",
-            data: JSON.stringify(message),
+            data: JSON.stringify(name + ": " + message),
             processData: false,
             async:false,
             dataType: 'json',
             contentType: 'application/json',
           }).done(function (){
-        	  //this.chatStack[this.indexChat] = message;
-        	  //this.indexChat ++;
-        	  console.log(message);
-              console.log("Message sended");
+                console.log("Sended");
           }).fail(function (value) {
-                console.log("Don't sended");
+                console.log(value);
             }
         );
     }
