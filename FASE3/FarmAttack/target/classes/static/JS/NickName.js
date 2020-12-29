@@ -55,8 +55,9 @@ class NickName extends Phaser.Scene{
 			      this.chekcing=true;
 			      this.nick = document.getElementById('nickname');
 			      var localnick = this.nick.value;
-			      if (localnick != '')
-			      {
+			      if (localnick != ''){
+					  localnick = "DEFAULT";
+				  }
 			        let data = {ip: '', name: localnick, score:0, online:false, lastconection : Date.now()};
 
 			        $.ajax({
@@ -103,14 +104,7 @@ class NickName extends Phaser.Scene{
 			            });
 			          }
 			        });
-			      }
-			      else
-			      {
-			        this.text.setText("Tienes que introducir un nombre de usuario");
-					this.text.setFontSize(50);
-					this.text.setPosition(gameWidth*0.2,gameHeight*0.9);
-					this.chekcing=false;
-			      }
+			      
 			    }
 			}
       	});
