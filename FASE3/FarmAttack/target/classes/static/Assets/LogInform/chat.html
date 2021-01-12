@@ -1,31 +1,42 @@
 <style>
-
-.box {
-  background: #eceeee;
-  border: 1px solid #42464b;
-  border-radius: 6px;
-  height: 30px;
-  margin: 265px auto 0;
-  width: 360px;
+  
+.container{
+  width: 400px;
+  margin: 0 auto;
+  border : solid  1px #ccc;
+  border-radius :5px;
+  overflow: scroll;
+  background-color: #3b3b3b;
+  
 }
-
-.box #message{
-	overflow-y:scroll;
-	line-height: 15; 
-	background-color: "#eceeee"; 
-	color: "#000000";
-	padding: 10;
-	font-size: 14;
-	font-style: "bold",; 
-	border: "1px solid #a1a3a3"; 
-	font: "sans-serif";
-	border-radius: "4px";	
-	scrollbar-width: auto;
-  	scrollbar-color: blue orange; 
+.chat-container{
+ height: 400px;
+  overflow: auto;
+  transform: rotate(180deg);
+  direction: rtl;
 }
-
-</style> 
  
- <div class="box">
-      <input type="text" placeholder="write a message" id="chat" name="chat" >
- </div>
+  
+.message{
+border-bottom :solid 1px #ccc;
+  padding: 20px;
+  transform: rotate(180deg);
+  direction: ltr;
+}
+ 
+    
+</style>    
+ 
+ <div class="container">
+  <div class="chat-container">
+    <div class="message" >
+      <p id="message">A message text</p>
+    </div>
+    </div>
+  <form class="send-message-form">
+    
+    <input type="text" placeholder="Ciao">
+    <button type="submit">Send</button>
+  </form>
+</div>
+ 
