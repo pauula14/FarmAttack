@@ -96,6 +96,9 @@ class NickName extends Phaser.Scene{
 			                goChat(this.scene);
 			              }else if(value.status == 0){
 			                console.log("Servidor caido");
+							game.scene.sendToBack(prevScene);
+					 	 	game.scene.stop(prevScene);
+					 	 	game.scene.bringToTop('ServidorCaido');
 			                this.chekcing=false;
 			              }else{
 			                console.log("Fallo no contemplado");

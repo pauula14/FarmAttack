@@ -72,13 +72,16 @@ class ChatMenu extends Phaser.Scene{
     }
 
     updateChat(){
-        while(this.chatStack.length != this.indexChat){
-            let TEXT = this.chatStack[this.indexChat];
-            this.localStack.push(TEXT);
-            this.chatText+=TEXT.toString() + " \n";
-            this.indexChat++;
-        }
-        this.chat.setText(this.chatText);
+		if(this.chatStack != undefined){
+			  while(this.chatStack.length != this.indexChat){
+	            let TEXT = this.chatStack[this.indexChat];
+	            this.localStack.push(TEXT);
+	            this.chatText+=TEXT.toString() + " \n";
+	            this.indexChat++;
+	        }
+	        this.chat.setText(this.chatText);
+		}
+      
     }
 
 

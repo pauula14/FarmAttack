@@ -87,14 +87,11 @@ function alive(){
   }).fail(function (value) {
     if(value.status == 200){
       console.log("Todo va bien");
-	     game.scene.sendToBack('ServidorCaido');
-	 	 game.scene.stop('ServidorCaido');
-	 	 game.scene.bringToTop(prevScene);
     }else if(value.status == 0){
-     console.log("Servidor caido");
-     game.scene.start('ServidorCaido');
-	 game.scene.sendToBack(prevScene);
- 	 game.scene.stop(prevScene);
+		console.log("Servidor caido");
+		game.scene.sendToBack(prevScene);
+		game.scene.stop(prevScene);
+		game.scene.start('ServidorCaido');
    }else{
      console.log("Fallo de conexion con el servidor");
    }
