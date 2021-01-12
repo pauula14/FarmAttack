@@ -55,7 +55,7 @@ class NickName extends Phaser.Scene{
 			      this.chekcing=true;
 			      this.nick = document.getElementById('nickname');
 			      var localnick = this.nick.value;
-			      if (localnick != ''){
+			      if (localnick === ''){
 					  localnick = "DEFAULT";
 				  }
 			        let data = {ip: '', name: localnick, score:0, online:false, lastconection : Date.now()};

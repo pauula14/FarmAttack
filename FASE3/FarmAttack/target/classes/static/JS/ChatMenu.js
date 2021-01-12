@@ -5,7 +5,9 @@ class ChatMenu extends Phaser.Scene{
     }
 
     preload() { 
-    	this.load.html('chatform', 'Assets/LogInform/chat.html');
+		prevScene ='ChatMenu';
+    	this.load.html('chatform', 'Assets/LogInform/sendmessage.html');
+		this.load.html('chatbox', 'Assets/LogInform/chat.html');
     }
     
     create() {
@@ -17,10 +19,12 @@ class ChatMenu extends Phaser.Scene{
 
     	//this.textInput = this.add.dom(1135, 690).createFromCache("chatform").setOrigin(0.5);
     	this.textInput = this.add.dom(gameWidth*6/16, gameHeight*10/16).createFromCache('chatform');
+		this.chat = this.add.dom(gameWidth*4/16, gameHeight*8/16).createFromCache("chatbox");
     	
-        this.chat = this.add.text(gameWidth*1/16, gameHeight*1/16, "", { lineSpacing: 15, backgroundColor: "#eceeee", color: "#000000", padding: 10, fontStyle: "bold", border: "1px solid #a1a3a3", font: "sans-serif" , borderRadius: "4px"});
+/*
+        this.chat = this.add.text(gameWidth*1/16, gameHeight*1/16, "", { overflow:scroll, lineSpacing: 15, backgroundColor: "#eceeee", color: "#000000", padding: 10, fontStyle: "bold", border: "1px solid #a1a3a3", font: "sans-serif" , borderRadius: "4px"});
         this.chat.setFixedSize(970, 565);
-        
+  */      
         this.usersConnectedText = this.add.text(gameWidth*12/16, gameHeight*1/16, "", { lineSpacing: 15, backgroundColor: "#eceeee", color: "#000000", padding: 10, fontStyle: "bold" , border: "1px solid #a1a3a3",  font: "sans-serif", borderRadius: "4px"});
         this.usersConnectedText.setFixedSize(270, 665);
         this.usersConnectedText.setText("USERS CONNECTED");

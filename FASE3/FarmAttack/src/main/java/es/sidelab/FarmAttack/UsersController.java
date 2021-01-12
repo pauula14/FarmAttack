@@ -33,8 +33,26 @@ public class UsersController {
 	private List<String> userlist = new ArrayList<String>();
 	private Stack<String> chatTexts = new Stack<String>();
 	private int usersconected;
+	private boolean saved = false;
 	public UsersController(){
 		TakeInfo();
+		readChat();
+	}
+	
+	
+	public void readChat(){
+		try (FileReader file = new FileReader("chat.json")){
+			Gson gson = new Gson();
+			Stack<String> chats = gson.fromJson(file, Stack.class);
+			if(chats !=null ) {
+				chatTexts = (Stack<String>) chats;
+				System.out.println(chatTexts);
+			}
+        }catch(FileNotFoundException e) {
+			System.out.println(e);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	public void TakeInfo(){
@@ -151,7 +169,6 @@ public class UsersController {
 	
 	@GetMapping("/Chat")
 	public ResponseEntity<Stack<String>> getChat() {
-		System.out.println(chatTexts);
 		return new ResponseEntity<>(chatTexts, HttpStatus.OK);
 	}
 	
@@ -194,6 +211,17 @@ public class UsersController {
 		return remoteAddr;				
 	}
 
+	public void saveChat() {
+		try (FileWriter file = new FileWriter("chat.json")) {
+			Gson gson = new Gson();
+			gson.toJson(chatTexts, file);
+			file.close();
+			System.out.println("Saved");
+		}catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
 	public void SaveInfo() {
 		try (FileWriter file = new FileWriter("data.json")) {
 			Gson gson = new Gson();
@@ -228,8 +256,12 @@ public class UsersController {
 		}
 		System.out.println("Hay " + num + " usuarios conectados");
 		usersconected = num;
-		if(usersconected == 0) {
-			chatTexts.clear();
+		if(usersconected == 0 && !saved) {
+			saveChat();
+			saved=true;
+		}
+		else if(usersconected > 0) {
+			saved=false;
 		}
 	}
 }

@@ -28,7 +28,7 @@ window.onload = function(){
     //URL del JUEGO
     //utl: "http://farmAttack.es",
 
-    scene: [PreloadMenu, InitMenu, NickName, ChatMenu, MainMenu, MainMenuMultiplayer, OptionsMenu, TutorialMenu, CreditsMenu, GamePlayEs1, GamePlayEs2, GamePlayFa1, GamePlayFa2, GamePlayFo1, PauseMenu, GameOver, Winner]
+    scene: [PreloadMenu, ServidorCaido, InitMenu, NickName, ChatMenu, MainMenu, MainMenuMultiplayer, OptionsMenu, TutorialMenu, CreditsMenu, GamePlayEs1, GamePlayEs2, GamePlayFa1, GamePlayFa2, GamePlayFo1, PauseMenu, GameOver, Winner]
 
   }
 
@@ -87,9 +87,14 @@ function alive(){
   }).fail(function (value) {
     if(value.status == 200){
       console.log("Todo va bien");
+	     game.scene.sendToBack('ServidorCaido');
+	 	 game.scene.stop('ServidorCaido');
+	 	 game.scene.bringToTop(prevScene);
     }else if(value.status == 0){
      console.log("Servidor caido");
-     //game.scene.start('ServidorCaido');
+     game.scene.start('ServidorCaido');
+	 game.scene.sendToBack(prevScene);
+ 	 game.scene.stop(prevScene);
    }else{
      console.log("Fallo de conexion con el servidor");
    }
@@ -107,9 +112,9 @@ function alive(){
         getonline(value);
 	    }else{
 	     console.log("ERROR");
-	     //game.scene.sendToBack('Juego');
-	 	 //game.scene.stop('Juego');
-	 	 //game.scene.bringToTop('ServidorCaido');
+	     game.scene.sendToBack(prevScene);
+	 	 game.scene.stop(prevScene);
+	 	 game.scene.bringToTop('ServidorCaido');
 	   }
 	  });
 }

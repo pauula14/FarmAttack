@@ -41,6 +41,7 @@ class PreloadMenu extends Phaser.Scene{
 
     //BACKGROUND MENUS
     this.load.image('backgroundMenus', 'ASSETS/Interface/Main_background.jpg');
+	this.load.image('backgroundOFFLINE', 'ASSETS/Interface/OfflineServer/offline_server_background.jpg');
 
     //INIT MENU
     //Online

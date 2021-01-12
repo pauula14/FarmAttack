@@ -1,11 +1,12 @@
-<style>
+
+     <style>
 .login {
   background: #eceeee;
   border: 1px solid #42464b;
   border-radius: 6px;
-  height: 180px;
-  margin: 285px auto 0;
-  width: 320px;
+  height: 60px;
+  margin: 265px auto 0;
+  width: 360px;
 }
 .login h1 {
   background-image: #831111;
@@ -13,7 +14,6 @@
   border-radius: 6px 6px 0 0;
   box-sizing: border-box;
   color: #000000;
-  display: block;
   height: 43px;
   font: 600 14px/1 'fort', sans-serif;
   padding-top: 14px;
@@ -29,7 +29,7 @@ input[type="text"], input[type="text"] {
   box-sizing: border-box;
   color: #696969;
   height: 39px;
-  margin: 31px 50px 0 80px;
+  margin: 8px 0px 0 30px;
   padding-left: 37px;
   transition: box-shadow 0.3s;
   width: 165px;
@@ -41,7 +41,6 @@ input[type="text"]:focus, input[type="text"]:focus {
 }
 
 .show-password {
-  display: block;
   height: 16px;
   margin: 26px 0 0 28px;
   width: 87px;
@@ -52,7 +51,7 @@ input[type="checkbox"] {
   height: 16px;
   opacity: 0;
   position: relative;
-  width: 64px;
+  width: 34px;
 }
 
 input[type="checkbox"]:checked {
@@ -60,32 +59,12 @@ input[type="checkbox"]:checked {
   width: 58px;
 }
 
-.toggle {
-  display: block;
-  height: 16px;
-  margin-top: -20px;
-  width: 87px;
-  z-index: -1;
-}
-input[type="checkbox"]:checked + .toggle { background-position: 0 -16px }
-.forgot {
-  color: #831111;
-  display: inline-block;
-  float: right;
-  font: 12px/1 sans-serif;
-  left: -19px;
-  position: relative;
-  text-decoration: none;
-  top: 5px;
-  transition: color .4s;
-}
 
 .forgot:hover { color: #3b3b3b }
 input[type="submit"] {
-  width: 165px;
+  width: 105px;
   height:35px;
-  display:block;
-  font-family:"fort";
+  font-family:"sans-serif";
   font-size:16px;
   font-weight:bold;
   color:#fff;
@@ -93,8 +72,7 @@ input[type="submit"] {
   text-transform:uppercase;
   text-align:center;
   padding-top:4px;
-  margin: 29px 0 0 80px;
-  position:relative;
+  margin: 10px 0 0 20px;
   cursor:pointer;
   border: none;
   background-color: #831111;
@@ -103,28 +81,12 @@ input[type="submit"] {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius:5px;
  }
-
-.shadow {
-  background: #000;
-  border-radius: 12px 12px 4px 4px;
-  box-shadow: 0 0 20px 10px #000;
-  height: 12px;
-  margin: 30px auto;
-  opacity: 0.2;
-  width: 270px;
-}
-
-input[type="submit"]:active {
-  top:3px;
-  box-shadow: inset 0px 1px 0px #f7cf2d, 0px 2px 0px 0px #c7ad04, 0px 5px 3px #999;
-}
+ 
 
 </style>
 
 
-  <div class="login">
-      <input type="text" placeholder="nickname" id="nickname" name="nickname">
-      <input type="submit" value="Play" id="loginButton" name="loginButton">
+ <div class="login">
+      <input type="text" placeholder="write a message" id="message" name="message" >
+      <input type="submit" value="Send" id="sendButton" name="sendButton">
  </div>
-
-  <div class="shadow"></div>
