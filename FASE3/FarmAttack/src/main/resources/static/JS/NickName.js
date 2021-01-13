@@ -13,7 +13,9 @@ class NickName extends Phaser.Scene{
 
 	 create ()
 	{
-	    
+
+		this.clickSound = this.sound.add('clickSound', this.EffectsConfig());	    
+
 		//background image and rescale
 		this.background =this.add.image(gameWidth/2,gameHeight/2,"fondo");
 
@@ -42,7 +44,7 @@ class NickName extends Phaser.Scene{
 			      this.nick = document.getElementById('nickname');
 			      var localnick = this.nick.value;
 			      if (localnick === ''){
-					  localnick = "DEFAULT";
+					  localnick = "USER_" + Math.round(Math.random() *100);
 				  }
 			        let data = {ip: '', name: localnick, score:0, online:false, lastconection : Date.now()};
 
@@ -99,6 +101,19 @@ class NickName extends Phaser.Scene{
       	});
 		jQuery.ajaxSetup({async:true});
 	}
+	
+	
+  EffectsConfig(){
+    return {
+      mute: false,
+      volume: volumeEffects/10,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    };
+  }
 
 }
 

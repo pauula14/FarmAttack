@@ -21,13 +21,9 @@ class InitMenu extends Phaser.Scene{
       delay: 0
     };
 
+	this.clickSound = this.sound.add('clickSound', this.EffectsConfig());	    
+
     musicMenu = this.sound.add('menuMusic', config);
-    this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
-/*
-    if (!musicMenu.isPlaying) {
-      musicMenu.play();
-    }*/
-  //  musicGameplay.play();
 
     this.backgroundIM = this.add.image(0, 0, 'backgroundMenus');
     this.backgroundIM.setPosition(gameWidth/2, gameHeight/2);
@@ -56,7 +52,7 @@ class InitMenu extends Phaser.Scene{
   
     this.clickSound.play();
 
-    //musicMenu.play();
+    gamemode = "Online";
     prevScene = 'InitMenu';
     
     this.scene.stop("InitMenu");
@@ -64,6 +60,7 @@ class InitMenu extends Phaser.Scene{
   }
 
   GameOffline(){
+	gamemode == "Offline"
     this.clickSound.play();
     musicMenu.play();
     prevScene = 'InitMenu';

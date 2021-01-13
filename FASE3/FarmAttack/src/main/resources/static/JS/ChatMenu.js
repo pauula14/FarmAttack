@@ -40,19 +40,18 @@ class ChatMenu extends Phaser.Scene{
         graphics.fillStyle(0xffff00, 1);
 	
  		var mask = new Phaser.Display.Masks.GeometryMask(this, graphics);
-
-//160 , 800
-    	this.chat = this.add.text(gameWidth*1/16, gameHeight*8/16, "", { fontFamily: 'Arial',  padding: 50,backgroundColor: "#eceeee", color: "#000000" ,fixedWidth: 800, wordWrap: { width: 600 } }).setOrigin(0);
-
+		
+		this.backgroundChat = this.add.text(gameWidth*1/16, gameHeight*8/16, "", { fontFamily: 'Arial',  padding: 50,backgroundColor: "#eceeee", color: "#000000" , wordWrap: { width: 600 } }).setOrigin(0);
+		this.backgroundChat.setFixedSize(800,550);
+    	this.backgroundChat.setMask(mask);
+		   	
+    	this.chat = this.add.text(gameWidth*1/16, gameHeight*8/16, "", { fontFamily: 'Arial',  padding: 50, color: "#000000" , wordWrap: { width: 600 } }).setOrigin(0);
+		//this.chat.setFixedSize(800,550);
     	this.chat.setMask(mask);
 		
 
-		/*
-        this.chat = this.add.text(gameWidth*1/16, gameHeight*1/16, "", { overflow:scroll, lineSpacing: 15, backgroundColor: "#eceeee", color: "#000000", padding: 10, fontStyle: "bold", border: "1px solid #a1a3a3", font: "sans-serif" , borderRadius: "4px"});
-        this.chat.setFixedSize(970, 565);
-  		*/      
-        this.usersConnectedText = this.add.text(gameWidth*12/16, gameHeight*1/16, "", { lineSpacing: 15, backgroundColor: "#eceeee", color: "#000000", padding: 10, fontStyle: "bold" , border: "1px solid #a1a3a3",  font: "sans-serif", borderRadius: "4px"});
-        this.usersConnectedText.setFixedSize(270, 665);
+        this.usersConnectedText = this.add.text(gameWidth*12/16, gameHeight*2/16, "", { lineSpacing: 15, backgroundColor: "#eceeee", color: "#000000", padding: 10, fontStyle: "bold" , border: "1px solid #a1a3a3",  font: "sans-serif", borderRadius: "4px"});
+        this.usersConnectedText.setFixedSize(270, 550);
         this.usersConnectedText.setText("USERS CONNECTED");
         
         this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
@@ -94,7 +93,8 @@ class ChatMenu extends Phaser.Scene{
         alive();
         this.updateUsersConected();
         this.getChat();
-        this.updateChat(); 
+        this.updateChat();
+
     }
 
     updateUsersConected(){

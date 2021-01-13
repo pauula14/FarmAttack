@@ -235,6 +235,7 @@ public class UsersController {
 	
 	@Scheduled(fixedRate=2000)
     public void CheckUsersOnline() {
+		saveChat();
 		int num=0;
 		if(users!=null && userlist!=null) {
 			for (String name : userlist) {
@@ -256,12 +257,5 @@ public class UsersController {
 		}
 		System.out.println("Hay " + num + " usuarios conectados");
 		usersconected = num;
-		if(usersconected == 0 && !saved) {
-			saveChat();
-			saved=true;
-		}
-		else if(usersconected > 0) {
-			saved=false;
-		}
 	}
 }

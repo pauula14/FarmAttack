@@ -4,7 +4,7 @@ class MainMenuMultiplayer extends Phaser.Scene{
   }
 
   preload(){
-
+	this.load.html('conexionalert', 'Assets/LogInform/conexionalert.html');
   }
 
   create(){
@@ -108,7 +108,18 @@ class MainMenuMultiplayer extends Phaser.Scene{
     /*this.backButtonMM = this.add.image(gameWidth*14/16, gameHeight*14/16, 'backButtonMM');
     this.backButtonMM.setScale(2/3);
     this.backButtonMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackInitMenu());*/
+
+
+	this.alertbox = this.add.dom(gameWidth*11/16, gameHeight*1/16).createFromCache('conexionalert');
+	this.alertbox.setVisible(true);    	
+	
+	this.textusers = document.getElementById('alertmessage');
   }
+
+	update(){
+		alive();
+		this.updateUsersConected();
+	}
 
   PlayGame(){
 
@@ -124,7 +135,6 @@ class MainMenuMultiplayer extends Phaser.Scene{
     this.creditsButton.setVisible(false);
 
     this.skipButtonL1.setVisible(true);
-  //  this.backButtonMM.setVisible(false);
 
   if(musicMenu.isPlaying){
     musicMenu.stop();
@@ -208,5 +218,13 @@ class MainMenuMultiplayer extends Phaser.Scene{
       delay: 0
     };
   }
-
+  updateUsersConected(){
+        let text="USERS CONNECTED:" + "\n";
+        for(var i=0 ; i< usersConnected.length;i++){
+            if(usersConnected[i].online){
+            	text += usersConnected[i].name +" \n"
+            }
+        }
+        this.textusers.innerHTML = text.toString();
+    }
 }

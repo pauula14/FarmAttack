@@ -91,7 +91,17 @@ class PauseMenu extends Phaser.Scene{
 
     this.scene.stop('PauseMenu');
     this.scene.stop(levelGameplay);
-    this.scene.start('MainMenu');
+	if(gamemode =="Offline"){
+		this.scene.start('MainMenu');	
+	}
+	else if(gamemode == "Online"){
+		this.scene.start('MainMenuMultiplayer');
+	}
+	else{
+		gamemode = "Offline"
+		this.scene.start('InitMenu');
+	}
+    
     prevScene = 'PauseMenu';
   }
 

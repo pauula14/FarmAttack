@@ -50,7 +50,7 @@ class ServidorCaido extends Phaser.Scene{
 	    this.clickSound.play();
 
 		this.scene.stop("ServidorCaido");
-    	this.scene.start("MainMenu");
+    	this.scene.start("InitMenu");
 		alive();
 	}
 	
