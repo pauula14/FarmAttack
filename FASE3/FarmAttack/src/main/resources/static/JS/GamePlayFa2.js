@@ -223,14 +223,14 @@ class GamePlayFa2 extends Phaser.Scene{
     // --- CONTROLES --- //
 
     // 1) P1
-    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up);
-    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left);
-    this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right);
+    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
+    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
+    this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
 
     // 2) P2
-    this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up);
-    this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left);
-    this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right);
+    this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
+    this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left, false);
+    this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
 
     this.testButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
 
