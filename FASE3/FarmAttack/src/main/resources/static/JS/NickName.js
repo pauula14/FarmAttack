@@ -14,7 +14,18 @@ class NickName extends Phaser.Scene{
 	 create ()
 	{
 
-		this.clickSound = this.sound.add('clickSound', this.EffectsConfig());	    
+	        let config = {
+	        	      mute: false,
+	        	      volume: volumeMusic/10,
+	        	      rate: 1,
+	        	      detune: 0,
+	        	      seek: 0,
+	        	      loop: true,
+	        	      delay: 0
+	        	    };
+
+	        musicGameplay = this.sound.add('levelMusic', config);
+	        this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
 
 		//background image and rescale
 		this.background =this.add.image(gameWidth/2,gameHeight/2,"fondo");
@@ -22,16 +33,27 @@ class NickName extends Phaser.Scene{
 		//Font style for leters
 		var style = {fontFamily: 'fort', fontSize: "30px", align: 'center', fill: "#000000", stroke: "#000000"};
 
-		this.text = this.add.text(gameWidth*5/16, gameHeight*14/16, 'Introduzca su Nickname', style);
+		//this.text = this.add.text(gameWidth*5/16, gameHeight*14/16, 'Introduzca su Nickname', style);
 
 		//Animation for input name and loginButton
 		this.nickname = this.add.dom(gameWidth*8/16, gameHeight*7/16).createFromCache('nameform');
 		this.nickname.setDepth(2);
 
+        //BACK
+        this.backButtonMMM = this.add.image(gameWidth*14.5/16, gameHeight*15/16, 'backButton');
+        this.backButtonMMM.setScale(2/3);
+        this.backButtonMMMSel = this.add.image(gameWidth*14.5/16, gameHeight*15/16, 'backButtonSel');
+        this.backButtonMMMSel.setScale(2/3);
+        this.backButtonMMMSel.setVisible(false);
+
+        this.backButtonMMM.on('pointerover', function (pointer) {this.backButtonMMMSel.setVisible(true);}, this);
+        this.backButtonMMM.on('pointerout', function (pointer) {this.backButtonMMMSel.setVisible(false);}, this);
+        this.backButtonMMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackInit());
+
 		this.checking=false;
 		console.log('CREATE FINISH');
   	}
-	
+
 	update(){
 		jQuery.ajaxSetup({async:false});
 	  	this.nickname.addListener('click');
@@ -95,26 +117,31 @@ class NickName extends Phaser.Scene{
 			            });
 			          }
 			        });
-			      
+
 			    }
 			}
       	});
 		jQuery.ajaxSetup({async:true});
 	}
-	
-	
-  EffectsConfig(){
-    return {
-      mute: false,
-      volume: volumeEffects/10,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0
-    };
-  }
 
+	BackInit(){
+		this.clickSound.play();
+        this.scene.stop("NickName");
+        this.scene.start("InitMenu");
+        prevScene = 'NickName';
+	}
+
+    EffectsConfig(){
+        return {
+          mute: false,
+          volume: volumeEffects/10,
+          rate: 1,
+          detune: 0,
+          seek: 0,
+          loop: false,
+          delay: 0
+        };
+      }
 }
 
 
