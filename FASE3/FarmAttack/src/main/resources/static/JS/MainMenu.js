@@ -84,9 +84,14 @@ class MainMenu extends Phaser.Scene{
 //0;
 
     //BACK
-    /*this.backButtonMM = this.add.image(gameWidth*14/16, gameHeight*14/16, 'backButtonMM');
-    this.backButtonMM.setScale(2/3);
-    this.backButtonMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackInitMenu());*/
+    this.backButtonCM = this.add.image(gameWidth*13.9/16, gameHeight*14.2/16, 'backButton');
+    this.backButtonCMSel = this.add.image(gameWidth*13.9/16, gameHeight*14.2/16, 'backButtonSel');
+    this.backButtonCMSel.setVisible(false);
+
+    this.backButtonCM.on('pointerover', function (pointer) {this.backButtonCMSel.setVisible(true);}, this);
+    this.backButtonCM.on('pointerout', function (pointer) {this.backButtonCMSel.setVisible(false);}, this);
+    this.backButtonCM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackInitMenu());
+
   }
 
   PlayGame(){

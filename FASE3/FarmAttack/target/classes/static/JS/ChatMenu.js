@@ -11,7 +11,21 @@ class ChatMenu extends Phaser.Scene{
     }
     
     create() {
+    	
+        let config = {
+        	      mute: false,
+        	      volume: volumeMusic/10,
+        	      rate: 1,
+        	      detune: 0,
+        	      seek: 0,
+        	      loop: true,
+        	      delay: 0
+        	    };
+        
+        musicGameplay = this.sound.add('levelMusic', config);
+        this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
 
+        
         this.chatStack = [];
         this.localStack = [];
         this.indexChat = 0;
@@ -50,7 +64,31 @@ class ChatMenu extends Phaser.Scene{
                 text.value = "";
             }
         })
+        
+
+        //PLAY
+        this.playButton = this.add.image(gameWidth*14.5/16, gameHeight*15/16, 'playButton');
+        this.playButton.setScale(1.5/3);
+        this.playButtonSel = this.add.image(gameWidth*14.5/16, gameHeight*15/16, 'playButtonSel');
+        this.playButtonSel.setScale(1.5/3);
+        this.playButtonSel.setVisible(false);
+
+        this.playButton.on('pointerover', function (pointer) {this.playButtonSel.setVisible(true);}, this);
+        this.playButton.on('pointerout', function (pointer) {this.playButtonSel.setVisible(false);}, this);
+        this.playButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.PlayerMultiplayerGame());
+        
+        //BACK
+        this.backButtonMMM = this.add.image(gameWidth*12.5/16, gameHeight*15/16, 'backButton');
+        this.backButtonMMM.setScale(1.5/3);
+        this.backButtonMMMSel = this.add.image(gameWidth*12.5/16, gameHeight*15/16, 'backButtonSel');
+        this.backButtonMMMSel.setScale(1.5/3);
+        this.backButtonMMMSel.setVisible(false);
+
+        this.backButtonMMM.on('pointerover', function (pointer) {this.backButtonMMMSel.setVisible(true);}, this);
+        this.backButtonMMM.on('pointerout', function (pointer) {this.backButtonMMMSel.setVisible(false);}, this);
+        this.backButtonMMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackInit());
     }
+
 
     update() {
         alive();
@@ -97,6 +135,19 @@ class ChatMenu extends Phaser.Scene{
       
     }
 
+    PlayerMultiplayerGame(){
+    	this.clickSound.play();
+        this.scene.stop("ChatMenu");
+        this.scene.start("MainMenuMultiplayer");
+        prevScene = 'ChatMenu';
+    }
+    
+    BackInit(){
+    	this.clickSound.play();
+        this.scene.stop("ChatMenu");
+        this.scene.start("InitMenu");
+        prevScene = 'ChatMenu';
+    }
 
     sendMessage(message){
         $.ajax({
@@ -114,4 +165,17 @@ class ChatMenu extends Phaser.Scene{
             }
         );
     }
+    
+    EffectsConfig(){
+        return {
+          mute: false,
+          volume: volumeEffects/10,
+          rate: 1,
+          detune: 0,
+          seek: 0,
+          loop: false,
+          delay: 0
+        };
+      }
+
 }

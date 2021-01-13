@@ -19,6 +19,8 @@ class MainMenuMultiplayer extends Phaser.Scene{
       delay: 0
     };
 
+    console.log("Menu multijugador");
+    
     musicGameplay = this.sound.add('levelMusic', config);
     this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
 
@@ -65,13 +67,22 @@ class MainMenuMultiplayer extends Phaser.Scene{
     this.creditsButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.CreditsMenu());
     
   //CHAT
-    this.chatButton = this.add.image(gameWidth*14/16, gameHeight*2/16, 'chatButton');
+    /*this.chatButton = this.add.image(gameWidth*14/16, gameHeight*2/16, 'chatButton');
     this.chatButtonSel = this.add.image(gameWidth*14/16, gameHeight*2/16, 'chatButton');
     this.chatButtonSel.setVisible(false);
 
     this.chatButton.on('pointerover', function (pointer) {this.chatButtonSel.setVisible(true);}, this);
     this.chatButton.on('pointerout', function (pointer) {this.chatButtonSel.setVisible(false);}, this);
-    this.chatButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.ChatMenu());
+    this.chatButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.ChatMenu());*/
+    
+    //BACK
+    this.backButtonMMM = this.add.image(gameWidth*13.9/16, gameHeight*14.2/16, 'backButton');
+    this.backButtonMMMSel = this.add.image(gameWidth*13.9/16, gameHeight*14.2/16, 'backButtonSel');
+    this.backButtonMMMSel.setVisible(false);
+
+    this.backButtonMMM.on('pointerover', function (pointer) {this.backButtonMMMSel.setVisible(true);}, this);
+    this.backButtonMMM.on('pointerout', function (pointer) {this.backButtonMMMSel.setVisible(false);}, this);
+    this.backButtonMMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.ChatMenu());
 
 
     //Pre carga Nivel 1
