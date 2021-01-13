@@ -17,16 +17,18 @@ class ChatMenu extends Phaser.Scene{
         this.indexChat = 0;
         this.chatText = "";
 
-    	this.textInput = this.add.dom(gameWidth*6/16, gameHeight*10/16).createFromCache('chatform');    	
+		gameWidth*6/16, gameHeight*10/16
+    	this.textInput = this.add.dom(gameWidth*6/16, 575).createFromCache('chatform');    	
 
 	    var graphics = this.make.graphics();
 
- 		graphics.fillRect(100, 100, 800, 600);
+ 		graphics.fillRect(75, 75, 800, 550);
         graphics.fillStyle(0xffff00, 1);
 	
  		var mask = new Phaser.Display.Masks.GeometryMask(this, graphics);
 
-    	this.chat = this.add.text(160, 800, "", { fontFamily: 'Arial', color: '#000000', wordWrap: { width: 600 } }).setOrigin(0);
+//160 , 800
+    	this.chat = this.add.text(gameWidth*1/16, gameHeight*8/16, "", { fontFamily: 'Arial',  padding: 50,backgroundColor: "#eceeee", color: "#000000" ,fixedWidth: 800, wordWrap: { width: 600 } }).setOrigin(0);
 
     	this.chat.setMask(mask);
 		
@@ -90,7 +92,7 @@ class ChatMenu extends Phaser.Scene{
 	            this.indexChat++;
 	        }
 	        this.chat.setText(this.chatText);
-			this.chat.y = 600 - this.chat.height; 
+			this.chat.y = 675 - this.chat.height; 
 		}
       
     }
