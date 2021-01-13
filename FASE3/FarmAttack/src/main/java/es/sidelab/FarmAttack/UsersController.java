@@ -33,7 +33,6 @@ public class UsersController {
 	private List<String> userlist = new ArrayList<String>();
 	private Stack<String> chatTexts = new Stack<String>();
 	private int usersconected;
-	private boolean saved = false;
 	public UsersController(){
 		TakeInfo();
 		readChat();
@@ -43,6 +42,7 @@ public class UsersController {
 	public void readChat(){
 		try (FileReader file = new FileReader("chat.json")){
 			Gson gson = new Gson();
+			@SuppressWarnings("unchecked")
 			Stack<String> chats = gson.fromJson(file, Stack.class);
 			if(chats !=null ) {
 				chatTexts = (Stack<String>) chats;

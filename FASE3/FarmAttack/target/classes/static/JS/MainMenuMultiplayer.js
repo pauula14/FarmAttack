@@ -35,8 +35,8 @@ class MainMenuMultiplayer extends Phaser.Scene{
     this.playButtonSel = this.add.image(gameWidth*8/16, gameHeight*8.3/16, 'playButtonSel');
     this.playButtonSel.setVisible(false);
 
-    this.playButton.on('pointerover', function (pointer) {this.playButtonSel.setVisible(true);}, this);
-    this.playButton.on('pointerout', function (pointer) {this.playButtonSel.setVisible(false);}, this);
+    this.playButton.on('pointerover', function () {this.playButtonSel.setVisible(true);}, this);
+    this.playButton.on('pointerout', function () {this.playButtonSel.setVisible(false);}, this);
     this.playButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.PlayGame());
 
     //TUTORIAL
@@ -44,8 +44,8 @@ class MainMenuMultiplayer extends Phaser.Scene{
     this.tutorialButtonSel = this.add.image(gameWidth*8/16, gameHeight*10.4/16, 'tutorialButtonSel');
     this.tutorialButtonSel.setVisible(false);
 
-    this.tutorialButton.on('pointerover', function (pointer) {this.tutorialButtonSel.setVisible(true);}, this);
-    this.tutorialButton.on('pointerout', function (pointer) {this.tutorialButtonSel.setVisible(false);}, this);
+    this.tutorialButton.on('pointerover', function () {this.tutorialButtonSel.setVisible(true);}, this);
+    this.tutorialButton.on('pointerout', function () {this.tutorialButtonSel.setVisible(false);}, this);
     this.tutorialButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.TutorialMenuMM());
 
     //OPTIONS
@@ -53,8 +53,8 @@ class MainMenuMultiplayer extends Phaser.Scene{
     this.optionsButtonSel = this.add.image(gameWidth*8/16, gameHeight*12.4/16, 'optionsButtonSel');
     this.optionsButtonSel.setVisible(false);
 
-    this.optionsButton.on('pointerover', function (pointer) {this.optionsButtonSel.setVisible(true);}, this);
-    this.optionsButton.on('pointerout', function (pointer) {this.optionsButtonSel.setVisible(false);}, this);
+    this.optionsButton.on('pointerover', function () {this.optionsButtonSel.setVisible(true);}, this);
+    this.optionsButton.on('pointerout', function () {this.optionsButtonSel.setVisible(false);}, this);
     this.optionsButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.OptionsMenuMM());
 
     //CREDITS
@@ -62,26 +62,17 @@ class MainMenuMultiplayer extends Phaser.Scene{
     this.creditsButtonSel = this.add.image(gameWidth*8/16, gameHeight*14.4/16, 'creditsButtonSel');
     this.creditsButtonSel.setVisible(false);
 
-    this.creditsButton.on('pointerover', function (pointer) {this.creditsButtonSel.setVisible(true);}, this);
-    this.creditsButton.on('pointerout', function (pointer) {this.creditsButtonSel.setVisible(false);}, this);
+    this.creditsButton.on('pointerover', function () {this.creditsButtonSel.setVisible(true);}, this);
+    this.creditsButton.on('pointerout', function () {this.creditsButtonSel.setVisible(false);}, this);
     this.creditsButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.CreditsMenu());
-    
-  //CHAT
-    /*this.chatButton = this.add.image(gameWidth*14/16, gameHeight*2/16, 'chatButton');
-    this.chatButtonSel = this.add.image(gameWidth*14/16, gameHeight*2/16, 'chatButton');
-    this.chatButtonSel.setVisible(false);
-
-    this.chatButton.on('pointerover', function (pointer) {this.chatButtonSel.setVisible(true);}, this);
-    this.chatButton.on('pointerout', function (pointer) {this.chatButtonSel.setVisible(false);}, this);
-    this.chatButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.ChatMenu());*/
     
     //BACK
     this.backButtonMMM = this.add.image(gameWidth*13.9/16, gameHeight*14.2/16, 'backButton');
     this.backButtonMMMSel = this.add.image(gameWidth*13.9/16, gameHeight*14.2/16, 'backButtonSel');
     this.backButtonMMMSel.setVisible(false);
 
-    this.backButtonMMM.on('pointerover', function (pointer) {this.backButtonMMMSel.setVisible(true);}, this);
-    this.backButtonMMM.on('pointerout', function (pointer) {this.backButtonMMMSel.setVisible(false);}, this);
+    this.backButtonMMM.on('pointerover', function () {this.backButtonMMMSel.setVisible(true);}, this);
+    this.backButtonMMM.on('pointerout', function () {this.backButtonMMMSel.setVisible(false);}, this);
     this.backButtonMMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.ChatMenu());
 
 
@@ -99,8 +90,8 @@ class MainMenuMultiplayer extends Phaser.Scene{
     this.skipButtonL1Sel.setDepth(2);
 
     this.skipButtonL1.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL1());
-    this.skipButtonL1.on('pointerover', function (pointer) {this.skipButtonL1Sel.setVisible(true);}, this);
-    this.skipButtonL1.on('pointerout', function (pointer) {this.skipButtonL1Sel.setVisible(false);}, this);
+    this.skipButtonL1.on('pointerover', function () {this.skipButtonL1Sel.setVisible(true);}, this);
+    this.skipButtonL1.on('pointerout', function () {this.skipButtonL1Sel.setVisible(false);}, this);
 
 //0;
 
