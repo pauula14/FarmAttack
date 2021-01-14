@@ -41,7 +41,24 @@ Diego Pérez Pérez         d.perezp.2017@alumnos.urjc.es   diegoperezp2@gmail.c
 
 ## 1. Cambios
 
-Esta es la primera fase de desarrollo del juego, así que de momento no se ha aplicado ningún cambio.
+# Cambios Fase 3
+
+Para esta fase no hemos hecho ningún cambio respecto a la jugabilidad ni el aspecto del juego, sino que hemos añadidio un back-end creado con API REST, para que los jugadores puedan conectarse  aun servidor común y puedan saber los usuarios que hay conectados en todo momento y chatear con ellos. 
+El jugador para poder ver los usuarios primero deberá introducir un nickname, de esta forma, al darle a play irá a una pantalla de chat, en la que podrá ver los usuarios conectados en ese momento, en tiempo real y chatear con ellos.
+
+Ahora vamos a introducir los diagramas que hemos creado. 
+
+Primero está el diagrama del servidor:
+
+![server diagram](https://github.com/pauula14/FarmAttack/blob/main/FASE3/FarmAttack/src/main/resources/static/Assets/Diagrams/Diagrama%20Rest%20Controller.jpeg)
+
+A continuación, el diagrama de navegación, en el que se puede ver las pantallas del juego y la navegación que el usuario puede hacer por las mismas:
+
+![navigation diagram](https://github.com/pauula14/FarmAttack/blob/main/FASE3/FarmAttack/src/main/resources/static/Assets/Diagrams/diagrama%20de%20navegacion.jpg)
+
+Por último, el diagrama de clases:
+
+![classes diagram](https://github.com/pauula14/FarmAttack/blob/main/FASE3/FarmAttack/src/main/resources/static/Assets/Diagrams/Diagrama%20de%20clases.jpeg)
 
 ## 2. Introducción
 
