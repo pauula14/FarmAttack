@@ -6,8 +6,8 @@ class ChatMenu extends Phaser.Scene{
 
     preload() { 
 		prevScene ='ChatMenu';
-    	this.load.html('chatform', 'Assets/LogInform/sendmessage.html');
-		//this.load.html('chatbox', 'Assets/LogInform/chat.html');
+    	this.load.html('chatform', '../ASSETS/LogInform/sendmessage.html');
+		//this.load.html('chatbox', '../ASSETS/LogInform/chat.html');
     }
     
     create() {
@@ -25,35 +25,38 @@ class ChatMenu extends Phaser.Scene{
         musicGameplay = this.sound.add('levelMusic', config);
         this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
 
-        
         this.chatStack = [];
         this.localStack = [];
         this.indexChat = 0;
         this.chatText = "";
 
-		gameWidth*6/16, gameHeight*10/16
+		this.background = this.add.image(gameWidth/2,gameHeight/2,"backgroundCHAT"); 
+
     	this.textInput = this.add.dom(gameWidth*6/16, 575).createFromCache('chatform');    	
 
 	    var graphics = this.make.graphics();
 
- 		graphics.fillRect(75, 75, 800, 550);
+		//graphics.fillRect(gameWidth*1/16, gameHeight*1/16, gameWidth*7/16, gameHeight*12/16);
+ 		graphics.fillRect(125, 135, 700, 1000);
         graphics.fillStyle(0xffff00, 1);
 	
  		var mask = new Phaser.Display.Masks.GeometryMask(this, graphics);
 		
-		this.backgroundChat = this.add.text(gameWidth*1/16, gameHeight*8/16, "", { fontFamily: 'Arial',  padding: 50,backgroundColor: "#eceeee", color: "#000000" , wordWrap: { width: 600 } }).setOrigin(0);
-		this.backgroundChat.setFixedSize(800,550);
-    	this.backgroundChat.setMask(mask);
-		   	
-    	this.chat = this.add.text(gameWidth*1/16, gameHeight*8/16, "", { fontFamily: 'Arial',  padding: 50, color: "#000000" , wordWrap: { width: 600 } }).setOrigin(0);
-		//this.chat.setFixedSize(800,550);
+		
+    	this.chat = this.add.text(gameWidth*2/16, gameHeight*11/16, "", { fontFamily: 'fort', fontSize: '20px', padding: 50, color: "#FFFFFF" , wordWrap: { width: 600 } }).setOrigin(0);
+		//this.chat.setFixedSize(600,350);
     	this.chat.setMask(mask);
 		
 
-        this.usersConnectedText = this.add.text(gameWidth*12/16, gameHeight*2/16, "", { lineSpacing: 15, backgroundColor: "#eceeee", color: "#000000", padding: 10, fontStyle: "bold" , border: "1px solid #a1a3a3",  font: "sans-serif", borderRadius: "4px"});
-        this.usersConnectedText.setFixedSize(270, 550);
+        this.usersConnectedText = this.add.text(gameWidth*11/16, gameHeight*3/16, "", { fontFamily: 'fort', fontSize: '25px', lineSpacing: 15, color: "#FFFFFF", padding: 10});
+        this.usersConnectedText.setFixedSize(290, 550);
         this.usersConnectedText.setText("USERS CONNECTED");
-        
+	   	
+		graphics.fillRect( 800, 100, 1200, 900);
+        graphics.fillStyle(0xffff00, 1);
+        mask = new Phaser.Display.Masks.GeometryMask(this, graphics);
+		this.usersConnectedText.setMask(mask)
+
         this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         
         this.enterKey.on("down", event => {
@@ -98,7 +101,7 @@ class ChatMenu extends Phaser.Scene{
     }
 
     updateUsersConected(){
-        let text="USERS CONNECTED:" + "\n";
+		let text = "";
         for(var i=0 ; i< usersConnected.length;i++){
             if(usersConnected[i].online){
             	text += usersConnected[i].name +" \n"
@@ -130,7 +133,7 @@ class ChatMenu extends Phaser.Scene{
 	            this.indexChat++;
 	        }
 	        this.chat.setText(this.chatText);
-			this.chat.y = 675 - this.chat.height; 
+			this.chat.y =550 - this.chat.height; 
 		}
       
     }

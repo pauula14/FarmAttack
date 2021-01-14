@@ -25,15 +25,10 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
-	<filteredResources>
-		<filter>
-			<id>1608830632607</id>
-			<name></name>
-			<type>30</type>
-			<matcher>
-				<id>org.eclipse.core.resources.regexFilterMatcher</id>
-				<arguments>node_modules|.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
-			</matcher>
-		</filter>
-	</filteredResources>
+	<variableList>
+		<variable>
+			<name>resources</name>
+			<value>file:/C:/Users/Proth/Documents/Juegos%20en%20Red/FarmAttack/FASE3/FarmAttack/src/main/resources</value>
+		</variable>
+	</variableList>
 </projectDescription>

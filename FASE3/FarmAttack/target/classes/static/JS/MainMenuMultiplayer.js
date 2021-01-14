@@ -4,7 +4,7 @@ class MainMenuMultiplayer extends Phaser.Scene{
   }
 
   preload(){
-	this.load.html('conexionalert', 'Assets/LogInform/conexionalert.html');
+	this.load.html('conexionalert', '../ASSETS/LogInform/conexionalert.html');
   }
 
   create(){

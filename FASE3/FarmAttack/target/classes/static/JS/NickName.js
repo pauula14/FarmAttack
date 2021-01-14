@@ -5,9 +5,9 @@ class NickName extends Phaser.Scene{
 	}
 
 	preload (){
-	    this.load.html('nameform', 'Assets/LogInform/loginform.html');
-	    this.load.image('botonMP', 'Assets/Interface/BackButton/back_button.png');//BOTON JUGAR
-	    this.load.image('fondo', 'Assets/Interface/Main_background.jpg'); //FONDO
+	    this.load.html('nameform', '../ASSETS/LogInform/loginform.html');
+	    this.load.image('botonMP', '../ASSETS/Interface/BackButton/back_button.png');//BOTON JUGAR
+	    this.load.image('fondo', '../ASSETS/Interface/Main_background.jpg'); //FONDO
 		prevScene = "NickName"
 	}
 
