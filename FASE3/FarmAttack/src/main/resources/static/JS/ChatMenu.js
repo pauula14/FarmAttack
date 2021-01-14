@@ -32,7 +32,15 @@ class ChatMenu extends Phaser.Scene{
 
 		this.background = this.add.image(gameWidth/2,gameHeight/2,"backgroundCHAT"); 
 
-    	this.textInput = this.add.dom(gameWidth*6/16, 575).createFromCache('chatform');    	
+    	this.textInput = this.add.dom(gameWidth*6/16, 575).createFromCache('chatform');
+
+		this.textInput.addListener('click');
+		this.textInput.on('click', function(event){
+			let text = document.getElementById('message');
+            if (text.value != "") {
+                sendMessage(text.value);
+                text.value = "";
+            }})    	
 
 	    var graphics = this.make.graphics();
 
@@ -62,7 +70,7 @@ class ChatMenu extends Phaser.Scene{
         this.enterKey.on("down", event => {
         	let text = document.getElementById('message');
             if (text.value != "") {
-                this.sendMessage(text.value);
+                sendMessage(text.value);
                 text.value = "";
             }
         })
@@ -152,7 +160,23 @@ class ChatMenu extends Phaser.Scene{
         prevScene = 'ChatMenu';
     }
 
-    sendMessage(message){
+    
+    
+    EffectsConfig(){
+        return {
+          mute: false,
+          volume: volumeEffects/10,
+          rate: 1,
+          detune: 0,
+          seek: 0,
+          loop: false,
+          delay: 0
+        };
+      }
+
+}
+
+function sendMessage(message){
         $.ajax({
             method: "POST",
             url:url+"/Chat",
@@ -168,17 +192,3 @@ class ChatMenu extends Phaser.Scene{
             }
         );
     }
-    
-    EffectsConfig(){
-        return {
-          mute: false,
-          volume: volumeEffects/10,
-          rate: 1,
-          detune: 0,
-          seek: 0,
-          loop: false,
-          delay: 0
-        };
-      }
-
-}
