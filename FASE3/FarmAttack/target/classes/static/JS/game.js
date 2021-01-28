@@ -58,6 +58,11 @@ var P1_controls = {  // Controles del jugador (teclado)
 
 var fpsTarget = 60;
 
+//WebSockets
+var playerId = 0;
+var connection = null;
+var fullLobby = false;
+
 // Tamaño pantalla
 var gameWidth = 1425;
 var gameHeight = 800;

@@ -13,18 +13,22 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
       this.endTrigger1Empty;
       this.endTrigger2;
       this.endTrigger1;
+      this.connection;
   }
-
+  
+  /*init (data){
+      this.connection = data.connection;
+      //this.playerId = data.playerId;
+      //data = null;
+  }// Fin init
+*/
   preload(){
     this.levelWidth = 1462;
     this.levelHeight = 687;
-    console.log("HELOU");
-
-    this.connection = new WebSocket('ws://'+ window.location.host + '/ws-level');
-    this.connection.onopen = function(){
-        console.log("WS Open");
-        //this.send(JSON.stringify({ type: "connect", id: that.myPlayer.id, numPlayers: that.numPlayers}));
-    }
+    console.log("HELOU");    
+    console.log('conexion ' + JSON.stringify(connection));
+    console.log('conexion ' + connection);
+    console.log('playerId ' + playerId);
   }
 
   create(){
