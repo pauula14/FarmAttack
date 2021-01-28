@@ -1,0 +1,42 @@
+<style>
+  
+.container{
+  width: 400px;
+  margin: 0 auto;
+  border : solid  1px #ccc;
+  border-radius :5px;
+  overflow: scroll;
+  background-color: #3b3b3b;
+  
+}
+.chat-container{
+ height: 400px;
+  overflow: auto;
+  transform: rotate(180deg);
+  direction: rtl;
+}
+ 
+  
+.message{
+border-bottom :solid 1px #ccc;
+  padding: 20px;
+  transform: rotate(180deg);
+  direction: ltr;
+}
+ 
+    
+</style>    
+ 
+ <div class="container">
+  <div class="chat-container">
+    <div class="message" >
+      <p id="message">A message text</p>
+    </div>
+    </div>
+  <form class="send-message-form">
+    
+    <input type="text" placeholder="Ciao">
+    <button type="submit">Send</button>
+  </form>
+</div>
+ 

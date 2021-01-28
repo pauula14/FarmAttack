@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: Proth
+Build-Jdk: 15.0.1
+Implementation-Title: FarmAttack
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: es.sidelab
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: https://github.com/pauula14/FarmAttack
+Created-By: Maven Integration for Eclipse
+
