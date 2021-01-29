@@ -60,8 +60,11 @@ var fpsTarget = 60;
 
 //WebSockets
 var playerId = 0;
+//var playersIn = 0;
 var connection = null;
 var fullLobby = false;
+var startGame = false;
+var skipTutorial = false;
 
 // Tamaño pantalla
 var gameWidth = 1425;
