@@ -1,11 +1,8 @@
 package es.sidelab.FarmAttack;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,8 +18,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.concurrent.Semaphore;
 
-import javax.websocket.Session;
-
 public class LevelHandler extends TextWebSocketHandler{
 	
 	private WebSocketSession sessionOne;
@@ -30,7 +25,6 @@ public class LevelHandler extends TextWebSocketHandler{
 	private int idOne = 1;
 	private int idTwo = 2;
 	private ObjectMapper mapper = new ObjectMapper();
-	 private Set<WebSocketSession> sessions = new HashSet<>();
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -42,22 +36,18 @@ public class LevelHandler extends TextWebSocketHandler{
 			newNode.put("playerID", idOne);
 			session.sendMessage(new TextMessage(newNode.toString()));
 			System.out.println("Session one");
-			sessions.add(session);
 		}else if(sessionTwo == null) {
 			sessionTwo = session;
 			ObjectNode newNode = mapper.createObjectNode();
 			newNode.put("playerID", idTwo);
 			session.sendMessage(new TextMessage(newNode.toString()));
 			System.out.println("Session two");
-			sessions.add(session);
 		}else {
 			ObjectNode newNode = mapper.createObjectNode();
 			newNode.put("lobby", "full");
 			session.sendMessage(new TextMessage(newNode.toString()));
 			System.out.println("Impossible to establish connection. The lobby is full, so the session with id: " + session.getId() + " can't connect.");
-			session.close();
-		}	
-		
+		}		
 	}
 	
 	//Método que se ejecuta tras cerrar la conexión
@@ -71,12 +61,6 @@ public class LevelHandler extends TextWebSocketHandler{
 		if(session.equals(sessionTwo)){
 			sessionTwo = null;
 		}
-		try {
-			sessions.remove(session);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		
 	}
 	
     /*@Override
@@ -90,5 +74,73 @@ public class LevelHandler extends TextWebSocketHandler{
 		//System.out.println("Session closed in level 1: " + session.getId());
 		//sessions.remove(session.getId());
 	}*/
+	
+	//HAY QUE PASAR ASI LOS MENSAJESSSSSSS
+	//that.connection.send(JSON.stringify({ type: "event", id: that.myPlayer.id, key: event.key }));
+	
+	 @Override
+    protected void handleTextMessage(WebSocketSession session,TextMessage message)throws Exception {
+	 
+		 System.out.println("Message received: " + message.getPayload());
+         String msg = message.getPayload();
+         JsonNode node = mapper.readTree(msg);
+         
+         String typeMessage = node.get("type").asText();
+         
+         System.out.println("tipo de mensaje" + typeMessage);
+         
+         switch(typeMessage){
+         
+       //DAR COMIENZO LOS DOS A LA PARTIDA
+         case "startGame":
+        	 
+        	 ObjectNode responseNode = mapper.createObjectNode();
+     		 responseNode.put("type", "startGame");
+     		 
+     		try {
+     			sessionOne.sendMessage(new TextMessage(responseNode.toString()));
+     			sessionTwo.sendMessage(new TextMessage(responseNode.toString()));
+			}catch(Exception e) {
+				System.out.println("Error de conexión - " + e);
+			}
+     		
+        	 break;
+        	 
+         case "skipTutorial":
+        	 ObjectNode responseNode2 = mapper.createObjectNode();
+        	 responseNode2.put("type", "skipTutorial");
+     		 
+     		try {
+     			System.out.println("Mensaje " + responseNode2.toString());
+     			sessionOne.sendMessage(new TextMessage(responseNode2.toString()));
+     			sessionTwo.sendMessage(new TextMessage(responseNode2.toString()));
+			}catch(Exception e) {
+				System.out.println("Error de conexión - " + e);
+			}
+     		
+        	break;
+        	
+         case "updatePosition":
+        	 
+        	 //METER EN UN MAPPER TODA LA INFO A ATUALIZAR
+        	 ObjectNode responseNodePosition = mapper.createObjectNode();
+        	 float posX = Float.parseFloat(node.get("posX").asText());
+             float posY = Float.parseFloat(node.get("posY").asText());
+             
+        	 responseNodePosition.put("posX", posX);
+        	 responseNodePosition.put("posY", posY);
+        	 
+        	 if (session.getId() == "1") {
+        		 sessionOne.sendMessage(new TextMessage(responseNodePosition.toString()));
+      			
+        	 }else if (session.getId() == "2") {
+        		 sessionTwo.sendMessage(new TextMessage(responseNodePosition.toString()));
+        	 }
+        	 break;
+        	 
+
+         }
+	 
+	 }
     
 }

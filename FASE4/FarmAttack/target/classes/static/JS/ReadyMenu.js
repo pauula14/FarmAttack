@@ -7,6 +7,7 @@ class ReadyMenu extends Phaser.Scene{
     preload() { 
 		prevScene ='ReadyMenu';
 		this.load.html('conexionalert', '../ASSETS/LogInform/conexionalert.html');
+		this.activeButton = false;
 		//this.fullLobby;// = false;
 		
 		connection = new WebSocket('ws://'+ window.location.host + '/ws-level');
@@ -15,20 +16,23 @@ class ReadyMenu extends Phaser.Scene{
 	        //this.send(JSON.stringify({ type: "connect", id: that.myPlayer.id, numPlayers: that.numPlayers}));
 	    }
 	    
-	    connection.onmessage = function(message) {
+	    /*connection.onmessage = function(message) {
 	        var parsedMessage = JSON.parse(message.data);
 	        
 	        if(parsedMessage.playerID != null){     
 	            playerId = parsedMessage.playerID;
 	            console.log("Id de la sesion: " + parsedMessage.playerID);
 	            console.log("ID establecido: " + playerId);
+	            //console.log("jugadores antes: " + playersIn);
+	            //playersIn ++;
+	            //console.log("jugadores despues: " + playersIn);
 	          }
 	        
 	        if(parsedMessage.lobby == "full"){
 	        	console.log("lobby llena");
 	        	fullLobby = true;
 	        }
-	    }
+	    }*/
 	    
 	  //Cuando la conexion da un error
 	    connection.onerror = function(e) {
@@ -42,7 +46,42 @@ class ReadyMenu extends Phaser.Scene{
     
     create() {
     	
-    	
+    	//recibimos el mensaje de empezar
+        connection.onmessage = function (msg) {
+        	var parsedMessage = JSON.parse(msg.data);
+	        
+	        if(parsedMessage.playerID != null){     
+	            playerId = parsedMessage.playerID;
+	            console.log("Id de la sesion: " + parsedMessage.playerID);
+	            console.log("ID establecido: " + playerId);
+	            //console.log("jugadores antes: " + playersIn);
+	            //playersIn ++;
+	            //console.log("jugadores despues: " + playersIn);
+	          }
+	        
+	        if(parsedMessage.lobby == "full"){
+	        	console.log("lobby llena");
+	        	fullLobby = true;
+	        }
+	        
+            console.log("message received");
+            console.log(connection);
+            
+            var data = JSON.parse(msg.data); // Se convierte el mensaje a JSON
+            
+            if(data.type == "startGame"){
+            	console.log(" A JUGAR!");
+            	//this.PlayGame();
+            	startGame = true;
+            }
+            
+            if(data.type == "skipTutorial"){
+            	console.log(" SALTAR!");
+            	//this.PlayGame();
+            	skipTutorial = true;
+            }
+            
+        }// Fin onmessage
     	
         let config = {
         	      mute: false,
@@ -64,38 +103,38 @@ class ReadyMenu extends Phaser.Scene{
 	    this.preLevel1 = this.add.image(gameWidth/2, gameHeight/2, 'level1');
 	    this.preLevel1.setDepth(2);
 	    this.preLevel1.alpha = 0;
-
-	    //SKIP BUTTON
-	    this.skipButtonL1 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
-	    this.skipButtonL1.setVisible(false);
-	    this.skipButtonL1.setDepth(2);
-	    this.skipButtonL1Sel = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButtonSel');
-	    this.skipButtonL1Sel.setVisible(false);
-	    this.skipButtonL1Sel.setDepth(2);
-
-	    this.skipButtonL1.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL1());
-	    this.skipButtonL1.on('pointerover', function () {this.skipButtonL1Sel.setVisible(true);}, this);
-	    this.skipButtonL1.on('pointerout', function () {this.skipButtonL1Sel.setVisible(false);}, this);
 	    
         //PLAY    
         this.playButton = this.add.image(gameWidth*7/16, gameHeight*8/16, 'playButton');
         this.playButton.setScale(2.5/3);
         this.playButtonSel = this.add.image(gameWidth*7/16, gameHeight*8/16, 'playButtonSel');
         this.playButtonSel.setScale(2.5/3);
+        
+        this.playButton.setVisible(false);
         this.playButtonSel.setVisible(false);
 
         this.playButton.on('pointerover', function (pointer) {this.playButtonSel.setVisible(true);}, this);
         this.playButton.on('pointerout', function (pointer) {this.playButtonSel.setVisible(false);}, this);
-        this.playButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.PlayGame());
+        this.playButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => /*this.PlayGame()*/ connection.send(JSON.stringify({type: "startGame"})));
         
-        if (fullLobby == true){
+        /*if ((fullLobby == true) ){//}|| (playerId == "1")){
 	    	 console.log("putas todas");
 	       	 this.playButton.setVisible(false);
 	       	 this.playButtonSel.setVisible(false);
 	    }else{
 	    	this.playButton.setVisible(true);
-	    }
+	    }*/
         
+        if (fullLobby == true){
+        	
+        	//ACTIVAR FONDO QUE PONE FULL LOBBY
+        	
+        }
+        /*else
+        {
+        	//ACTIVAR FONDO QUE PONE WAITING FOR PLAYERS
+        }
+        */
         //BACK
         this.backButtonMMM = this.add.image(gameWidth*10/16, gameHeight*8/16, 'backButton');
         this.backButtonMMM.setScale(2.5/3);
@@ -107,10 +146,23 @@ class ReadyMenu extends Phaser.Scene{
         this.backButtonMMM.on('pointerout', function (pointer) {this.backButtonMMMSel.setVisible(false);}, this);
         this.backButtonMMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackInit());
         
+	    //SKIP BUTTON
+	    this.skipButtonL1 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
+	    this.skipButtonL1.setVisible(false);
+	    this.skipButtonL1.setDepth(2);
+	    this.skipButtonL1Sel = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButtonSel');
+	    this.skipButtonL1Sel.setVisible(false);
+	    this.skipButtonL1Sel.setDepth(2);
+
+	    this.skipButtonL1.setInteractive({ useHandCursor: true}).on('pointerdown', () => connection.send(JSON.stringify({ type: "skipTutorial"}))/*this.SkipPreloadL1()*/);
+	    this.skipButtonL1.on('pointerover', function () {this.skipButtonL1Sel.setVisible(true);}, this);
+	    this.skipButtonL1.on('pointerout', function () {this.skipButtonL1Sel.setVisible(false);}, this);
+	    
     	this.alertbox = this.add.dom(gameWidth*11/16, gameHeight*1/16).createFromCache('conexionalert');
     	this.alertbox.setVisible(true);    	
     	
     	this.textusers = document.getElementById('alertmessage');
+    	
     }
 
 
@@ -118,7 +170,34 @@ class ReadyMenu extends Phaser.Scene{
 		alive();
 		this.updateUsersConected();
 		
-	    
+		/*if (playerId == "2"){
+			console.log("Holaaaaa 2");
+			this.playButton.setVisible(true);
+		}*/
+		
+		if (playerId == 2){
+			//console.log("Holaaaaa 2");
+			this.playButton.setVisible(true);
+		}
+		
+		if (playerId == 1){
+        	
+        	//ACTIVAR FONDO QUE PONE WAITING FOR PLAYERS
+        	
+        }
+        else
+        {
+        	//ACTIVAR FONDO QUE PONE READY TO PLAY!!
+        }
+		
+		if (startGame == true){
+			this.PlayGame();
+		}
+		
+		if (skipTutorial == true){
+			this.SkipPreloadL1();
+			skipTutorial = false;
+		}
 	}
 
 
@@ -150,6 +229,8 @@ class ReadyMenu extends Phaser.Scene{
 
     
     PlayGame(){
+    	
+    	//SE DEBERIA PASATR UN MENSAJE PARA QUE AMBOS COMIENCEN A JUGAR A LA PAR CUANDO EL JUGADOR 2 LE DE CLICK
 
         //this.scene.start("SelectMap");
         prevScene = 'ReadyMenu';
@@ -161,6 +242,9 @@ class ReadyMenu extends Phaser.Scene{
         this.backButtonMMM.setVisible(false);
         this.backButtonMMMSel.setVisible(false);
         //this.creditsButton.setVisible(false);
+        
+    	this.alertbox.setVisible(false);    	  	
+    	//this.textusers.setVisible(false);    	
 
         this.skipButtonL1.setVisible(true);
 
