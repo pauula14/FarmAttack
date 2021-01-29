@@ -156,47 +156,97 @@ class GamePlayEs1 extends Phaser.Scene{
     this.pauseButtonEs1.on('pointerout', function (pointer) {this.pauseButtonEs1Sel.setVisible(false);}, this);
 
     // --- CONTROLES --- //
+	
+	if(gamemode == "Online"){
+		if(playerId == 1 ){
+			this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
+   			this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
+    		this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
 
-    // 1) P1
-    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
-    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
-    this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+	 		// Reiniciamos eventos
+		    this.P1_jumpButton.off('down');
+		    this.P1_jumpButton.off('up');
+		    this.P1_leftButton.off('down');
+		    this.P1_leftButton.off('up');
+		    this.P1_rightButton.off('down');
+		    this.P1_rightButton.off('up');
 
-    // 2) P2
-    this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
-    this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
-    this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+			//Controles jugador 1
+		    this.P1_jumpButton.on('down',this.player1StartJump, this);
+		    this.P1_jumpButton.on('up',this.player1StopJump, this);
+		    this.P1_leftButton.on('down',this.player1Left , this);
+		    this.P1_leftButton.on('up', this.player1Stop, this);
+		    this.P1_rightButton.on('down',this.player1Right, this);
+		    this.P1_rightButton.on('up', this.player1Stop, this);
+		}
+		else if(playerId ==2){
+			this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+			
+			// Reiniciamos eventos
+			this.P2_jumpButton.off('down');
+		    this.P2_jumpButton.off('up');
+		    this.P2_leftButton.off('down');
+		    this.P2_leftButton.off('up');
+		    this.P2_rightButton.off('down');
+		    this.P2_rightButton.off('up');
 
-    // Reiniciamos eventos
-    this.P1_jumpButton.off('down');
-    this.P1_jumpButton.off('up');
-    this.P1_leftButton.off('down');
-    this.P1_leftButton.off('up');
-    this.P1_rightButton.off('down');
-    this.P1_rightButton.off('up');
+			//Controles jugador 2
+		    this.P2_jumpButton.on('down',this.player2StartJump, this);
+		    this.P2_jumpButton.on('up',this.player2StopJump, this);
+		    this.P2_leftButton.on('down',this.player2Left, this);
+		    this.P2_leftButton.on('up', this.player2Stop, this);
+		    this.P2_rightButton.on('down',this.player2Right, this);
+		    this.P2_rightButton.on('up', this.player2Stop, this);
 
-    this.P2_jumpButton.off('down');
-    this.P2_jumpButton.off('up');
-    this.P2_leftButton.off('down');
-    this.P2_leftButton.off('up');
-    this.P2_rightButton.off('down');
-    this.P2_rightButton.off('up');
+	
+		}
+	}else{
+	    // 1) P1
+	    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
+	    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
+	    this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+	
+	    // 2) P2
+	    this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
+	    this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
+	    this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+	
+	    // Reiniciamos eventos
+	    this.P1_jumpButton.off('down');
+	    this.P1_jumpButton.off('up');
+	    this.P1_leftButton.off('down');
+	    this.P1_leftButton.off('up');
+	    this.P1_rightButton.off('down');
+	    this.P1_rightButton.off('up');
+	
+	    this.P2_jumpButton.off('down');
+	    this.P2_jumpButton.off('up');
+	    this.P2_leftButton.off('down');
+	    this.P2_leftButton.off('up');
+	    this.P2_rightButton.off('down');
+	    this.P2_rightButton.off('up');
+	
+	    //Controles jugador 1
+	    this.P1_jumpButton.on('down',this.player1StartJump, this);
+	    this.P1_jumpButton.on('up',this.player1StopJump, this);
+	    this.P1_leftButton.on('down',this.player1Left , this);
+	    this.P1_leftButton.on('up', this.player1Stop, this);
+	    this.P1_rightButton.on('down',this.player1Right, this);
+	    this.P1_rightButton.on('up', this.player1Stop, this);
+	
+	    //Controles jugador 2
+	    this.P2_jumpButton.on('down',this.player2StartJump, this);
+	    this.P2_jumpButton.on('up',this.player2StopJump, this);
+	    this.P2_leftButton.on('down',this.player2Left, this);
+	    this.P2_leftButton.on('up', this.player2Stop, this);
+	    this.P2_rightButton.on('down',this.player2Right, this);
+	    this.P2_rightButton.on('up', this.player2Stop, this);
 
-    //Controles jugador 1
-    this.P1_jumpButton.on('down',this.player1StartJump, this);
-    this.P1_jumpButton.on('up',this.player1StopJump, this);
-    this.P1_leftButton.on('down',this.player1Left , this);
-    this.P1_leftButton.on('up', this.player1Stop, this);
-    this.P1_rightButton.on('down',this.player1Right, this);
-    this.P1_rightButton.on('up', this.player1Stop, this);
+	}
+	
 
-    //Controles jugador 2
-    this.P2_jumpButton.on('down',this.player2StartJump, this);
-    this.P2_jumpButton.on('up',this.player2StopJump, this);
-    this.P2_leftButton.on('down',this.player2Left, this);
-    this.P2_leftButton.on('up', this.player2Stop, this);
-    this.P2_rightButton.on('down',this.player2Right, this);
-    this.P2_rightButton.on('up', this.player2Stop, this);
 
 
     //Variable para saber los huevos recogidos
@@ -207,6 +257,25 @@ class GamePlayEs1 extends Phaser.Scene{
 
   }
   update(){
+	
+	 connection.onmessage = function (msg) {
+		
+        	var parsedMessage = JSON.parse(msg.data);
+	        
+            if(parsedMessage.type == "updatePosition"){
+				if(playerId ==1){
+					this.player2.x = parsedMessage.posX;
+					this.player2.y = parsedMessage.posY;	
+				}
+				else if(playerId ==2){
+					this.player1.x = parsedMessage.posX;
+					this.player1.y = parsedMessage.posY;
+
+				}
+            	
+            }
+            
+        }// Fin onmessage
 
     this.physics.add.overlap(this.player1, this.eggsP1, this.recogerHuevoP1, null, this);
     this.physics.add.overlap(this.player2, this.eggsP2, this.recogerHuevoP2, null, this);
@@ -321,10 +390,14 @@ endArrived(player, end){
   //ANIMATIONS PLAYER 1
   player1StartJump(){
     this.player1.setVelocityY(-300);
+	console.log("sended");
+	connection.send(JSON.stringify({type: "updatePosition" , posX : this.player1.x, posY: this.player1.y}));
   }
 
   player1StopJump(){
     this.player1.setVelocityY(0);
+	console.log("sended");
+	connection.send(JSON.stringify({type: "updatePosition" , posX : this.player1.x, posY: this.player1.y}));
   }
 
 
@@ -333,12 +406,16 @@ endArrived(player, end){
     this.player1.anims.play('move_left1', true);
     this.player1.flipX = false;
     this.dir1 = 0;
+	console.log("sended");
+	connection.send(JSON.stringify({type: "updatePosition" , posX : this.player1.x, posY: this.player1.y}));
   }
 
   player1Right() {
     this.player1.setVelocityX(160);
     this.player1.anims.play('move_right1', true);
     this.dir1 = 1;
+	console.log("sended");
+	connection.send(JSON.stringify({type: "updatePosition" , posX : this.player1.x, posY: this.player1.y}));
   }
 
   player1Stop() {
@@ -356,16 +433,21 @@ endArrived(player, end){
     if(this.P1_rightButton.isDown){
       this.player1Right();
     }
-
+	console.log("sended");
+	connection.send(JSON.stringify({type: "updatePosition" , posX : this.player1.x, posY: this.player1.y}));
   }
 
   //ANIMATIONS PLAYER 2
   player2StartJump(){
     this.player2.setVelocityY(-300);
+	console.log("sended");
+	connection.send(JSON.stringify({ type: "updatePosition", posX: this.player2.x, posY: this.player2.y }));
   }
 
   player2StopJump(){
     this.player2.setVelocityY(0);
+	console.log("sended");
+	connection.send(JSON.stringify({ type: "updatePosition", posX: this.player2.x, posY: this.player2.y }));
   }
 
 
@@ -373,12 +455,16 @@ endArrived(player, end){
     this.player2.setVelocityX(-160);
     this.player2.anims.play('move_left2', true);
     this.dir2 = 0;
+	console.log("sended");
+	connection.send(JSON.stringify({ type: "updatePosition", posX: this.player2.x, posY: this.player2.y }));
   }
 
   player2Right() {
     this.player2.setVelocityX(160);
     this.player2.anims.play('move_right2', true);
     this.dir2 = 1;
+	console.log("sended");
+	connection.send(JSON.stringify({ type: "updatePosition", posX: this.player2.x, posY: this.player2.y }));
   }
 
   player2Stop() {
@@ -396,6 +482,8 @@ endArrived(player, end){
     if(this.P2_rightButton.isDown){
       this.player2Right();
     }
+	console.log("sended");
+	connection.send(JSON.stringify({ type: "updatePosition", posX: this.player2.x, posY: this.player2.y }));
   }
 
   //GAME CONTROL

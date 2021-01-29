@@ -28,22 +28,17 @@ public class LevelHandler extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("New user: " + session.getId());
-		
+		ObjectNode newNode = mapper.createObjectNode();
 		if(sessionOne == null) {
 			sessionOne = session;
-			ObjectNode newNode = mapper.createObjectNode();
+			
 			newNode.put("playerID", idOne);
 			session.sendMessage(new TextMessage(newNode.toString()));
-			System.out.println("Session one");
 		}else if(sessionTwo == null) {
 			sessionTwo = session;
-			ObjectNode newNode = mapper.createObjectNode();
 			newNode.put("playerID", idTwo);
 			session.sendMessage(new TextMessage(newNode.toString()));
-			System.out.println("Session two");
 		}else {
-			ObjectNode newNode = mapper.createObjectNode();
 			newNode.put("lobby", "full");
 			session.sendMessage(new TextMessage(newNode.toString()));
 			System.out.println("Impossible to establish connection. The lobby is full, so the session with id: " + session.getId() + " can't connect.");
@@ -98,13 +93,10 @@ public class LevelHandler extends TextWebSocketHandler{
 	 @Override
     protected void handleTextMessage(WebSocketSession session,TextMessage message)throws Exception {
 	 
-		 System.out.println("Message received: " + message.getPayload());
          String msg = message.getPayload();
          JsonNode node = mapper.readTree(msg);
          
          String typeMessage = node.get("type").asText();
-         
-         System.out.println("tipo de mensaje" + typeMessage);
          
          switch(typeMessage){
          
@@ -128,7 +120,6 @@ public class LevelHandler extends TextWebSocketHandler{
         	 responseNode2.put("type", "skipTutorial");
      		 
      		try {
-     			System.out.println("Mensaje " + responseNode2.toString());
      			sessionOne.sendMessage(new TextMessage(responseNode2.toString()));
      			sessionTwo.sendMessage(new TextMessage(responseNode2.toString()));
 			}catch(Exception e) {
@@ -140,18 +131,30 @@ public class LevelHandler extends TextWebSocketHandler{
          case "updatePosition":
         	 
         	 //METER EN UN MAPPER TODA LA INFO A ATUALIZAR
-        	 ObjectNode responseNodePosition = mapper.createObjectNode();
         	 float posX = Float.parseFloat(node.get("posX").asText());
-             float posY = Float.parseFloat(node.get("posY").asText());
-             
+        	 float posY = Float.parseFloat(node.get("posY").asText());
+        	 float accX = Float.parseFloat(node.get("accX").asText());
+        	 float accY = Float.parseFloat(node.get("accY").asText());
+        	 
+        	 ObjectNode responseNodePosition = mapper.createObjectNode();
+        	 
+             responseNodePosition.put("type", "updatePosition");
         	 responseNodePosition.put("posX", posX);
         	 responseNodePosition.put("posY", posY);
+        	 responseNodePosition.put("accX", accX);
+        	 responseNodePosition.put("accY", accY);
+        	 if(node.get("event") != null) {
+        		 responseNodePosition.put("event", node.get("event").asText());
+        	 }
         	 
-        	 if (session.getId() == "1") {
-        		 sessionOne.sendMessage(new TextMessage(responseNodePosition.toString()));
-      			
-        	 }else if (session.getId() == "2") {
+        	 if (session.getId() == sessionOne.getId()) {
         		 sessionTwo.sendMessage(new TextMessage(responseNodePosition.toString()));
+      			
+        	 }else if (session.getId() == sessionTwo.getId()) {
+        		 sessionOne.sendMessage(new TextMessage(responseNodePosition.toString()));
+        	 }
+        	 else {
+        		 System.out.println("SALE MAL");
         	 }
         	 break;
         	 
