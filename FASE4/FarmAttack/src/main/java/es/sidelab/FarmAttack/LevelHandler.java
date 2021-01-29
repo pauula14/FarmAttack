@@ -20,6 +20,8 @@ import java.util.concurrent.Semaphore;
 
 public class LevelHandler extends TextWebSocketHandler{
 	
+	private Map<Integer, WebSocketSession> sessions = new ConcurrentHashMap<>();
+	
 	private WebSocketSession sessionOne;
 	private WebSocketSession sessionTwo;
 	private int idOne = 1;
@@ -29,14 +31,18 @@ public class LevelHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		ObjectNode newNode = mapper.createObjectNode();
-		if(sessionOne == null) {
-			sessionOne = session;
-			
+		
+		System.out.println("0: " + sessions.get(0) + " 1: " + sessions.get(1));
+		
+		if(sessions.get(1) == null) {
+			sessionOne = session;			
 			newNode.put("playerID", idOne);
+			sessions.put(idOne, session);
 			session.sendMessage(new TextMessage(newNode.toString()));
-		}else if(sessionTwo == null) {
+		}else if(sessions.get(2) == null) {
 			sessionTwo = session;
 			newNode.put("playerID", idTwo);
+			sessions.put(idTwo, session);
 			session.sendMessage(new TextMessage(newNode.toString()));
 		}else {
 			newNode.put("lobby", "full");
@@ -49,14 +55,42 @@ public class LevelHandler extends TextWebSocketHandler{
 	//Si la sesión cerrada es igual a la sesión 1, esta se borra, sino se borra la 2.
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		
 		System.out.println("Session closed: " + session.getId());
 		
-		ObjectNode responseNodeOne = mapper.createObjectNode();
-		responseNodeOne.put("type", "leave");
-		sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
-		sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));
-		 
-		if(session.equals(sessionOne)) {
+		ObjectNode responseNodeLeave = mapper.createObjectNode();
+		responseNodeLeave.put("type", "leave");
+		
+		//sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
+		//sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));
+		for (WebSocketSession participant : sessions.values()) {
+			try {
+				System.out.println("Eliminado after" + session.getId());
+				System.out.println("0: " + sessions.get(1) + " 1: " + sessions.get(2));
+				sessions.remove(1);
+				sessions.remove(2);
+				System.out.println("0: " + sessions.get(1) + " 1: " + sessions.get(2));
+				
+				synchronized(participant) {
+					participant.sendMessage(new TextMessage(responseNodeLeave.toString()));
+				}
+			}catch(Exception e) {
+				System.out.println("Catched " + e);
+			}
+		}
+		
+		/*if (session.getId() == sessionOne.getId()) {
+			 //sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
+			 sessionOne = null;
+			 //session.close();
+	   		
+	 	}else if (session.getId() == sessionTwo.getId()) {
+	   		//sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));
+	   		sessionTwo = null;
+	   		//session.close();
+	   	}*/
+		
+		/*if(session.equals(sessionOne)) {
 			//System.out.println("1 cerrao ");
 			sessionOne = null;
 			//System.out.println("Se cerro el 1 ");
@@ -72,20 +106,8 @@ public class LevelHandler extends TextWebSocketHandler{
 			//responseNodeTwo.put("type", "leave");
 			//sessionOne.sendMessage(new TextMessage(responseNodeTwo.toString()));
  			
-		}
+		}*/
 	}
-	
-    /*@Override
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        //System.out.println("New session in level 1: " + session.getId());
-		//sessions.put(session.getId(), session);
-	}
-    
-    @Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		//System.out.println("Session closed in level 1: " + session.getId());
-		//sessions.remove(session.getId());
-	}*/
 	
 	//HAY QUE PASAR ASI LOS MENSAJESSSSSSS
 	//that.connection.send(JSON.stringify({ type: "event", id: that.myPlayer.id, key: event.key }));
@@ -160,13 +182,36 @@ public class LevelHandler extends TextWebSocketHandler{
         	 
          case "leave":
         	 
-        	 System.out.println("K me voy loko");
+        	 /*System.out.println("K me voy loko");
         	 ObjectNode responseNodeOne = mapper.createObjectNode();
  			 responseNodeOne.put("type", "leave");
  			 sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
- 			 sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));
+ 			 sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));*/
+        	 
+        	 ObjectNode responseNodeLeave = mapper.createObjectNode();
+        	 responseNodeLeave.put("type", "leaveReadyRoom");
+     		//sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
+     		//sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));
+     		 
+     		if (session.getId() == sessionOne.getId()) {
+     			System.out.println("el uno se piro");
+     			sessions.remove(1);
+     			sessionOne = null;
+     	   		sessionTwo.sendMessage(new TextMessage(responseNodeLeave.toString()));
+     	 			
+     	   	 }else if (session.getId() == sessionTwo.getId()) {
+     	   		System.out.println("el dos se piro");
+     	   		sessions.remove(2);
+     	   		sessionTwo = null;
+     	   		sessionOne.sendMessage(new TextMessage(responseNodeLeave.toString()));
+     	   	 }
+     		
+     		//System.out.println("Eliminado leave" + session.getId());
+     		//sessions.remove(session.getId());
+     		
         	 
         	 break;
+        	 
 
          }
 	 

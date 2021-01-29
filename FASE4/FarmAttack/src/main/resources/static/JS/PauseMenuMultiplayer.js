@@ -5,10 +5,34 @@ class PauseMenuMultiplayer extends Phaser.Scene{
 
   preload(){
 
+	  	//Cuando la conexion da un error
+	    connection.onerror = function(e) {
+	      console.log("WS error: " + e);
+	    }
+
+	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
+	    connection.onclose = function(e){
+	      connection.send(JSON.stringify({ type: "leave"}))
+	      console.log("Motivo del cierre: " + e.code);
+	    }
+	    
   }
 
   create(){
 
+  	//recibimos el mensaje de empezar
+      connection.onmessage = function (msg) {
+    	  var data = JSON.parse(msg.data); 
+    	  
+          if(data.type == "leave"){
+          	console.log(" EL OTRO SE FUE :((((");
+          	alone = true;
+          	//this.PlayGame();
+          	//skipTutorial = true;
+          }
+          
+      }// Fin onmessage
+      
     this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
 
     //BACKGROUND
@@ -35,6 +59,15 @@ class PauseMenuMultiplayer extends Phaser.Scene{
 
   }
 
+  update(){
+	  
+	  if (alone == true){
+		  this.BackGamePM();
+		  alone = false;
+	  }
+  }
+  
+  
   BackGamePM(){
     this.clickSound.play();
 

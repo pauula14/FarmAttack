@@ -36,11 +36,13 @@ class ReadyMenu extends Phaser.Scene{
 	    
 	  //Cuando la conexion da un error
 	    connection.onerror = function(e) {
+	      connection.send(JSON.stringify({ type: "leave"}));
 	      console.log("WS error: " + e);
 	    }
+	    
 	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
 	    connection.onclose = function(e){
-	      //connection.send(JSON.stringify({ type: "leave"}))
+	      connection.send(JSON.stringify({ type: "leave"}));
 	      console.log("Motivo del cierre: " + e.code);
 	    }
     }
@@ -83,10 +85,20 @@ class ReadyMenu extends Phaser.Scene{
             }
             
             if(data.type == "leave"){
-            	console.log(" EL OTRO SE FUE :((((");
+            	console.log(" EL OTRO SE FUE de golpe :((((");
+            	alone = true;
             	//this.PlayGame();
             	//skipTutorial = true;
             }
+            
+            /*if(data.type == "leaveReadyRoom"){
+            	console.log(" EL OTRO SE FUE :((((");
+            	alone = true;
+            	//this.PlayGame();
+            	//skipTutorial = true;
+            }*/
+            
+
             
         }// Fin onmessage
     	
@@ -151,7 +163,7 @@ class ReadyMenu extends Phaser.Scene{
 
         this.backButtonMMM.on('pointerover', function (pointer) {this.backButtonMMMSel.setVisible(true);}, this);
         this.backButtonMMM.on('pointerout', function (pointer) {this.backButtonMMMSel.setVisible(false);}, this);
-        this.backButtonMMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.BackInit());
+        this.backButtonMMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => (connection.send(JSON.stringify({ type: "leave"})), leaved = true)/*this.BackInit()*/);
         
 	    //SKIP BUTTON
 	    this.skipButtonL1 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
@@ -205,6 +217,28 @@ class ReadyMenu extends Phaser.Scene{
 			this.SkipPreloadL1();
 			skipTutorial = false;
 		}
+		
+		/*if ((alone == true) && (leaved == false)){
+			this.AloneInRoom();
+			alone = false;
+		}
+		
+		if ((alone == true) && (leaved == true)){
+			console.log("atras satanas");
+			this.BackInit();
+			leaved = false;
+		}*/
+		
+		/*if ((alone == true) && (leaved == false)){
+			this.AloneInRoom();
+			alone = false;
+		}*/
+
+		if ((leaved == true)){
+			console.log("atras satanas");
+			this.BackInit();
+			leaved = false;
+		}
 	}
 
 
@@ -224,14 +258,18 @@ class ReadyMenu extends Phaser.Scene{
     	this.clickSound.play();
         this.scene.stop("ReadyMenu");
         this.scene.start("GamePlayEs1Multiplayer");
-        prevScene = 'ReadyMenu';
     }
     
     BackInit(){
     	this.clickSound.play();
         this.scene.stop("ReadyMenu");
         this.scene.start("MainMenuMultiplayer");
-        prevScene = 'ReadyMenu';
+    }
+    
+    AloneInRoom(){
+    	this.clickSound.play();
+        this.scene.stop("ReadyMenu");
+        this.scene.start("AloneInGame");
     }
 
     

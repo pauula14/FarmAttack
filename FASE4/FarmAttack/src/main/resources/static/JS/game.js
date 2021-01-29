@@ -28,7 +28,7 @@ window.onload = function() {
 		//URL del JUEGO
 		//utl: "http://farmAttack.es",
 
-		scene: [PreloadMenu, ServidorCaido, InitMenu, NickName, ChatMenu, MainMenu, MainMenuMultiplayer, OptionsMenu, ReadyMenu, PauseMenuMultiplayer, TutorialMenu, CreditsMenu, GamePlayEs1, GamePlayEs1Multiplayer, GamePlayEs2, GamePlayFa1, GamePlayFa2, GamePlayFo1, PauseMenu, GameOver, Winner]
+		scene: [PreloadMenu, AloneInGame, ServidorCaido, InitMenu, NickName, ChatMenu, MainMenu, MainMenuMultiplayer, OptionsMenu, ReadyMenu, PauseMenuMultiplayer, TutorialMenu, CreditsMenu, GamePlayEs1, GamePlayEs1Multiplayer, GamePlayEs2, GamePlayFa1, GamePlayFa2, GamePlayFo1, PauseMenu, GameOver, Winner]
 
 	}
 
@@ -64,6 +64,9 @@ var connection = null;
 var fullLobby = false;
 var startGame = false;
 var skipTutorial = false;
+var alone = false; 
+var leaved = false;
+
 
 // Tamaño pantalla
 var gameWidth = 1425;

@@ -18,6 +18,22 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
   preload(){
     this.levelWidth = 1462;
     this.levelHeight = 687;
+    
+    if(gamemode == "Online"){
+    	
+    	console.log("online");
+    	
+  	    //Cuando la conexion da un error
+	    connection.onerror = function(e) {
+	      console.log("WS error: " + e);
+	    }
+	    
+	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
+	    connection.onclose = function(e){
+	      connection.send(JSON.stringify({ type: "leave"}))
+	      console.log("Motivo del cierre: " + e.code);
+	    }
+    }
   }
 
   create(){
@@ -158,22 +174,25 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
     // --- CONTROLES --- //
 	
 	if(gamemode == "Online"){
+		
 		this.playerUpdate = setInterval(() => {
-		if(playerId == 1 ){
-			connection.send(JSON.stringify({type: "updatePosition",
-			posX: this.player1.x, posY: this.player1.y,
-			accX: this.player1.body.acceleration.x, accY: this.player1.body.acceleration.y}));
-		}
-		else if(playerId==2){
-			connection.send(JSON.stringify({type: "updatePosition",
-			posX: this.player2.x, posY: this.player2.y,
-			accX: this.player2.body.acceleration.x, accY: this.player2.body.acceleration.y}));
+			
+			if(playerId == 1 ){
+				connection.send(JSON.stringify({type: "updatePosition",
+				posX: this.player1.x, posY: this.player1.y,
+				accX: this.player1.body.acceleration.x, accY: this.player1.body.acceleration.y}));
+			}
+			else if(playerId==2){
+				connection.send(JSON.stringify({type: "updatePosition",
+				posX: this.player2.x, posY: this.player2.y,
+				accX: this.player2.body.acceleration.x, accY: this.player2.body.acceleration.y}));
 			}
 		}, 30);
 		
 		 connection.onmessage = (msg) => {
 			var parsedMessage = JSON.parse(msg.data);
 	        console.log("receive");
+	        
 	        if(parsedMessage.type == "updatePosition"){
 				if(playerId == 1){				
 					this.player2.x = parsedMessage.posX;
@@ -208,7 +227,19 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 					//this.player1.setVisible(true);
 				}
 	        }
+	        
+	        if(parsedMessage.type == "leave"){
+	         	console.log(" EL OTRO SE FUE :((((");
+	         	alone = true;
+	         	//this.PlayGame();
+	         	//skipTutorial = true;
+	         }
+	         
 		}
+		 
+		 
+		 
+		 
 		if(playerId == 1 ){
 			this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 			this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
