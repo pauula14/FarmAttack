@@ -328,9 +328,6 @@ endArrived(player, end){
     }
   }
 
-	SendData(){
-		connection.send(JSON.stringify({type: "updatePosition", posX: "", posY:""}))
-	}
 //ANIMATIONS
   //ANIMATIONS PLAYER 1
   player1StartJump(){
