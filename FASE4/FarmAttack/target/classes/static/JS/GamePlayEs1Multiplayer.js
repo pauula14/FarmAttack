@@ -41,7 +41,7 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
     this.end2Visible = false;
     this.playersArrived = 0;
 
-    levelGameplay = 'GamePlayEs1';
+    levelGameplay = 'GamePlayEs1Multiplayer';
 
     //EFFECTS
     this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
@@ -479,9 +479,9 @@ endArrived(player, end){
       musicGameplay.stop();
     }
     musicMenu.play();
-    this.scene.run('PauseMenu');
-    this.scene.bringToTop('PauseMenu');
-    this.scene.pause();
+    this.scene.run('PauseMenuMultiplayer');
+    this.scene.bringToTop('PauseMenuMultiplayer');
+    this.scene.sendToBack();
   }
 
   EffectsConfig(){

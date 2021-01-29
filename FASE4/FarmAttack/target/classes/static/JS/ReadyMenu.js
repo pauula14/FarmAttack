@@ -40,6 +40,7 @@ class ReadyMenu extends Phaser.Scene{
 	    }
 	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
 	    connection.onclose = function(e){
+	      //connection.send(JSON.stringify({ type: "leave"}))
 	      console.log("Motivo del cierre: " + e.code);
 	    }
     }
@@ -79,6 +80,12 @@ class ReadyMenu extends Phaser.Scene{
             	console.log(" SALTAR!");
             	//this.PlayGame();
             	skipTutorial = true;
+            }
+            
+            if(data.type == "leave"){
+            	console.log(" EL OTRO SE FUE :((((");
+            	//this.PlayGame();
+            	//skipTutorial = true;
             }
             
         }// Fin onmessage

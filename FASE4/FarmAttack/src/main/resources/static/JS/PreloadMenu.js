@@ -121,7 +121,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('clock', '../ASSETS/Gameplay/Objects/clock.png');
 
     //PAUSE MENU
-    this.load.image('backgroundPM', '../ASSETS/Interface/PauseMenu/pause_menu_buttons.png');
+    this.load.image('backgroundPM', '../ASSETS/Interface/PauseMenu/pause_menu_background.png');
     this.load.image('resumeButtonPM', '../ASSETS/Interface/PauseMenu/Buttons/resume_button.png');
     this.load.image('optionsButtonPM', '../ASSETS/Interface/PauseMenu/Buttons/options_button.png');
     this.load.image('tutorialButtonPM', '../ASSETS/Interface/PauseMenu/Buttons/tutorial_button.png');

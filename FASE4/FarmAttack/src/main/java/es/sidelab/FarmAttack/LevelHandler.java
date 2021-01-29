@@ -55,11 +55,28 @@ public class LevelHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		System.out.println("Session closed: " + session.getId());
+		
+		ObjectNode responseNodeOne = mapper.createObjectNode();
+		responseNodeOne.put("type", "leave");
+		sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
+		sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));
+		 
 		if(session.equals(sessionOne)) {
+			//System.out.println("1 cerrao ");
 			sessionOne = null;
+			//System.out.println("Se cerro el 1 ");
+			//ObjectNode responseNodeOne = mapper.createObjectNode();
+			//responseNodeOne.put("type", "leave");
+			//sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
 		}
 		if(session.equals(sessionTwo)){
+			//System.out.println("2 cerrao ");
 			sessionTwo = null;
+			//System.out.println("Se cerro el 2 ");
+			//ObjectNode responseNodeTwo = mapper.createObjectNode();
+			//responseNodeTwo.put("type", "leave");
+			//sessionOne.sendMessage(new TextMessage(responseNodeTwo.toString()));
+ 			
 		}
 	}
 	
@@ -138,6 +155,15 @@ public class LevelHandler extends TextWebSocketHandler{
         	 }
         	 break;
         	 
+         case "leave":
+        	 
+        	 System.out.println("K me voy loko");
+        	 ObjectNode responseNodeOne = mapper.createObjectNode();
+ 			 responseNodeOne.put("type", "leave");
+ 			 sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
+ 			 sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));
+        	 
+        	 break;
 
          }
 	 
