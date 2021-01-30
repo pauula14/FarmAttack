@@ -149,9 +149,10 @@ class ReadyMenu extends Phaser.Scene{
             }
 			
 			if(data.type == "names"){
-				let text = data.Name1 + "\n";
-				text += data.Name2;
-				this.textusers.innerHTML = text.toString();
+				let text = data.name1 + "\n";
+				text += data.name2;
+				namesreceived = true
+				names = text;
 			}
             
             if(data.type == "leave"){
@@ -163,15 +164,20 @@ class ReadyMenu extends Phaser.Scene{
                         
         }// Fin onmessage
 		
-		//connection.send(JSON.stringify({ type: "handshake" , nombre: name}));
-			
-
+		
+		 this.time.addEvent({
+	        delay:1000,
+	        callback: () => {
+				connection.send(JSON.stringify({ type: "handshake" , nombre: name}));
+			},
+	      callbackScope: this
+	      }, this);
  						
     }
 
 
 	update(){
-		alive();
+		//alive();
 		//this.updateUsersConected();
 		
 		/*if (playerId == "2"){
@@ -204,17 +210,6 @@ class ReadyMenu extends Phaser.Scene{
 			skipTutorial = false;
 		}
 		
-		/*if ((alone == true) && (leaved == false)){
-			this.AloneInRoom();
-			alone = false;
-		}
-		
-		if ((alone == true) && (leaved == true)){
-			console.log("atras satanas");
-			this.BackInit();
-			leaved = false;
-		}*/
-		
 		if ((alone == true)){
 			this.AloneInRoom();
 			alone = false;
@@ -225,19 +220,10 @@ class ReadyMenu extends Phaser.Scene{
 			this.BackInit();
 			leaved = false;
 		}
+		if(namesreceived == true){
+			this.textusers.innerHTML = names;
+		}
 	}
-
-/*
-    updateUsersConected(){
-		let text = "";
-        for(var i=0 ; i< usersConnected.length;i++){
-            if(usersConnected[i].online){
-            	text += usersConnected[i].name +" \n"
-            }
-        }
-        this.textusers.innerHTML = text.toString();
-    }
-*/
 
 
     PlayerMultiplayerGame(){
