@@ -5,6 +5,8 @@ class MainMenuMultiplayer extends Phaser.Scene{
 
   preload(){
 	this.load.html('conexionalert', '../ASSETS/LogInform/conexionalert.html');
+	
+	console.log("MAIN MENU ONLINE");
   }
 
   create(){

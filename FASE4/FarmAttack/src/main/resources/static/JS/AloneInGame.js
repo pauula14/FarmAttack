@@ -29,6 +29,7 @@ class AloneInGame extends Phaser.Scene{
 
   BackMainMenu(){
     this.clickSound.play();
+    //this.scene.stop(levelGameplay);
     this.scene.stop('AloneInGame');
     this.scene.sendToBack('AloneInGame');
     this.scene.start('InitMenu'); //Ver como hacer para que lleve a la anterior real

@@ -158,6 +158,8 @@ class GamePlayEs1 extends Phaser.Scene{
     // --- CONTROLES --- //
 	
 	if(gamemode == "Online"){
+		console.log("Modo online");
+		
 		if(playerId == 1 ){
 			this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
    			this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
@@ -203,6 +205,9 @@ class GamePlayEs1 extends Phaser.Scene{
 	
 		}
 	}else{
+		
+		console.log("Modo offline");
+		
 	    // 1) P1
 	    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 	    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);

@@ -6,6 +6,8 @@ class ReadyMenu extends Phaser.Scene{
 
     preload() { 
 		prevScene ='ReadyMenu';
+		alone = false;
+    	
 		this.load.html('conexionalert', '../ASSETS/LogInform/conexionalert.html');
 		this.activeButton = false;
 		//this.fullLobby;// = false;
@@ -194,6 +196,7 @@ class ReadyMenu extends Phaser.Scene{
 		
 		if (startGame == true){
 			this.PlayGame();
+			startGame = false;
 		}
 		
 		if (skipTutorial == true){
@@ -212,10 +215,10 @@ class ReadyMenu extends Phaser.Scene{
 			leaved = false;
 		}*/
 		
-		/*if ((alone == true) && (leaved == false)){
+		if ((alone == true)){
 			this.AloneInRoom();
 			alone = false;
-		}*/
+		}
 
 		if ((leaved == true)){
 			console.log("atras satanas");

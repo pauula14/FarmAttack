@@ -66,7 +66,7 @@ var startGame = false;
 var skipTutorial = false;
 var alone = false; 
 var leaved = false;
-
+var playerUpdate;
 
 // Tamaño pantalla
 var gameWidth = 1425;

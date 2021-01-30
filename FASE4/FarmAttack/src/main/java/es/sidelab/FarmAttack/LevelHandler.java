@@ -120,6 +120,8 @@ public class LevelHandler extends TextWebSocketHandler{
      		 responseNode.put("type", "startGame");
      		 
      		try {
+     			
+     			if((sessions.get(1) != null && sessions.get(2) != null))
      			sessionOne.sendMessage(new TextMessage(responseNode.toString()));
      			sessionTwo.sendMessage(new TextMessage(responseNode.toString()));
 			}catch(Exception e) {
@@ -197,22 +199,40 @@ public class LevelHandler extends TextWebSocketHandler{
  			 sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));*/
         	 
         	 ObjectNode responseNodeLeave = mapper.createObjectNode();
-        	 responseNodeLeave.put("type", "leaveReadyRoom");
+        	 responseNodeLeave.put("type", "leave");
      		//sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
      		//sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));
      		 
-     		if (session.getId() == sessionOne.getId()) {
-     			System.out.println("el uno se piro");
-     			sessions.remove(1);
-     			sessionOne = null;
-     	   		sessionTwo.sendMessage(new TextMessage(responseNodeLeave.toString()));
-     	 			
-     	   	 }else if (session.getId() == sessionTwo.getId()) {
-     	   		System.out.println("el dos se piro");
-     	   		sessions.remove(2);
-     	   		sessionTwo = null;
-     	   		sessionOne.sendMessage(new TextMessage(responseNodeLeave.toString()));
-     	   	 }
+        	 
+        	 if (node.get("inGame").asText() == "yes") {
+       		 
+        		 System.out.println("ME VOY DEL JUEGO");
+        		 
+        		 sessions.remove(1);
+        		 sessions.remove(2);
+        		 sessionOne = null;
+        		 sessionTwo = null;
+    	   		 sessionOne.sendMessage(new TextMessage(responseNodeLeave.toString()));
+    	   		 sessionTwo.sendMessage(new TextMessage(responseNodeLeave.toString()));
+        	   		
+        			
+        	 }
+        	 else 
+        	 {
+        		 if (session.getId() == sessionOne.getId()) {
+          			System.out.println("el uno se piro");
+          			sessions.remove(1);
+          			sessionOne = null;
+          	   		sessionTwo.sendMessage(new TextMessage(responseNodeLeave.toString()));
+          	 			
+          	   	 }else if (session.getId() == sessionTwo.getId()) {
+          	   		System.out.println("el dos se piro");
+          	   		sessions.remove(2);
+          	   		sessionTwo = null;
+          	   		sessionOne.sendMessage(new TextMessage(responseNodeLeave.toString()));
+          	   	 }
+        	 }
+     		
      		
      		//System.out.println("Eliminado leave" + session.getId());
      		//sessions.remove(session.getId());

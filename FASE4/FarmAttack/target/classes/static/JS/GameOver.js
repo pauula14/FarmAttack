@@ -4,11 +4,13 @@ class GameOver extends Phaser.Scene{
   }
 
   preload(){
-
+	  alone = false;
   }
 
   create(){
 
+	//CONTROLAR EL MENSAJE DE VOLVER A COMENZAR PARA QUE VUELVAN A EMPEZAR LOS DOS A LA VEZ
+	  
     this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
 
     // 1) BACKGROUND
@@ -42,9 +44,17 @@ class GameOver extends Phaser.Scene{
   BackMainMenu(){
     this.clickSound.play();
 
-    this.scene.stop('GameOver');
-    this.scene.sendToBack('GameOver');
-    this.scene.start('MainMenu'); //Ver como hacer para que lleve a la anterior real
+    if(gamemode == "Online"){
+    	//this.scene.stop('GamePlayEs1Multiplayer');
+    	this.scene.stop('GameOver');
+        this.scene.sendToBack('GameOver');
+        this.scene.start('InitMenu'); //Llleva al menu inicial
+    }else{
+    	this.scene.stop('GameOver');
+        this.scene.sendToBack('GameOver');
+        this.scene.start('MainMenu'); //Lleva al main menu
+	}
+    
   }
 
   RetryGame(){
@@ -54,10 +64,18 @@ class GameOver extends Phaser.Scene{
       musicMenu.stop();
     }
     musicGameplay.play();
+    
+	if(gamemode != "Online"){
+		
+		this.scene.stop('GameOver');
+	    this.scene.sendToBack('GameOver');
+	    this.scene.start(levelGameplay);
+	    
+	}else{
+		//ENVIAMOS MENSAJE DE REEMPEZAR
+	}
 
-    this.scene.stop('GameOver');
-    this.scene.sendToBack('GameOver');
-    this.scene.start(levelGameplay);
+    
   }
 
   EffectsConfig(){

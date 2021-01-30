@@ -12,7 +12,7 @@ class PauseMenuMultiplayer extends Phaser.Scene{
 
 	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
 	    connection.onclose = function(e){
-	      connection.send(JSON.stringify({ type: "leave"}))
+	      //connection.send(JSON.stringify({ type: "leave"}))
 	      console.log("Motivo del cierre: " + e.code);
 	    }
 	    
@@ -27,8 +27,6 @@ class PauseMenuMultiplayer extends Phaser.Scene{
           if(data.type == "leave"){
           	console.log(" EL OTRO SE FUE :((((");
           	alone = true;
-          	//this.PlayGame();
-          	//skipTutorial = true;
           }
           
       }// Fin onmessage
@@ -53,7 +51,7 @@ class PauseMenuMultiplayer extends Phaser.Scene{
     this.quitButtonPMSel = this.add.image(gameWidth*8/16, gameHeight*10.35/16, 'quitButtonPMsel');
     this.quitButtonPMSel.setVisible(false);
 
-    this.quitButtonPM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.QuitGamePM());
+    this.quitButtonPM.setInteractive({ useHandCursor: true}).on('pointerdown', () => (connection.send(JSON.stringify({ type:"leave", inGame:"yes"})), leaved = true));/*this.QuitGamePM());*/
     this.quitButtonPM.on('pointerover', function (pointer) {this.quitButtonPMSel.setVisible(true);}, this);
     this.quitButtonPM.on('pointerout', function (pointer) {this.quitButtonPMSel.setVisible(false);}, this);
 
@@ -64,6 +62,11 @@ class PauseMenuMultiplayer extends Phaser.Scene{
 	  if (alone == true){
 		  this.BackGamePM();
 		  alone = false;
+	  }
+	  
+	  if (leaved == true){
+		  this.QuitGamePM();
+		  leaved = false;
 	  }
   }
   
@@ -84,14 +87,17 @@ class PauseMenuMultiplayer extends Phaser.Scene{
 
   QuitGamePM(){
     this.clickSound.play();
-
-    this.scene.stop('PauseMenu');
+    
     this.scene.stop(levelGameplay);
+    this.scene.stop('PauseMenuMultiplayer');
+    
+    
 	if(gamemode =="Offline"){
 		this.scene.start('MainMenu');	
 	}
 	else if(gamemode == "Online"){
-		this.scene.start('MainMenuMultiplayer');
+		clearInterval(playerUpdate);
+		this.scene.start('InitMenu');
 	}
 	else{
 		gamemode = "Offline"
