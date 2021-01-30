@@ -102,6 +102,7 @@ class MainMenuMultiplayer extends Phaser.Scene{
 
 
   GoReadyMenu(){
+	
     this.scene.stop("MainMenuMultiplayer");
     this.scene.start("ReadyMenu");
     musicGameplay.play();

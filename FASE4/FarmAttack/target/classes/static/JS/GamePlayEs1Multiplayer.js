@@ -13,6 +13,7 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
       this.endTrigger1Empty;
       this.endTrigger2;
       this.endTrigger1;
+      this.goalArrived = false;
       //this.playerUpdate;
    }
 
@@ -238,7 +239,7 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 
 	        if(parsedMessage.type == "leave"){
 	         	console.log(" EL OTRO SE FUE :((((");
-	         	clearInterval(this.playerUpdate);
+	         	clearInterval(playerUpdate);
 	         	alone = true;
 	         	//gamemode = "Offline";
 	         	//this.PlayGame();
@@ -389,12 +390,14 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 
   onEvent ()
   {
-    this.initialTime -= 1; // One second
-    this.text.setText(this.formatTime(this.initialTime));
-
-    if(this.initialTime==0){
-      console.log("Se acaboo");
-    }
+	if(this.goalArrived == false){
+		this.initialTime -= 1; // One second
+	    this.text.setText(this.formatTime(this.initialTime));
+	
+	    if(this.initialTime==0){
+	      console.log("Se acaboo");
+	    }
+	}   
   }
 
   recogerHuevoP1 (player, egg)
@@ -465,6 +468,7 @@ endArrived(player, end){
     this.playersArrived++;
 
     if (this.playersArrived == 2){
+    	this.goalArrived = true;
         this.FinNivelEs1();
     }
   }
@@ -580,6 +584,7 @@ endArrived(player, end){
     this.time.addEvent({
       delay: 6300,
       callback: function() {
+    	  clearInterval(playerUpdate);
         this.scene.stop('GamePlayEs1Multiplayer');
         this.scene.sendToBack('GamePlayEs1Multiplayer');
         this.scene.start('GamePlayEs2');
@@ -619,6 +624,7 @@ endArrived(player, end){
 
   SkipPreloadL2()
   {
+	  clearInterval(playerUpdate);
     this.scene.stop('GamePlayEs1Multiplayer');
     this.scene.sendToBack('GamePlayEs1Multiplayer');
     this.scene.start('GamePlayEs2');

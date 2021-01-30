@@ -7,7 +7,7 @@ class ReadyMenu extends Phaser.Scene{
     preload() { 
 		prevScene ='ReadyMenu';
 		alone = false;
-    	
+		
 		this.load.html('conexionalert', '../ASSETS/LogInform/conexionalert.html');
 		this.activeButton = false;
 		//this.fullLobby;// = false;
@@ -25,7 +25,7 @@ class ReadyMenu extends Phaser.Scene{
 	    
 	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
 	    connection.onclose = function(e){
-	      connection.send(JSON.stringify({ type: "leave"}));
+	      //connection.send(JSON.stringify({ type: "leave"}));
 	      console.log("Motivo del cierre: " + e.code);
 	    }
     }
@@ -78,7 +78,9 @@ class ReadyMenu extends Phaser.Scene{
         	
         	//ACTIVAR FONDO QUE PONE FULL LOBBY
         	
-        }
+        }/*else{
+        	connection.send(JSON.stringify({ type: "handshake" , nombre: name}));
+        }*/
         /*else
         {
         	//ACTIVAR FONDO QUE PONE WAITING FOR PLAYERS
@@ -151,7 +153,7 @@ class ReadyMenu extends Phaser.Scene{
 			if(data.type == "names"){
 				let text = data.name1 + "\n";
 				text += data.name2;
-				namesreceived = true
+				namesreceived = true;
 				names = text;
 			}
             
@@ -172,7 +174,7 @@ class ReadyMenu extends Phaser.Scene{
 			},
 	      callbackScope: this
 	      }, this);
- 						
+ 			
     }
 
 
@@ -222,6 +224,7 @@ class ReadyMenu extends Phaser.Scene{
 		}
 		if(namesreceived == true){
 			this.textusers.innerHTML = names;
+			namesreceived = false;
 		}
 	}
 
