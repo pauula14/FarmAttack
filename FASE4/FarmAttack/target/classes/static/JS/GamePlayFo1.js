@@ -15,6 +15,26 @@ class GamePlayFo1 extends Phaser.Scene{
   preload(){
     this.levelWidth = 1462;
     this.levelHeight = 687;
+ if(gamemode == "Online"){
+
+    	console.log("online");
+
+  	    //Cuando la conexion da un error
+	    connection.onerror = function(e) {
+	      //this.scene.stop('GamePlayEs1Multiplayer');
+	      console.log("WS error: " + e);
+	    }
+
+	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
+	    connection.onclose = function(e){
+	      //connection.send(JSON.stringify({ type: "leave", inGame: "yes"}))
+	      //this.scene.stop('GamePlayEs1Multiplayer');
+	      console.log("Motivo del cierre: " + e.code);
+	      clearInterval(playerUpdate);
+	      console.log("Intervalo fuera");
+	      
+	    }
+    }
   }
 
   create(){
@@ -133,47 +153,163 @@ class GamePlayFo1 extends Phaser.Scene{
     this.pauseButtonFo1.on('pointerout', function (pointer) {this.pauseButtonFo1Sel.setVisible(false);}, this);
 
     // --- CONTROLES --- //
+if((gamemode == "Online")){
 
-    // 1) P1
-    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
-    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
-    this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			console.log("Jugando moodo online con x");
+			var pl1 = this.player1;
+			var pl2 = this.player2;
+			
+			playerUpdate = setInterval(function(){
+				
+					if(playerId == 1 ){
+						
+						connection.send(JSON.stringify({type: "updatePosition",
+						posX: pl1.x, posY: pl1.y,
+						accX: pl1.body.acceleration.x, accY: pl1.body.acceleration.y}));
+					}
+					else if(playerId==2)
+					{
+						connection.send(JSON.stringify({type: "updatePosition",
+						posX: pl2.x, posY: pl2.y,
+						accX: pl2.body.acceleration.x, accY: pl2.body.acceleration.y}));
+					}
+				
+			}, 30);
+		
+		
 
-    // 2) P2
-    this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
-    this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left, false);
-    this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
 
-    // Reiniciamos eventos
-    this.P1_jumpButton.off('down');
-    this.P1_jumpButton.off('up');
-    this.P1_leftButton.off('down');
-    this.P1_leftButton.off('up');
-    this.P1_rightButton.off('down');
-    this.P1_rightButton.off('up');
 
-    this.P2_jumpButton.off('down');
-    this.P2_jumpButton.off('up');
-    this.P2_leftButton.off('down');
-    this.P2_leftButton.off('up');
-    this.P2_rightButton.off('down');
-    this.P2_rightButton.off('up');
+		 connection.onmessage = (msg) => {
 
-    //Controles jugador 1
-    this.P1_jumpButton.on('down',this.player1StartJump, this);
-    this.P1_jumpButton.on('up',this.player1StopJump, this);
-    this.P1_leftButton.on('down',this.player1Left , this);
-    this.P1_leftButton.on('up', this.player1Stop, this);
-    this.P1_rightButton.on('down',this.player1Right, this);
-    this.P1_rightButton.on('up', this.player1Stop, this);
+			var parsedMessage = JSON.parse(msg.data);
+	        console.log("receive");
 
-    //Controles jugador 2
-    this.P2_jumpButton.on('down',this.player2StartJump, this);
-    this.P2_jumpButton.on('up',this.player2StopJump, this);
-    this.P2_leftButton.on('down',this.player2Left, this);
-    this.P2_leftButton.on('up', this.player2Stop, this);
-    this.P2_rightButton.on('down',this.player2Right, this);
-    this.P2_rightButton.on('up', this.player2Stop, this);
+	        if(parsedMessage.type == "updatePosition"){
+				if(playerId == 1){
+					this.player2.x = parsedMessage.posX;
+					this.player2.y = parsedMessage.posY;
+					this.player2.body.x = parsedMessage.posX;
+					this.player2.body.y = parsedMessage.posY;
+					//this.player2.setVisible(true);
+				}
+				else if(playerId == 2){
+					this.player1.x = parsedMessage.posX;
+					this.player1.y = parsedMessage.posY;
+					this.player1.body.x = parsedMessage.posX;
+					this.player1.body.y = parsedMessage.posY;
+					//this.player1.setVisible(true);
+				}
+				this.UpdatetAnims();
+	        }
+
+			if(parsedMessage.type == "synTimer"){
+				this.initialTime = parsedMessage.time;
+			}
+
+	        if(parsedMessage.type == "leave"){
+	         	console.log(" EL OTRO SE FUE :((((");
+	         	clearInterval(this.playerUpdate);
+	         	alone = true;
+	         	//gamemode = "Offline";
+	         	//this.PlayGame();
+	         	//skipTutorial = true;
+	         }
+
+		}
+
+
+
+
+		if(playerId == 1 ){
+			this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
+			this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
+			this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+
+	 		// Reiniciamos eventos
+		    this.P1_jumpButton.off('down');
+		    this.P1_jumpButton.off('up');
+		    this.P1_leftButton.off('down');
+		    this.P1_leftButton.off('up');
+		    this.P1_rightButton.off('down');
+		    this.P1_rightButton.off('up');
+
+			//Controles jugador 1
+		    this.P1_jumpButton.on('down',this.player1StartJump , this);
+		    this.P1_jumpButton.on('up',this.player1StopJump, this);
+		    this.P1_leftButton.on('down',this.player1Left , this);
+		    this.P1_leftButton.on('up', this.player1Stop, this);
+		    this.P1_rightButton.on('down',this.player1Right, this);
+		    this.P1_rightButton.on('up', this.player1Stop, this);
+		}
+		else if(playerId ==2){
+			this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+
+			// Reiniciamos eventos
+			this.P2_jumpButton.off('down');
+		    this.P2_jumpButton.off('up');
+		    this.P2_leftButton.off('down');
+		    this.P2_leftButton.off('up');
+		    this.P2_rightButton.off('down');
+		    this.P2_rightButton.off('up');
+
+			//Controles jugador 2
+		    this.P2_jumpButton.on('down',this.player2StartJump, this);
+		    this.P2_jumpButton.on('up',this.player2StopJump, this);
+		    this.P2_leftButton.on('down',this.player2Left, this);
+		    this.P2_leftButton.on('up', this.player2Stop, this);
+		    this.P2_rightButton.on('down',this.player2Right, this);
+		    this.P2_rightButton.on('up', this.player2Stop, this);
+
+
+		}
+	}else{
+	    // 1) P1
+	    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
+	    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
+	    this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+
+	    // 2) P2
+	    this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
+	    this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
+	    this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+
+	    // Reiniciamos eventos
+	    this.P1_jumpButton.off('down');
+	    this.P1_jumpButton.off('up');
+	    this.P1_leftButton.off('down');
+	    this.P1_leftButton.off('up');
+	    this.P1_rightButton.off('down');
+	    this.P1_rightButton.off('up');
+
+	    this.P2_jumpButton.off('down');
+	    this.P2_jumpButton.off('up');
+	    this.P2_leftButton.off('down');
+	    this.P2_leftButton.off('up');
+	    this.P2_rightButton.off('down');
+	    this.P2_rightButton.off('up');
+
+	    //Controles jugador 1
+	    this.P1_jumpButton.on('down',this.player1StartJump, this);
+	    this.P1_jumpButton.on('up',this.player1StopJump, this);
+	    this.P1_leftButton.on('down',this.player1Left , this);
+	    this.P1_leftButton.on('up', this.player1Stop, this);
+	    this.P1_rightButton.on('down',this.player1Right, this);
+	    this.P1_rightButton.on('up', this.player1Stop, this);
+
+	    //Controles jugador 2
+	    this.P2_jumpButton.on('down',this.player2StartJump, this);
+	    this.P2_jumpButton.on('up',this.player2StopJump, this);
+	    this.P2_leftButton.on('down',this.player2Left, this);
+	    this.P2_leftButton.on('up', this.player2Stop, this);
+	    this.P2_rightButton.on('down',this.player2Right, this);
+	    this.P2_rightButton.on('up', this.player2Stop, this);
+
+	}
+
+
 
     //Variable para saber los huevos recogidos
     this.score=0;
@@ -181,6 +317,10 @@ class GamePlayFo1 extends Phaser.Scene{
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
 
+	if(gamemode == "Online"){
+    	connection.send(JSON.stringify({type: "syncTimer", time: this.text.text}));
+    }
+	
   }
   update(){
 
@@ -427,5 +567,35 @@ endArrived(player, end){
         delay: 0
       };
     }
+	UpdatetAnims(){
+		if(this.player1.prevx > this.player1.x)
+		{
+			this.player1.anims.play('move_left1', true);
+			this.player1.flipX = false;
+		}
+		else if(this.player1.prevx < this.player1.x)
+		{
+			this.player1.anims.play('move_right1', true);
+			this.player1.flipX = false;
+		}
+		else if(this.player1.prevx == this.player1.x)
+			this.player1.anims.play('stop1R', true);
 
+		this.player1.prevx = this.player1.x;
+
+		if(this.player2.prevx > this.player2.x){
+			this.player2.anims.play('move_left2', true);
+			this.player2.flipX = false;
+		}
+		else if(this.player2.prevx < this.player2.x)
+		{
+			this.player2.anims.play('move_right2', true);
+		    this.player2.flipX = false;
+		}
+		else if(this.player2.prevx == this.player2.x)
+			this.player2.anims.play('stop2R', true);
+
+		this.player2.prevx = this.player2.x;
+
+	}
 }

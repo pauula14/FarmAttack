@@ -18,6 +18,26 @@ class GamePlayEs1 extends Phaser.Scene{
   preload(){
     this.levelWidth = 1462;
     this.levelHeight = 687;
+ 	if(gamemode == "Online"){
+
+    	console.log("online");
+
+  	    //Cuando la conexion da un error
+	    connection.onerror = function(e) {
+	      //this.scene.stop('GamePlayEs1Multiplayer');
+	      console.log("WS error: " + e);
+	    }
+
+	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
+	    connection.onclose = function(e){
+	      //connection.send(JSON.stringify({ type: "leave", inGame: "yes"}))
+	      //this.scene.stop('GamePlayEs1Multiplayer');
+	      console.log("Motivo del cierre: " + e.code);
+	      clearInterval(playerUpdate);
+	      console.log("Intervalo fuera");
+	      
+	    }
+    }
   }
 
   create(){
@@ -251,14 +271,15 @@ class GamePlayEs1 extends Phaser.Scene{
 
 	}
 	
-
-
-
     //Variable para saber los huevos recogidos
     this.score=0;
 
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
+
+	if(gamemode == "Online"){
+    	connection.send(JSON.stringify({type: "syncTimer", time: this.text.text}));
+    }
 
   }
   update(){
@@ -556,5 +577,35 @@ endArrived(player, end){
       delay: 0
     };
   }
+UpdatetAnims(){
+		if(this.player1.prevx > this.player1.x)
+		{
+			this.player1.anims.play('move_left1', true);
+			this.player1.flipX = false;
+		}
+		else if(this.player1.prevx < this.player1.x)
+		{
+			this.player1.anims.play('move_right1', true);
+			this.player1.flipX = false;
+		}
+		else if(this.player1.prevx == this.player1.x)
+			this.player1.anims.play('stop1R', true);
 
+		this.player1.prevx = this.player1.x;
+
+		if(this.player2.prevx > this.player2.x){
+			this.player2.anims.play('move_left2', true);
+			this.player2.flipX = false;
+		}
+		else if(this.player2.prevx < this.player2.x)
+		{
+			this.player2.anims.play('move_right2', true);
+		    this.player2.flipX = false;
+		}
+		else if(this.player2.prevx == this.player2.x)
+			this.player2.anims.play('stop2R', true);
+
+		this.player2.prevx = this.player2.x;
+
+	}
 }
