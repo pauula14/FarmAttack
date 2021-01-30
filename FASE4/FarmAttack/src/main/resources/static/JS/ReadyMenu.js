@@ -13,26 +13,7 @@ class ReadyMenu extends Phaser.Scene{
 		connection = new WebSocket('ws://'+ window.location.host + '/ws-level');
 	    connection.onopen = function(){
 	        console.log("WS Open");
-	        //this.send(JSON.stringify({ type: "connect", id: that.myPlayer.id, numPlayers: that.numPlayers}));
 	    }
-	    
-	    /*connection.onmessage = function(message) {
-	        var parsedMessage = JSON.parse(message.data);
-	        
-	        if(parsedMessage.playerID != null){     
-	            playerId = parsedMessage.playerID;
-	            console.log("Id de la sesion: " + parsedMessage.playerID);
-	            console.log("ID establecido: " + playerId);
-	            //console.log("jugadores antes: " + playersIn);
-	            //playersIn ++;
-	            //console.log("jugadores despues: " + playersIn);
-	          }
-	        
-	        if(parsedMessage.lobby == "full"){
-	        	console.log("lobby llena");
-	        	fullLobby = true;
-	        }
-	    }*/
 	    
 	  //Cuando la conexion da un error
 	    connection.onerror = function(e) {
@@ -48,59 +29,6 @@ class ReadyMenu extends Phaser.Scene{
     }
     
     create() {
-    	
-    	//recibimos el mensaje de empezar
-        connection.onmessage = function (msg) {
-        	var parsedMessage = JSON.parse(msg.data);
-	        
-	        if(parsedMessage.playerID != null){     
-	            playerId = parsedMessage.playerID;
-	            console.log("Id de la sesion: " + parsedMessage.playerID);
-	            console.log("ID establecido: " + playerId);
-	            //console.log("jugadores antes: " + playersIn);
-	            //playersIn ++;
-	            //console.log("jugadores despues: " + playersIn);
-	          }
-	        
-	        if(parsedMessage.lobby == "full"){
-	        	console.log("lobby llena");
-	        	fullLobby = true;
-	        }
-	        
-            console.log("message received");
-            console.log(connection);
-            
-            var data = JSON.parse(msg.data); // Se convierte el mensaje a JSON
-            
-            if(data.type == "startGame"){
-            	console.log(" A JUGAR!");
-            	//this.PlayGame();
-            	startGame = true;
-            }
-            
-            if(data.type == "skipTutorial"){
-            	console.log(" SALTAR!");
-            	//this.PlayGame();
-            	skipTutorial = true;
-            }
-            
-            if(data.type == "leave"){
-            	console.log(" EL OTRO SE FUE de golpe :((((");
-            	alone = true;
-            	//this.PlayGame();
-            	//skipTutorial = true;
-            }
-            
-            /*if(data.type == "leaveReadyRoom"){
-            	console.log(" EL OTRO SE FUE :((((");
-            	alone = true;
-            	//this.PlayGame();
-            	//skipTutorial = true;
-            }*/
-            
-
-            
-        }// Fin onmessage
     	
         let config = {
         	      mute: false,
@@ -181,13 +109,68 @@ class ReadyMenu extends Phaser.Scene{
     	this.alertbox.setVisible(true);    	
     	
     	this.textusers = document.getElementById('alertmessage');
-    	
+		this.textusers.innerHTML = name;
+
+//recibimos el mensaje de empezar
+        connection.onmessage = function (msg) {
+        	var parsedMessage = JSON.parse(msg.data);
+	        
+	        if(parsedMessage.playerID != null){     
+	            playerId = parsedMessage.playerID;
+	            console.log("Id de la sesion: " + parsedMessage.playerID);
+	            console.log("ID establecido: " + playerId);
+	            //console.log("jugadores antes: " + playersIn);
+	            //playersIn ++;
+	            //console.log("jugadores despues: " + playersIn);
+	          }
+	        
+	        if(parsedMessage.lobby == "full"){
+	        	console.log("lobby llena");
+	        	fullLobby = true;
+	        }
+	        
+            console.log("message received");
+            console.log(connection);
+            
+            var data = JSON.parse(msg.data); // Se convierte el mensaje a JSON
+            
+            if(data.type == "startGame"){
+            	console.log(" A JUGAR!");
+            	//this.PlayGame();
+            	startGame = true;
+            }
+            
+            if(data.type == "skipTutorial"){
+            	console.log(" SALTAR!");
+            	//this.PlayGame();
+            	skipTutorial = true;
+            }
+			
+			if(data.type == "names"){
+				let text = data.Name1 + "\n";
+				text += data.Name2;
+				this.textusers.innerHTML = text.toString();
+			}
+            
+            if(data.type == "leave"){
+            	console.log(" EL OTRO SE FUE de golpe :((((");
+            	alone = true;
+            	//this.PlayGame();
+            	//skipTutorial = true;
+            }
+                        
+        }// Fin onmessage
+		
+		//connection.send(JSON.stringify({ type: "handshake" , nombre: name}));
+			
+
+ 						
     }
 
 
 	update(){
 		alive();
-		this.updateUsersConected();
+		//this.updateUsersConected();
 		
 		/*if (playerId == "2"){
 			console.log("Holaaaaa 2");
@@ -241,7 +224,7 @@ class ReadyMenu extends Phaser.Scene{
 		}
 	}
 
-
+/*
     updateUsersConected(){
 		let text = "";
         for(var i=0 ; i< usersConnected.length;i++){
@@ -251,7 +234,7 @@ class ReadyMenu extends Phaser.Scene{
         }
         this.textusers.innerHTML = text.toString();
     }
-
+*/
 
 
     PlayerMultiplayerGame(){

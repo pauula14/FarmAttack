@@ -26,6 +26,8 @@ public class LevelHandler extends TextWebSocketHandler{
 	private WebSocketSession sessionTwo;
 	private int idOne = 1;
 	private int idTwo = 2;
+	private String NameOne =null;
+	private String NameTwo =null;
 	private ObjectMapper mapper = new ObjectMapper();
 	
 	@Override
@@ -79,38 +81,8 @@ public class LevelHandler extends TextWebSocketHandler{
 			}
 		}
 		
-		/*if (session.getId() == sessionOne.getId()) {
-			 //sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
-			 sessionOne = null;
-			 //session.close();
-	   		
-	 	}else if (session.getId() == sessionTwo.getId()) {
-	   		//sessionOne.sendMessage(new TextMessage(responseNodeOne.toString()));
-	   		sessionTwo = null;
-	   		//session.close();
-	   	}*/
-		
-		/*if(session.equals(sessionOne)) {
-			//System.out.println("1 cerrao ");
-			sessionOne = null;
-			//System.out.println("Se cerro el 1 ");
-			//ObjectNode responseNodeOne = mapper.createObjectNode();
-			//responseNodeOne.put("type", "leave");
-			//sessionTwo.sendMessage(new TextMessage(responseNodeOne.toString()));
-		}
-		if(session.equals(sessionTwo)){
-			//System.out.println("2 cerrao ");
-			sessionTwo = null;
-			//System.out.println("Se cerro el 2 ");
-			//ObjectNode responseNodeTwo = mapper.createObjectNode();
-			//responseNodeTwo.put("type", "leave");
-			//sessionOne.sendMessage(new TextMessage(responseNodeTwo.toString()));
- 			
-		}*/
 	}
-	
-	//HAY QUE PASAR ASI LOS MENSAJESSSSSSS
-	//that.connection.send(JSON.stringify({ type: "event", id: that.myPlayer.id, key: event.key }));
+
 	
 	 @Override
     protected void handleTextMessage(WebSocketSession session,TextMessage message)throws Exception {
@@ -122,7 +94,26 @@ public class LevelHandler extends TextWebSocketHandler{
          
          switch(typeMessage){
          
-       //DAR COMIENZO LOS DOS A LA PARTIDA
+         
+         case "handshake":
+        	 if(session.getId() == sessionOne.getId()) {
+        		 NameOne = node.get("nombre").asText();
+        	 }else if(session.getId() == sessionTwo.getId()) {
+        		 NameTwo = node.get("nombre").asText();
+        	 }
+        	 System.out.println("NAME RECEIBED");
+
+        	 if(NameOne!= null && NameTwo !=null) {
+        		 ObjectNode responseNode = mapper.createObjectNode();
+         		 responseNode.put("type", "names");
+         		 responseNode.put("name1", NameOne);
+         		 responseNode.put("name2", NameTwo);
+
+      			sessionOne.sendMessage(new TextMessage(responseNode.toString()));
+      			sessionTwo.sendMessage(new TextMessage(responseNode.toString()));
+        	 }
+        	
+     		 break;
          case "startGame":
         	 
         	 ObjectNode responseNode = mapper.createObjectNode();
@@ -180,6 +171,23 @@ public class LevelHandler extends TextWebSocketHandler{
         	 }
         	 break;
         	 
+         	case "syncTimer":
+        	 
+         		ObjectNode responseNodeSync = mapper.createObjectNode();
+         		String time = node.get("time").asText();
+         		responseNodeSync.put("type", "syncTimer");
+         		responseNodeSync.put("time", time);
+         		try {
+         			sessionTwo.sendMessage(new TextMessage(responseNodeSync.toString()));
+         			sessionOne.sendMessage(new TextMessage(responseNodeSync.toString()));
+         			
+         		}catch(Exception e) {
+    				System.out.println("Error de conexión - " + e);
+    			}
+         		
+ 	   		break;
+	 			
+         
          case "leave":
         	 
         	 /*System.out.println("K me voy loko");
@@ -211,9 +219,7 @@ public class LevelHandler extends TextWebSocketHandler{
      		
         	 
         	 break;
-        	 
-
-         }
+         }    
 	 
 	 }
     

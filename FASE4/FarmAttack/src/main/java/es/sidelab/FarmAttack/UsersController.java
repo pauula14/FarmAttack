@@ -19,12 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.*;
 
 @RestController
+@EnableScheduling
 @RequestMapping("/users")
 public class UsersController {
 	

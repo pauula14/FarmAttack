@@ -102,21 +102,11 @@ class ChatMenu extends Phaser.Scene{
 
     update() {
         alive();
-        this.updateUsersConected();
+        this.usersConnectedText.setText(updateUsersConected());
         this.getChat();
         this.updateChat();
-
     }
-
-    updateUsersConected(){
-		let text = "";
-        for(var i=0 ; i< usersConnected.length;i++){
-            if(usersConnected[i].online){
-            	text += usersConnected[i].name +" \n"
-            }
-        }
-        this.usersConnectedText.setText(text);
-    }
+   
 
     getChat(){
         let stack
@@ -176,19 +166,3 @@ class ChatMenu extends Phaser.Scene{
 
 }
 
-function sendMessage(message){
-        $.ajax({
-            method: "POST",
-            url:url+"/Chat",
-            data: JSON.stringify(name + ": " + message),
-            processData: false,
-            async:false,
-            dataType: 'json',
-            contentType: 'application/json',
-          }).done(function (){
-                console.log("Sended");
-          }).fail(function (value) {
-                console.log(value);
-            }
-        );
-    }

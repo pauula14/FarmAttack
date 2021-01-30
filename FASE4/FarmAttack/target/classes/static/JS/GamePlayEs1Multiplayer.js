@@ -45,7 +45,7 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
     this.end1Visible = false;
     this.end2Visible = false;
     this.playersArrived = 0;
-
+	
     levelGameplay = 'GamePlayEs1Multiplayer';
 
     //EFFECTS
@@ -189,6 +189,8 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 			}
 		}, 30);
 		
+
+		
 		 connection.onmessage = (msg) => {
 			var parsedMessage = JSON.parse(msg.data);
 	        console.log("receive");
@@ -199,15 +201,6 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 					this.player2.y = parsedMessage.posY;
 					this.player2.body.x = parsedMessage.posX;
 					this.player2.body.y = parsedMessage.posY;
-					if(parsedMessage.accX<0){
-						this.player2.flipX = true;
-						this.player2.anims.play('move_left2', true);
-					}else if(parsedMessage.accX > 0){
-						this.player2.flipX = false;
-						this.player2.anims.play('move_right2', true);
-					}else if(parsedMessage.accX ==0){
-						this.player2.anims.play('stop2R', true);
-					}
 					//this.player2.setVisible(true);
 				}
 				else if(playerId == 2){
@@ -215,18 +208,14 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 					this.player1.y = parsedMessage.posY;
 					this.player1.body.x = parsedMessage.posX;
 					this.player1.body.y = parsedMessage.posY;
-					if(parsedMessage.accX<0){
-						this.player1.flipX = true;
-						this.player1.anims.play('move_left1', true);
-					}else if(parsedMessage.accX > 0){
-						this.player1.flipX = false;
-						this.player1.anims.play('move_right1', true);
-					}else if(parsedMessage.accX ==0){
-						this.player1.anims.play('stop1R', true);
-					}
 					//this.player1.setVisible(true);
 				}
+				this.UpdatetAnims();
 	        }
+			
+			if(parsedMessage.type == "synTimer"){
+				this.initialTime = parsedMessage.time;
+			}
 	        
 	        if(parsedMessage.type == "leave"){
 	         	console.log(" EL OTRO SE FUE :((((");
@@ -334,11 +323,11 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
+	connection.send(JSON.stringify({type: "syncTimer", time: this.text.text}));
 
   }
   update(){
 	
-
     this.physics.add.overlap(this.player1, this.eggsP1, this.recogerHuevoP1, null, this);
     this.physics.add.overlap(this.player2, this.eggsP2, this.recogerHuevoP2, null, this);
 
@@ -358,7 +347,7 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
       this.GameOverEs1();
     }
 
-	alive();
+	//alive();
   }
 
   formatTime(seconds){
@@ -612,5 +601,33 @@ endArrived(player, end){
       delay: 0
     };
   }
-
+	
+			UpdatetAnims(){
+		if(this.player1.prevx > this.player1.x){
+			this.player1.anims.play('move_left1', true);
+			    this.player1.flipX = false;			
+		}
+		else if(this.player1.prevx < this.player1.x){			
+			this.player1.anims.play('move_right1', true);
+			    this.player1.flipX = false;	
+		}
+		else if(this.player1.prevx == this.player1.x)
+			this.player1.anims.play('stop1R', true);
+			
+		this.player1.prevx = this.player1.x;
+		
+		if(this.player2.prevx > this.player2.x){
+			this.player2.anims.play('move_left2', true);
+			this.player2.flipX = false;			
+		}
+		else if(this.player2.prevx < this.player2.x){
+			this.player2.anims.play('move_right2', true);
+		    this.player2.flipX = false;				
+		}
+		else if(this.player2.prevx == this.player2.x)
+			this.player2.anims.play('stop2R', true);
+			
+		this.player2.prevx = this.player2.x;
+					
+	}
 }

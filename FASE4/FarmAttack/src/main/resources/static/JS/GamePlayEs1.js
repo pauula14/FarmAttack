@@ -258,24 +258,6 @@ class GamePlayEs1 extends Phaser.Scene{
   }
   update(){
 	
-	 connection.onmessage = function (msg) {
-		
-        	var parsedMessage = JSON.parse(msg.data);
-	        
-            if(parsedMessage.type == "updatePosition"){
-				if(playerId ==1){
-					this.player2.x = parsedMessage.posX;
-					this.player2.y = parsedMessage.posY;	
-				}
-				else if(playerId ==2){
-					this.player1.x = parsedMessage.posX;
-					this.player1.y = parsedMessage.posY;
-
-				}
-            	
-            }
-            
-        }// Fin onmessage
 
     this.physics.add.overlap(this.player1, this.eggsP1, this.recogerHuevoP1, null, this);
     this.physics.add.overlap(this.player2, this.eggsP2, this.recogerHuevoP2, null, this);

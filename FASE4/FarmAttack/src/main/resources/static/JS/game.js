@@ -127,5 +127,31 @@ function alive() {
 		}
 	});
 	}
-	
 }
+
+function  updateUsersConected(){
+		let text = "";
+        for(var i=0 ; i< usersConnected.length;i++){
+            if(usersConnected[i].online){
+            	text += usersConnected[i].name +" \n"
+            }
+        }
+	return text;
+}
+
+function sendMessage(message){
+        $.ajax({
+            method: "POST",
+            url:url+"/Chat",
+            data: JSON.stringify(name + ": " + message),
+            processData: false,
+            async:false,
+            dataType: 'json',
+            contentType: 'application/json',
+          }).done(function (){
+                console.log("Sended");
+          }).fail(function (value) {
+                console.log(value);
+            }
+        );
+    }
