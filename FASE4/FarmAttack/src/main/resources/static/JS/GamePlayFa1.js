@@ -9,31 +9,30 @@ class GamePlayFa1 extends Phaser.Scene{
       this.playersArrived = 0;
       this.dir1 = 1; //0 = mirando izq, 1 = mirando der
       this.dir2 = 0; //0 = izq, 1 = der
+      this.goalArrived = false;
   }
 
   preload(){
     this.levelWidth = 1462;
     this.levelHeight = 687;
- if(gamemode == "Online"){
-
-    	console.log("online");
-
-  	    //Cuando la conexion da un error
-	    connection.onerror = function(e) {
-	      //this.scene.stop('GamePlayEs1Multiplayer');
-	      console.log("WS error: " + e);
+    
+	 if(gamemode == "Online"){
+	
+	    	console.log("online");
+	
+	  	    //Cuando la conexion da un error
+		    connection.onerror = function(e){
+		      console.log("WS error: " + e);
+		    }
+	
+		    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
+		    connection.onclose = function(e){
+		      console.log("Motivo del cierre: " + e.code);
+		      clearInterval(playerUpdate);
+		      console.log("Intervalo fuera");
+		      
+		    }
 	    }
-
-	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
-	    connection.onclose = function(e){
-	      //connection.send(JSON.stringify({ type: "leave", inGame: "yes"}))
-	      //this.scene.stop('GamePlayEs1Multiplayer');
-	      console.log("Motivo del cierre: " + e.code);
-	      clearInterval(playerUpdate);
-	      console.log("Intervalo fuera");
-	      
-	    }
-    }
   }
 
   create(){
@@ -71,9 +70,18 @@ class GamePlayFa1 extends Phaser.Scene{
     this.skipButtonL4Sel.setVisible(false);
     this.skipButtonL4Sel.setDepth(2);
 
-    this.skipButtonL4.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL4());
+    //this.skipButtonL4.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL4());
     this.skipButtonL4.on('pointerover', function (pointer) {this.skipButtonL4Sel.setVisible(true);}, this);
     this.skipButtonL4.on('pointerout', function (pointer) {this.skipButtonL4Sel.setVisible(false);}, this);
+    
+    if(gamemode == "Online")
+    {
+        this.skipButtonL4.setInteractive({ useHandCursor: true}).on('pointerdown', () => connection.send(JSON.stringify({ type: "skipTutorial"})));
+    }
+    else
+    {
+        this.skipButtonL4.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL4());
+    }
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(50, 690, 'chicken1R').setScale(0.7).setDepth(2);
@@ -231,56 +239,67 @@ class GamePlayFa1 extends Phaser.Scene{
 					}
 				
 			}, 30);
-		
-		
-
-
 
 		 connection.onmessage = (msg) => {
 
 			var parsedMessage = JSON.parse(msg.data);
 	        console.log("receive");
 
-	        if(parsedMessage.type == "updatePosition"){
-				if(playerId == 1){
+	        if(parsedMessage.type == "updatePosition")
+	        {
+				if(playerId == 1)
+				{
 					this.player2.x = parsedMessage.posX;
 					this.player2.y = parsedMessage.posY;
 					this.player2.body.x = parsedMessage.posX;
 					this.player2.body.y = parsedMessage.posY;
 					//this.player2.setVisible(true);
 				}
-				else if(playerId == 2){
+				else if(playerId == 2)
+				{
 					this.player1.x = parsedMessage.posX;
 					this.player1.y = parsedMessage.posY;
 					this.player1.body.x = parsedMessage.posX;
 					this.player1.body.y = parsedMessage.posY;
 					//this.player1.setVisible(true);
 				}
+				
 				this.UpdatetAnims();
 	        }
 
-			if(parsedMessage.type == "synTimer"){
+			if(parsedMessage.type == "synTimer")
+			{
 				this.initialTime = parsedMessage.time;
 			}
 
-	        if(parsedMessage.type == "leave"){
+	        if(parsedMessage.type == "leave")
+	        {
 	         	console.log(" EL OTRO SE FUE :((((");
 	         	clearInterval(this.playerUpdate);
 	         	alone = true;
-	         	//gamemode = "Offline";
-	         	//this.PlayGame();
-	         	//skipTutorial = true;
 	         }
-
+	        
+	        if(parsedMessage.type == "skipTutorial")
+	        {
+            	console.log(" SALTAR!");
+            	skipTutorial = true;
+            }
+	        
+	        if(parsedMessage.type == "gameover")
+	        {
+	        	gameOver = true;
+	        }
 		}
 
-
-
-
-		if(playerId == 1 ){
+		if(playerId == 1 )
+		{
 			this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 			this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
 			this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			
+			this.P1_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P1_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P1_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 	 		// Reiniciamos eventos
 		    this.P1_jumpButton.off('down');
@@ -289,6 +308,13 @@ class GamePlayFa1 extends Phaser.Scene{
 		    this.P1_leftButton.off('up');
 		    this.P1_rightButton.off('down');
 		    this.P1_rightButton.off('up');
+		    
+		    this.P1_jumpButton2.off('down');
+		    this.P1_jumpButton2.off('up');
+		    this.P1_leftButton2.off('down');
+		    this.P1_leftButton2.off('up');
+		    this.P1_rightButton2.off('down');
+		    this.P1_rightButton2.off('up');
 
 			//Controles jugador 1
 		    this.P1_jumpButton.on('down',this.player1StartJump , this);
@@ -297,11 +323,23 @@ class GamePlayFa1 extends Phaser.Scene{
 		    this.P1_leftButton.on('up', this.player1Stop, this);
 		    this.P1_rightButton.on('down',this.player1Right, this);
 		    this.P1_rightButton.on('up', this.player1Stop, this);
+		    
+		    this.P1_jumpButton2.on('down',this.player1StartJump , this);
+		    this.P1_jumpButton2.on('up',this.player1StopJump, this);
+		    this.P1_leftButton2.on('down',this.player1Left , this);
+		    this.P1_leftButton2.on('up', this.player1Stop, this);
+		    this.P1_rightButton2.on('down',this.player1Right, this);
+		    this.P1_rightButton2.on('up', this.player1Stop, this);
 		}
-		else if(playerId ==2){
-			this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
-			this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
-			this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+		else if(playerId ==2)
+		{
+			this.P2_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
+			this.P2_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
+			this.P2_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			
+			this.P2_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P2_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P2_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 			// Reiniciamos eventos
 			this.P2_jumpButton.off('down');
@@ -310,6 +348,13 @@ class GamePlayFa1 extends Phaser.Scene{
 		    this.P2_leftButton.off('up');
 		    this.P2_rightButton.off('down');
 		    this.P2_rightButton.off('up');
+		    
+		    this.P2_jumpButton2.off('down');
+		    this.P2_jumpButton2.off('up');
+		    this.P2_leftButton2.off('down');
+		    this.P2_leftButton2.off('up');
+		    this.P2_rightButton2.off('down');
+		    this.P2_rightButton2.off('up');
 
 			//Controles jugador 2
 		    this.P2_jumpButton.on('down',this.player2StartJump, this);
@@ -319,9 +364,16 @@ class GamePlayFa1 extends Phaser.Scene{
 		    this.P2_rightButton.on('down',this.player2Right, this);
 		    this.P2_rightButton.on('up', this.player2Stop, this);
 
-
+		    this.P2_jumpButton2.on('down',this.player2StartJump, this);
+		    this.P2_jumpButton2.on('up',this.player2StopJump, this);
+		    this.P2_leftButton2.on('down',this.player2Left, this);
+		    this.P2_leftButton2.on('up', this.player2Stop, this);
+		    this.P2_rightButton2.on('down',this.player2Right, this);
+		    this.P2_rightButton2.on('up', this.player2Stop, this);
 		}
-	}else{
+	}
+   else
+   {
 	    // 1) P1
 	    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 	    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
@@ -362,7 +414,6 @@ class GamePlayFa1 extends Phaser.Scene{
 	    this.P2_leftButton.on('up', this.player2Stop, this);
 	    this.P2_rightButton.on('down',this.player2Right, this);
 	    this.P2_rightButton.on('up', this.player2Stop, this);
-
 	}
 
 
@@ -373,9 +424,10 @@ class GamePlayFa1 extends Phaser.Scene{
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
 
-	 if(gamemode == "Online"){
+	 if(gamemode == "Online")
+	 {
     	connection.send(JSON.stringify({type: "syncTimer", time: this.text.text}));
-    }
+     }
   }
   update(){
 
@@ -385,20 +437,42 @@ class GamePlayFa1 extends Phaser.Scene{
     this.physics.add.overlap(this.player2, this.movablePlatformIcon, this.movePltLeft, null, this);
     this.physics.add.overlap(this.player1, this.movablePlatformIcon2, this.movePltLeft2, null, this);
 
-    if(this.end1Visible == true) {
+    if(this.end1Visible == true) 
+    {
       this.physics.add.overlap(this.player1, this.endTrigger1, this.endArrived, null, this);
     }
 
-    if(this.end2Visible == true){
+    if(this.end2Visible == true)
+    {
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
-    if(this.initialTime < 60){
+    if(this.initialTime < 60)
+    {
       this.text.setX(gameWidth/2 - 28);
     }
 
-    if (this.initialTime < 0){
+    if (this.initialTime < 0)
+    {
       this.GameOverFa1();
+    }
+    
+    if (alone == true)
+    {
+    	this.AloneInGame();  	
+    	alone = false;
+    }
+
+    if (skipTutorial == true)
+    {
+		this.SkipPreloadL4();
+		skipTutorial = false;
+	}
+    
+    if(gameOver == true)
+    {
+    	this.GameOverFa1();
+    	gameOver = false;
     }
 
   }
@@ -412,12 +486,15 @@ class GamePlayFa1 extends Phaser.Scene{
 
   onEvent ()
   {
-    this.initialTime -= 1; // One second
-    this.text.setText(this.formatTime(this.initialTime));
-
-    if(this.initialTime==0){
-      console.log("Se acaboo");
-    }
+	if(this.goalArrived == false)
+	{
+		this.initialTime -= 1; // One second
+	    this.text.setText(this.formatTime(this.initialTime));
+	
+	    if(this.initialTime==0){
+	      console.log("Se acaboo");
+	    }
+	}   
   }
 
   recogerHuevoP1 (player, egg)
@@ -485,6 +562,7 @@ endArrived(player, end){
     this.playersArrived++;
 
     if (this.playersArrived == 2){
+    	this.goalArrived = true;
         this.FinNivelFa1();
     }
   }
@@ -623,9 +701,17 @@ endArrived(player, end){
     }
     musicMenu.play();
 
-    this.scene.run('PauseMenu');
-    this.scene.bringToTop('PauseMenu');
-    this.scene.pause();
+    if(gamemode == "Online"){
+    	this.scene.run('PauseMenuMultiplayer');
+        this.scene.bringToTop('PauseMenuMultiplayer');
+        this.scene.sendToBack();
+    }
+    else
+    {
+    	this.scene.run('PauseMenu');
+        this.scene.bringToTop('PauseMenu');
+        this.scene.pause();
+    }
   }
 
   FinNivelFa1(){
@@ -656,6 +742,7 @@ endArrived(player, end){
     this.time.addEvent({
       delay: 6300,
       callback: function() {
+    	clearInterval(playerUpdate);
         this.scene.stop('GamePlayFa1');
         this.scene.sendToBack('GamePlayFa1');
         this.scene.start('GamePlayFa2');
@@ -665,7 +752,21 @@ endArrived(player, end){
 
   }
 
-  SkipPreloadL4(){
+  AloneInGame(){
+	  if(musicGameplay.isPlaying){
+	      musicGameplay.stop();
+	    }
+	    musicMenu.play();
+
+	    this.scene.stop('GamePlayFa1');
+	    this.scene.sendToBack('GamePlayFa1');
+	    this.scene.start('AloneInGame');
+  }
+  
+  
+  SkipPreloadL4()
+  {
+	clearInterval(playerUpdate);
     this.scene.stop('GamePlayFa1');
     this.scene.sendToBack('GamePlayFa1');
     this.scene.start('GamePlayFa2');
@@ -677,11 +778,22 @@ endArrived(player, end){
     }
     musicMenu.play();
 
+    if (gamemode == "Online")
+    {
+    	gameOver = false;
+    	connection.send(JSON.stringify({type: "gameover"}));
+    	clearInterval(playerUpdate);
+    	connection.close();
+    }
+    
+    
     this.scene.stop('GamePlayFa1');
     this.scene.sendToBack('GamePlayFa1');
     this.scene.start('GameOver');
   }
-UpdatetAnims(){
+  
+  
+  UpdatetAnims(){
 		if(this.player1.prevx > this.player1.x)
 		{
 			this.player1.anims.play('move_left1', true);

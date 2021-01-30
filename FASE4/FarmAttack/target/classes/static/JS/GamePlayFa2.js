@@ -10,30 +10,30 @@ class GamePlayFa2 extends Phaser.Scene{
       this.endsVisibles = 0;
       this.dir1 = 1; //0 = mirando izq, 1 = mirando der
       this.dir2 = 0; //0 = izq, 1 = der
+      this.goalArrived = false;
   }
 
   preload(){
     this.levelWidth = 1462;
     this.levelHeight = 687;
- if(gamemode == "Online"){
-
-    	console.log("online");
-
-  	    //Cuando la conexion da un error
-	    connection.onerror = function(e) {
-	      //this.scene.stop('GamePlayEs1Multiplayer');
-	      console.log("WS error: " + e);
-	    }
-
-	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
-	    connection.onclose = function(e){
-	      //connection.send(JSON.stringify({ type: "leave", inGame: "yes"}))
-	      //this.scene.stop('GamePlayEs1Multiplayer');
-	      console.log("Motivo del cierre: " + e.code);
-	      clearInterval(playerUpdate);
-	      console.log("Intervalo fuera");
-	      
-	    }
+	 
+    if(gamemode == "Online"){
+	
+	    	console.log("online");
+	
+	  	    //Cuando la conexion da un error
+		    connection.onerror = function(e) {
+		      //this.scene.stop('GamePlayEs1Multiplayer');
+		      console.log("WS error: " + e);
+		    }
+	
+		    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
+		    connection.onclose = function(e){
+		      console.log("Motivo del cierre: " + e.code);
+		      clearInterval(playerUpdate);
+		      console.log("Intervalo fuera");
+		      
+		    }
     }
   }
 
@@ -72,9 +72,18 @@ class GamePlayFa2 extends Phaser.Scene{
     this.skipButtonL5Sel.setVisible(false);
     this.skipButtonL5Sel.setDepth(2);
 
-    this.skipButtonL5.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL5());
+    //this.skipButtonL5.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL5());
     this.skipButtonL5.on('pointerover', function (pointer) {this.skipButtonL5Sel.setVisible(true);}, this);
     this.skipButtonL5.on('pointerout', function (pointer) {this.skipButtonL5Sel.setVisible(false);}, this);
+    
+    if(gamemode == "Online")
+    {
+        this.skipButtonL5.setInteractive({ useHandCursor: true}).on('pointerdown', () => connection.send(JSON.stringify({ type: "skipTutorial"})));
+    }
+    else
+    {
+        this.skipButtonL5.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL5());
+    }
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(60, 685, 'chicken1R').setScale(0.7).setDepth(2);
@@ -265,10 +274,6 @@ class GamePlayFa2 extends Phaser.Scene{
 				
 			}, 30);
 		
-		
-
-
-
 		 connection.onmessage = (msg) => {
 
 			var parsedMessage = JSON.parse(msg.data);
@@ -300,20 +305,27 @@ class GamePlayFa2 extends Phaser.Scene{
 	         	console.log(" EL OTRO SE FUE :((((");
 	         	clearInterval(this.playerUpdate);
 	         	alone = true;
-	         	//gamemode = "Offline";
-	         	//this.PlayGame();
-	         	//skipTutorial = true;
 	         }
-
+	        
+	        if(parsedMessage.type == "skipTutorial"){
+            	console.log(" SALTAR!");
+            	skipTutorial = true;
+            }
+	        
+	        if(parsedMessage.type == "gameover"){
+	        	gameOver = true;
+	        }
 		}
 
-
-
-
-		if(playerId == 1 ){
+		if(playerId == 1 )
+		{
 			this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 			this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
 			this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			
+			this.P1_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P1_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P1_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 	 		// Reiniciamos eventos
 		    this.P1_jumpButton.off('down');
@@ -322,6 +334,13 @@ class GamePlayFa2 extends Phaser.Scene{
 		    this.P1_leftButton.off('up');
 		    this.P1_rightButton.off('down');
 		    this.P1_rightButton.off('up');
+		    
+		    this.P1_jumpButton2.off('down');
+		    this.P1_jumpButton2.off('up');
+		    this.P1_leftButton2.off('down');
+		    this.P1_leftButton2.off('up');
+		    this.P1_rightButton2.off('down');
+		    this.P1_rightButton2.off('up');
 
 			//Controles jugador 1
 		    this.P1_jumpButton.on('down',this.player1StartJump , this);
@@ -330,11 +349,22 @@ class GamePlayFa2 extends Phaser.Scene{
 		    this.P1_leftButton.on('up', this.player1Stop, this);
 		    this.P1_rightButton.on('down',this.player1Right, this);
 		    this.P1_rightButton.on('up', this.player1Stop, this);
+		    
+		    this.P1_jumpButton2.on('down',this.player1StartJump , this);
+		    this.P1_jumpButton2.on('up',this.player1StopJump, this);
+		    this.P1_leftButton2.on('down',this.player1Left , this);
+		    this.P1_leftButton2.on('up', this.player1Stop, this);
+		    this.P1_rightButton2.on('down',this.player1Right, this);
+		    this.P1_rightButton2.on('up', this.player1Stop, this);
 		}
 		else if(playerId ==2){
-			this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
-			this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
-			this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+			this.P2_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
+			this.P2_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
+			this.P2_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			
+			this.P2_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P2_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P2_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 			// Reiniciamos eventos
 			this.P2_jumpButton.off('down');
@@ -343,6 +373,13 @@ class GamePlayFa2 extends Phaser.Scene{
 		    this.P2_leftButton.off('up');
 		    this.P2_rightButton.off('down');
 		    this.P2_rightButton.off('up');
+		    
+		    this.P2_jumpButton2.off('down');
+		    this.P2_jumpButton2.off('up');
+		    this.P2_leftButton2.off('down');
+		    this.P2_leftButton2.off('up');
+		    this.P2_rightButton2.off('down');
+		    this.P2_rightButton2.off('up');
 
 			//Controles jugador 2
 		    this.P2_jumpButton.on('down',this.player2StartJump, this);
@@ -352,9 +389,16 @@ class GamePlayFa2 extends Phaser.Scene{
 		    this.P2_rightButton.on('down',this.player2Right, this);
 		    this.P2_rightButton.on('up', this.player2Stop, this);
 
-
+		    this.P2_jumpButton2.on('down',this.player2StartJump, this);
+		    this.P2_jumpButton2.on('up',this.player2StopJump, this);
+		    this.P2_leftButton2.on('down',this.player2Left, this);
+		    this.P2_leftButton2.on('up', this.player2Stop, this);
+		    this.P2_rightButton2.on('down',this.player2Right, this);
+		    this.P2_rightButton2.on('up', this.player2Stop, this);
 		}
-	}else{
+	}
+   else
+   {
 	    // 1) P1
 	    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 	    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
@@ -421,26 +465,49 @@ class GamePlayFa2 extends Phaser.Scene{
     this.physics.add.overlap(this.player1, this.blockDeleteIcon, this.deleteBlock, null, this);
     this.physics.add.overlap(this.player2, this.stickDeleteIcon, this.moveStick, null, this);
 
-    if(this.end1Visible == true) {
+    if(this.end1Visible == true) 
+    {
       this.physics.add.overlap(this.player1, this.endTrigger1, this.endArrived, null, this);
     }
 
-    if(this.end2Visible == true){
+    if(this.end2Visible == true)
+    {
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
-    if(this.initialTime < 60){
+    if(this.initialTime < 60)
+    {
       this.text.setX(gameWidth/2 - 28);
     }
 
-    if(this.initialTime < 0){
+    if(this.initialTime < 0)
+    {
       this.GameOverFa2();
+    }
+    
+    if (alone == true)
+    {
+    	this.AloneInGame();  	
+    	alone = false;
+    }
+
+    if (skipTutorial == true){
+    	
+		this.SkipPreloadL5();
+		skipTutorial = false;
+	}
+    
+    if(gameOver == true)
+    {
+    	this.GameOverFa2();
+    	gameOver = false;
     }
 
   }
 
 
-  formatTime(seconds){
+  formatTime(seconds)
+  {
     var minutes = Math.floor(seconds/60);
     var partInSeconds = seconds%60;
     partInSeconds = partInSeconds.toString().padStart(2,'0');
@@ -449,12 +516,14 @@ class GamePlayFa2 extends Phaser.Scene{
 
   onEvent ()
   {
-    this.initialTime -= 1; // One second
-    this.text.setText(this.formatTime(this.initialTime));
-
-    if(this.initialTime==0){
-      console.log("Se acaboo");
-    }
+	  if(this.goalArrived == false){
+			this.initialTime -= 1; // One second
+		    this.text.setText(this.formatTime(this.initialTime));
+		
+		    if(this.initialTime==0){
+		      console.log("Se acaboo");
+		    }
+		}   
   }
 
   recogerHuevoP1 (player, egg)
@@ -488,7 +557,6 @@ class GamePlayFa2 extends Phaser.Scene{
 
   recogerHuevoP2 (player, egg)
   {
-
     egg.body.enable=false;
     this.eggSound.play();
 
@@ -518,17 +586,20 @@ class GamePlayFa2 extends Phaser.Scene{
   }
 
 
-endArrived(player, end){
+  endArrived(player, end)
+  {
     end.body.enable=false;
     this.goalSound.play();
     this.playersArrived++;
 
     if (this.playersArrived == 2){
+      this.goalArrived = true;
       this.FinNivelFa2();
     }
   }
 
-  movePltLeft(){
+  movePltLeft()
+  {
     this.movablePlatformIcon.disableBody(true,true);
     this.handleSound.play();
 
@@ -542,7 +613,8 @@ endArrived(player, end){
     this.movablePlatformIconAct.setVisible(true);
   }
 
-  movePltLeft2(){
+  movePltLeft2()
+  {
     this.movablePlatformIcon2.disableBody(true, true);
     this.pltToDelete.disableBody(true, true);
     this.handleSound.play();
@@ -558,14 +630,16 @@ endArrived(player, end){
     this.movablePlatformIcon2Act.setVisible(true);
   }
 
-  deleteBlock(){
+  deleteBlock()
+  {
     this.blockDeleteIcon.disableBody(true, true);
     this.blockDelete.disableBody(true, true);
     this.handleSound.play();
     this.blockDeleteIconAct.setVisible(true);
   }
 
-  moveStick(){
+  moveStick()
+  {
     this.stickDeleteIcon.disableBody(true,true);
     this.stickDelete.body.enable=false;
     this.handleSound.play();
@@ -583,80 +657,102 @@ endArrived(player, end){
   //ANIMACIÓNES JUGADORES
   //CAMBIOS ANIMACIÓN PLAYER 1
 
-  player1StartJump(){
+  player1StartJump()
+  {
     this.player1.setVelocityY(-300);
   }
 
-  player1StopJump(){
+  player1StopJump()
+  {
     this.player1.setVelocityY(0);
   }
 
 
-  player1Left() {
+  player1Left() 
+  {
     this.player1.setVelocityX(-160);
     this.player1.anims.play('move_left1', true);
     this.player1.flipX = false;
     this.dir1 = 0;
   }
 
-  player1Right() {
+  player1Right() 
+  {
     this.player1.setVelocityX(100);
     this.player1.anims.play('move_right1', true);
     this.dir1 = 1;
   }
 
-  player1Stop() {
+  player1Stop() 
+  {
     this.player1.setVelocityX(0);
 
-    if(this.dir1 == 1){
+    if(this.dir1 == 1)
+    {
       this.player1.anims.play('stop1R', true);
-    }else{
+    }
+    else
+    {
       this.player1.anims.play('stop1L', true);
     }
 
-    if(this.P1_leftButton.isDown){
+    if(this.P1_leftButton.isDown)
+    {
       this.player1Left();
     }
-    if(this.P1_rightButton.isDown){
+    
+    if(this.P1_rightButton.isDown)
+    {
       this.player1Right();
     }
   }
 
   //CAMBIOS ANIMACION PLAYER 2
-  player2StartJump(){
+  player2StartJump()
+  {
     this.player2.setVelocityY(-300);
   }
 
-  player2StopJump(){
+  player2StopJump()
+  {
     this.player2.setVelocityY(0);
   }
 
 
-  player2Left() {
+  player2Left() 
+  {
     this.player2.setVelocityX(-160);
     this.player2.anims.play('move_left2', true);
     this.dir2 = 0;
   }
 
-  player2Right() {
+  player2Right() 
+  {
     this.player2.setVelocityX(160);
     this.player2.anims.play('move_right2', true);
     this.dir2 = 1;
   }
 
-  player2Stop() {
+  player2Stop() 
+  {
     this.player2.setVelocityX(0);
 
-    if(this.dir2 == 1){
+    if(this.dir2 == 1)
+    {
       this.player2.anims.play('stop2R', true);
-    }else{
+    }
+    else
+    {
       this.player2.anims.play('stop2L', true);
     }
 
-    if(this.P2_leftButton.isDown){
+    if(this.P2_leftButton.isDown)
+    {
       this.player2Left();
     }
-    if(this.P2_rightButton.isDown){
+    
+    if(this.P2_rightButton.isDown)
+    {
       this.player2Right();
     }
   }
@@ -664,116 +760,160 @@ endArrived(player, end){
 
   //FLUJO DEL JUEGO
 
-  PauseMenu(){
+  PauseMenu()
+  {
     this.clickSound.play();
 
-    if(musicGameplay.isPlaying){
+    if(musicGameplay.isPlaying)
+    {
       musicGameplay.stop();
     }
+    
     musicMenu.play();
 
-    this.scene.run('PauseMenu');
-    this.scene.bringToTop('PauseMenu');
-    this.scene.pause();
-  }
-
-  FinNivelFa2(){
-    totalTime += 65 - this.initialTime;
-    finalPunt = (totalTime * 5)/2;
-
-    this.endTrigger1.setVisible(false);
-    this.endTrigger2.setVisible(false);
-    this.player1.setVisible(false);
-    this.player2.setVisible(false);
-    this.backgroundFa2.setVisible(false);
-    this.movablePlatform2.setVisible(false);
-    this.clockHUD.setVisible(false);
-    this.text.setVisible(false);
-    this.blockDeleteIconAct.setVisible(false);
-    this.movablePlatformIcon2Act.setVisible(false);
-    this.movablePlatformIconAct.setVisible(false);
-    this.stickDeleteIconAct.setVisible(false);
-    this.pauseButtonFa2.setVisible(false);
-    this.skipButtonL5.setVisible(true);
-
-    this.tweens.add({
-      targets: this.preLevel5,
-      duration: 1000,
-      alpha: 1,
-      yoyo: true,
-      hold: 4000,
-      completeDelay: 2000
-    });
-
-    this.time.addEvent({
-      delay: 6300,
-      callback: function() {
-        this.scene.stop('GamePlayFa2');
-        this.scene.sendToBack('GamePlayFa2');
-        this.scene.start('GamePlayFo1');
-      },
-    callbackScope: this
-    }, this);
-  }
-
-  SkipPreloadL5(){
-    this.scene.stop('GamePlayFa2');
-    this.scene.sendToBack('GamePlayFa2');
-    this.scene.start('GamePlayFo1');
-  }
-
-  GameOverFa2(){
-    if(musicGameplay.isPlaying){
-      musicGameplay.stop();
+    if(gamemode == "Online")
+    {
+    	this.scene.run('PauseMenuMultiplayer');
+        this.scene.bringToTop('PauseMenuMultiplayer');
+        this.scene.sendToBack();
     }
-    musicMenu.play();
-
-    this.scene.stop('GamePlayFa2');
-    this.scene.sendToBack('GamePlayFa2');
-    this.scene.start('GameOver');
+    else
+    {
+    	this.scene.run('PauseMenu');
+        this.scene.bringToTop('PauseMenu');
+        this.scene.pause();
+    }
   }
 
-  //CONFIG
-  EffectsConfig(){
-    return {
-      mute: false,
-      volume: volumeEffects/10,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0
-    };
-  }
-UpdatetAnims(){
-		if(this.player1.prevx > this.player1.x)
-		{
-			this.player1.anims.play('move_left1', true);
-			this.player1.flipX = false;
-		}
-		else if(this.player1.prevx < this.player1.x)
-		{
-			this.player1.anims.play('move_right1', true);
-			this.player1.flipX = false;
-		}
-		else if(this.player1.prevx == this.player1.x)
-			this.player1.anims.play('stop1R', true);
+	  FinNivelFa2()
+	  {
+	    totalTime += 65 - this.initialTime;
+	    finalPunt = (totalTime * 5)/2;
+	
+	    this.endTrigger1.setVisible(false);
+	    this.endTrigger2.setVisible(false);
+	    this.player1.setVisible(false);
+	    this.player2.setVisible(false);
+	    this.backgroundFa2.setVisible(false);
+	    this.movablePlatform2.setVisible(false);
+	    this.clockHUD.setVisible(false);
+	    this.text.setVisible(false);
+	    this.blockDeleteIconAct.setVisible(false);
+	    this.movablePlatformIcon2Act.setVisible(false);
+	    this.movablePlatformIconAct.setVisible(false);
+	    this.stickDeleteIconAct.setVisible(false);
+	    this.pauseButtonFa2.setVisible(false);
+	    this.skipButtonL5.setVisible(true);
 
-		this.player1.prevx = this.player1.x;
+	    this.tweens.add({
+	      targets: this.preLevel5,
+	      duration: 1000,
+	      alpha: 1,
+	      yoyo: true,
+	      hold: 4000,
+	      completeDelay: 2000
+	    });
 
-		if(this.player2.prevx > this.player2.x){
-			this.player2.anims.play('move_left2', true);
-			this.player2.flipX = false;
+	    this.time.addEvent({
+	      delay: 6300,
+	      callback: function() {
+	    	clearInterval(playerUpdate);
+	        this.scene.stop('GamePlayFa2');
+	        this.scene.sendToBack('GamePlayFa2');
+	        this.scene.start('GamePlayFo1');
+	      },
+	    callbackScope: this
+	    }, this);
+	  }
+
+	  SkipPreloadL5()
+	  {
+	    clearInterval(playerUpdate);  
+	    this.scene.stop('GamePlayFa2');
+	    this.scene.sendToBack('GamePlayFa2');
+	    this.scene.start('GamePlayFo1');
+	  }
+  
+	  AloneInGame()
+	  {
+		  if(musicGameplay.isPlaying)
+		  {
+		     musicGameplay.stop();
+		  }
+		  
+	    musicMenu.play();
+	
+	    this.scene.stop('GamePlayFa2');
+	    this.scene.sendToBack('GamePlayFa2');
+	    this.scene.start('AloneInGame');
+	  }
+  
+	  GameOverFa2()
+	  {
+	    if(musicGameplay.isPlaying)
+	    {
+	      musicGameplay.stop();
+	    }
+	    
+	    musicMenu.play();
+	    
+	    if (gamemode == "Online")
+	    {
+	    	gameOver = false;
+	    	connection.send(JSON.stringify({type: "gameover"}));
+	    	clearInterval(playerUpdate);
+	    	connection.close();
+	    }
+	    
+	    this.scene.stop('GamePlayFa2');
+	    this.scene.sendToBack('GamePlayFa2');
+	    this.scene.start('GameOver');
+	  }
+
+	  //CONFIG
+	  EffectsConfig()
+	  {
+	    return {
+	      mute: false,
+	      volume: volumeEffects/10,
+	      rate: 1,
+	      detune: 0,
+	      seek: 0,
+	      loop: false,
+	      delay: 0
+	    };
+	  }
+  
+	UpdatetAnims()
+	{
+			if(this.player1.prevx > this.player1.x)
+			{
+				this.player1.anims.play('move_left1', true);
+				this.player1.flipX = false;
+			}
+			else if(this.player1.prevx < this.player1.x)
+			{
+				this.player1.anims.play('move_right1', true);
+				this.player1.flipX = false;
+			}
+			else if(this.player1.prevx == this.player1.x)
+				this.player1.anims.play('stop1R', true);
+	
+			this.player1.prevx = this.player1.x;
+	
+			if(this.player2.prevx > this.player2.x){
+				this.player2.anims.play('move_left2', true);
+				this.player2.flipX = false;
+			}
+			else if(this.player2.prevx < this.player2.x)
+			{
+				this.player2.anims.play('move_right2', true);
+			    this.player2.flipX = false;
+			}
+			else if(this.player2.prevx == this.player2.x)
+				this.player2.anims.play('stop2R', true);
+	
+			this.player2.prevx = this.player2.x;
+	
 		}
-		else if(this.player2.prevx < this.player2.x)
-		{
-			this.player2.anims.play('move_right2', true);
-		    this.player2.flipX = false;
-		}
-		else if(this.player2.prevx == this.player2.x)
-			this.player2.anims.play('stop2R', true);
-
-		this.player2.prevx = this.player2.x;
-
 	}
-}

@@ -7,6 +7,7 @@ class ReadyMenu extends Phaser.Scene{
     preload() { 
 		prevScene ='ReadyMenu';
 		alone = false;
+		gameOver = false;
 		
 		this.load.html('conexionalert', '../ASSETS/LogInform/conexionalert.html');
 		this.activeButton = false;
@@ -46,7 +47,7 @@ class ReadyMenu extends Phaser.Scene{
         this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
 
 
-		this.background = this.add.image(gameWidth/2,gameHeight/2,"backgroundCHAT"); 
+		this.background = this.add.image(gameWidth/2,gameHeight/2,"waitingBackground"); 
         
 	    //Pre carga Nivel 1
 	    this.preLevel1 = this.add.image(gameWidth/2, gameHeight/2, 'level1');
@@ -87,15 +88,15 @@ class ReadyMenu extends Phaser.Scene{
         }
         */
         //BACK
-        this.backButtonMMM = this.add.image(gameWidth*10/16, gameHeight*8/16, 'backButton');
-        this.backButtonMMM.setScale(2.5/3);
-        this.backButtonMMMSel = this.add.image(gameWidth*10/16, gameHeight*8/16, 'backButtonSel');
-        this.backButtonMMMSel.setScale(2.5/3);
-        this.backButtonMMMSel.setVisible(false);
+        this.readyButton = this.add.image(gameWidth*10/16, gameHeight*8/16, 'readyButton');
+        this.readyButton.setScale(2.5/3);
+        this.readyButtonSel = this.add.image(gameWidth*10/16, gameHeight*8/16, 'readyButtonSel');
+        this.readyButtonSel.setScale(2.5/3);
+        this.readyButtonSel.setVisible(false);
 
-        this.backButtonMMM.on('pointerover', function (pointer) {this.backButtonMMMSel.setVisible(true);}, this);
-        this.backButtonMMM.on('pointerout', function (pointer) {this.backButtonMMMSel.setVisible(false);}, this);
-        this.backButtonMMM.setInteractive({ useHandCursor: true}).on('pointerdown', () => (connection.send(JSON.stringify({ type: "leave"})), leaved = true)/*this.BackInit()*/);
+        this.readyButton.on('pointerover', function (pointer) {this.readyButtonSel.setVisible(true);}, this);
+        this.readyButton.on('pointerout', function (pointer) {this.readyButtonSel.setVisible(false);}, this);
+        this.readyButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => (connection.send(JSON.stringify({ type: "leave"})), leaved = true)/*this.BackInit()*/);
         
 	    //SKIP BUTTON
 	    this.skipButtonL1 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
@@ -259,8 +260,8 @@ class ReadyMenu extends Phaser.Scene{
         //this.backgroundMM.setVisible(false);
         this.playButton.setVisible(false);
         this.playButtonSel.setVisible(false);
-        this.backButtonMMM.setVisible(false);
-        this.backButtonMMMSel.setVisible(false);
+        this.readyButton.setVisible(false);
+        this.readyButtonSel.setVisible(false);
         //this.creditsButton.setVisible(false);
         
     	this.alertbox.setVisible(false);    	  	

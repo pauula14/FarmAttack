@@ -15,26 +15,24 @@ class GamePlayFo1 extends Phaser.Scene{
   preload(){
     this.levelWidth = 1462;
     this.levelHeight = 687;
- if(gamemode == "Online"){
-
-    	console.log("online");
-
-  	    //Cuando la conexion da un error
-	    connection.onerror = function(e) {
-	      //this.scene.stop('GamePlayEs1Multiplayer');
-	      console.log("WS error: " + e);
+    
+	 if(gamemode == "Online")
+	 {	
+	    	console.log("online");
+	
+	  	    //Cuando la conexion da un error
+		    connection.onerror = function(e) {
+		      console.log("WS error: " + e);
+		    }
+	
+		    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
+		    connection.onclose = function(e){
+		      console.log("Motivo del cierre: " + e.code);
+		      clearInterval(playerUpdate);
+		      console.log("Intervalo fuera");
+		      
+		    }
 	    }
-
-	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
-	    connection.onclose = function(e){
-	      //connection.send(JSON.stringify({ type: "leave", inGame: "yes"}))
-	      //this.scene.stop('GamePlayEs1Multiplayer');
-	      console.log("Motivo del cierre: " + e.code);
-	      clearInterval(playerUpdate);
-	      console.log("Intervalo fuera");
-	      
-	    }
-    }
   }
 
   create(){
@@ -211,20 +209,26 @@ if((gamemode == "Online")){
 	         	console.log(" EL OTRO SE FUE :((((");
 	         	clearInterval(this.playerUpdate);
 	         	alone = true;
-	         	//gamemode = "Offline";
-	         	//this.PlayGame();
-	         	//skipTutorial = true;
 	         }
+	        
+	        if(parsedMessage.type == "gameover"){
+	        	gameOver = true;
+	        }
 
 		}
 
 
 
 
-		if(playerId == 1 ){
+		if(playerId == 1 )
+		{
 			this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 			this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
 			this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			
+			this.P1_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P1_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P1_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 	 		// Reiniciamos eventos
 		    this.P1_jumpButton.off('down');
@@ -233,6 +237,13 @@ if((gamemode == "Online")){
 		    this.P1_leftButton.off('up');
 		    this.P1_rightButton.off('down');
 		    this.P1_rightButton.off('up');
+		    
+		    this.P1_jumpButton2.off('down');
+		    this.P1_jumpButton2.off('up');
+		    this.P1_leftButton2.off('down');
+		    this.P1_leftButton2.off('up');
+		    this.P1_rightButton2.off('down');
+		    this.P1_rightButton2.off('up');
 
 			//Controles jugador 1
 		    this.P1_jumpButton.on('down',this.player1StartJump , this);
@@ -241,11 +252,23 @@ if((gamemode == "Online")){
 		    this.P1_leftButton.on('up', this.player1Stop, this);
 		    this.P1_rightButton.on('down',this.player1Right, this);
 		    this.P1_rightButton.on('up', this.player1Stop, this);
+		    
+		    this.P1_jumpButton2.on('down',this.player1StartJump , this);
+		    this.P1_jumpButton2.on('up',this.player1StopJump, this);
+		    this.P1_leftButton2.on('down',this.player1Left , this);
+		    this.P1_leftButton2.on('up', this.player1Stop, this);
+		    this.P1_rightButton2.on('down',this.player1Right, this);
+		    this.P1_rightButton2.on('up', this.player1Stop, this);
 		}
-		else if(playerId ==2){
-			this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
-			this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
-			this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+		else if(playerId ==2)
+		{
+			this.P2_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
+			this.P2_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
+			this.P2_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			
+			this.P2_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P2_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P2_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 			// Reiniciamos eventos
 			this.P2_jumpButton.off('down');
@@ -254,6 +277,13 @@ if((gamemode == "Online")){
 		    this.P2_leftButton.off('up');
 		    this.P2_rightButton.off('down');
 		    this.P2_rightButton.off('up');
+		    
+		    this.P2_jumpButton2.off('down');
+		    this.P2_jumpButton2.off('up');
+		    this.P2_leftButton2.off('down');
+		    this.P2_leftButton2.off('up');
+		    this.P2_rightButton2.off('down');
+		    this.P2_rightButton2.off('up');
 
 			//Controles jugador 2
 		    this.P2_jumpButton.on('down',this.player2StartJump, this);
@@ -262,6 +292,13 @@ if((gamemode == "Online")){
 		    this.P2_leftButton.on('up', this.player2Stop, this);
 		    this.P2_rightButton.on('down',this.player2Right, this);
 		    this.P2_rightButton.on('up', this.player2Stop, this);
+
+		    this.P2_jumpButton2.on('down',this.player2StartJump, this);
+		    this.P2_jumpButton2.on('up',this.player2StopJump, this);
+		    this.P2_leftButton2.on('down',this.player2Left, this);
+		    this.P2_leftButton2.on('up', this.player2Stop, this);
+		    this.P2_rightButton2.on('down',this.player2Right, this);
+		    this.P2_rightButton2.on('up', this.player2Stop, this);
 
 
 		}
@@ -342,6 +379,16 @@ if((gamemode == "Online")){
     if(this.initialTime < 0){
       this.GameOverFo1();
     }
+    
+    if (alone == true){
+    	this.AloneInGame();  	
+    	alone = false;
+    }
+    
+    if(gameOver == true){
+    	this.GameOverFo1();
+    	gameOver = false;
+    }
 
   }
 
@@ -354,12 +401,14 @@ if((gamemode == "Online")){
 
   onEvent ()
   {
-    this.initialTime -= 1; // One second
-    this.text.setText(this.formatTime(this.initialTime));
-
-    if(this.initialTime==0){
-      console.log("Se acaboo");
-    }
+	  if(this.goalArrived == false){
+			this.initialTime -= 1; // One second
+		    this.text.setText(this.formatTime(this.initialTime));
+		
+		    if(this.initialTime==0){
+		      console.log("Se acaboo");
+		    }
+		} 
   }
 
   recogerHuevoP1 (player, egg)
@@ -425,12 +474,15 @@ if((gamemode == "Online")){
   }
 
 
-endArrived(player, end){
+  endArrived(player, end)
+  {
     end.body.enable=false;
     this.goalSound.play();
     this.playersArrived++;
 
-    if (this.playersArrived == 2){
+    if (this.playersArrived == 2)
+    {
+      this.goalArrived = true;
       this.FinNivelFo1();
     }
   }
@@ -525,9 +577,18 @@ endArrived(player, end){
       }
       musicMenu.play();
 
-      this.scene.run('PauseMenu');
-      this.scene.bringToTop('PauseMenu');
-      this.scene.pause();
+      if(gamemode == "Online"){
+      	//clearInterval(this.playerUpdate);
+      	this.scene.run('PauseMenuMultiplayer');
+          this.scene.bringToTop('PauseMenuMultiplayer');
+          this.scene.sendToBack();
+      }
+      else
+      {
+      	this.scene.run('PauseMenu');
+          this.scene.bringToTop('PauseMenu');
+          this.scene.pause();
+      }
     }
 
     FinNivelFo1(){
@@ -539,6 +600,13 @@ endArrived(player, end){
       }
       musicMenu.play();
 
+
+      if (gamemode == "Online")
+      {
+      	clearInterval(playerUpdate);
+      }
+      
+      
       this.scene.stop('GamePlayFo1');
       this.scene.sendToBack('GamePlayFo1');
       this.scene.start('Winner');
@@ -550,9 +618,29 @@ endArrived(player, end){
       }
       musicMenu.play();
 
+      if (gamemode == "Online")
+      {
+    	  gameOver = false;
+      	connection.send(JSON.stringify({type: "gameover"}));
+      	clearInterval(playerUpdate);
+      	connection.close();
+      }
+      
       this.scene.stop('GamePlayFo1');
       this.scene.sendToBack('GamePlayFo1');
       this.scene.start('GameOver');
+    }
+    
+    
+    AloneInGame(){
+  	  if(musicGameplay.isPlaying){
+  	      musicGameplay.stop();
+  	    }
+  	    musicMenu.play();
+
+  	    this.scene.stop('GamePlayFo1');
+  	    this.scene.sendToBack('GamePlayFo1');
+  	    this.scene.start('AloneInGame');
     }
 
     //CONFIGURATION

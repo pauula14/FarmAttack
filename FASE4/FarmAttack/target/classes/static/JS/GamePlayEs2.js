@@ -9,35 +9,36 @@ class GamePlayEs2 extends Phaser.Scene{
       this.playersArrived = 0;
       this.dir1 = 1; //0 = mirando izq, 1 = mirando der
       this.dir2 = 0; //0 = izq, 1 = der
+      this.goalArrived = false;
   }
 
-  preload(){
+  preload()
+  {
+	  
     this.levelWidth = 1462;
     this.levelHeight = 687;
- if(gamemode == "Online"){
-
-    	console.log("online");
-
-  	    //Cuando la conexion da un error
-	    connection.onerror = function(e) {
-	      //this.scene.stop('GamePlayEs1Multiplayer');
-	      console.log("WS error: " + e);
+    
+	 if(gamemode == "Online")
+	 {	
+	    	console.log("online");
+	
+	  	    //Cuando la conexion da un error
+		    connection.onerror = function(e) {
+		      console.log("WS error: " + e);
+		    }
+	
+		    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
+		    connection.onclose = function(e){
+		      console.log("Motivo del cierre: " + e.code);
+		      clearInterval(playerUpdate);
+		      console.log("Intervalo fuera");
+		      
+		    }
 	    }
-
-	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
-	    connection.onclose = function(e){
-	      //connection.send(JSON.stringify({ type: "leave", inGame: "yes"}))
-	      //this.scene.stop('GamePlayEs1Multiplayer');
-	      console.log("Motivo del cierre: " + e.code);
-	      clearInterval(playerUpdate);
-	      console.log("Intervalo fuera");
-	      
-	    }
-    }
   }
 
-  create(){
-
+  create()
+  {
     this.dir1 = 1;
     this.dir2 = 0;
     this.numEgssP1 = 0;
@@ -71,9 +72,18 @@ class GamePlayEs2 extends Phaser.Scene{
     this.skipButtonL3Sel.setVisible(false);
     this.skipButtonL3Sel.setDepth(2);
 
-    this.skipButtonL3.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL3());
+    
     this.skipButtonL3.on('pointerover', function (pointer) {this.skipButtonL3Sel.setVisible(true);}, this);
     this.skipButtonL3.on('pointerout', function (pointer) {this.skipButtonL3Sel.setVisible(false);}, this);
+    
+    if(gamemode == "Online")
+    {
+        this.skipButtonL3.setInteractive({ useHandCursor: true}).on('pointerdown', () => connection.send(JSON.stringify({ type: "skipTutorial"})));
+    }
+    else
+    {
+    	this.skipButtonL3.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL3());
+    }
 
 
     // 2) PLAYER
@@ -215,7 +225,7 @@ class GamePlayEs2 extends Phaser.Scene{
     this.pauseButtonEs2.on('pointerout', function (pointer) {this.pauseButtonEs2Sel.setVisible(false);}, this);
 
     // --- CONTROLES --- //
-if((gamemode == "Online")){
+    if((gamemode == "Online")){
 
 			console.log("Jugando moodo online con x");
 			var pl1 = this.player1;
@@ -223,8 +233,8 @@ if((gamemode == "Online")){
 			
 			playerUpdate = setInterval(function(){
 				
-					if(playerId == 1 ){
-						
+					if(playerId == 1 )
+					{						
 						connection.send(JSON.stringify({type: "updatePosition",
 						posX: pl1.x, posY: pl1.y,
 						accX: pl1.body.acceleration.x, accY: pl1.body.acceleration.y}));
@@ -236,11 +246,7 @@ if((gamemode == "Online")){
 						accX: pl2.body.acceleration.x, accY: pl2.body.acceleration.y}));
 					}
 				
-			}, 30);
-		
-		
-
-
+			}, 30);		
 
 		 connection.onmessage = (msg) => {
 
@@ -273,20 +279,27 @@ if((gamemode == "Online")){
 	         	console.log(" EL OTRO SE FUE :((((");
 	         	clearInterval(this.playerUpdate);
 	         	alone = true;
-	         	//gamemode = "Offline";
-	         	//this.PlayGame();
-	         	//skipTutorial = true;
 	         }
-
+	        
+	        if(parsedMessage.type == "skipTutorial"){
+            	console.log(" SALTAR!");
+            	skipTutorial = true;
+            }
+	        
+	        if(parsedMessage.type == "gameover"){
+	        	gameOver = true;
+	        }		
 		}
 
-
-
-
-		if(playerId == 1 ){
+		if(playerId == 1 )
+		{
 			this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 			this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
 			this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			
+			this.P1_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P1_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P1_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 	 		// Reiniciamos eventos
 		    this.P1_jumpButton.off('down');
@@ -295,6 +308,13 @@ if((gamemode == "Online")){
 		    this.P1_leftButton.off('up');
 		    this.P1_rightButton.off('down');
 		    this.P1_rightButton.off('up');
+		    
+		    this.P1_jumpButton2.off('down');
+		    this.P1_jumpButton2.off('up');
+		    this.P1_leftButton2.off('down');
+		    this.P1_leftButton2.off('up');
+		    this.P1_rightButton2.off('down');
+		    this.P1_rightButton2.off('up');
 
 			//Controles jugador 1
 		    this.P1_jumpButton.on('down',this.player1StartJump , this);
@@ -303,11 +323,23 @@ if((gamemode == "Online")){
 		    this.P1_leftButton.on('up', this.player1Stop, this);
 		    this.P1_rightButton.on('down',this.player1Right, this);
 		    this.P1_rightButton.on('up', this.player1Stop, this);
+		    
+		    this.P1_jumpButton2.on('down',this.player1StartJump , this);
+		    this.P1_jumpButton2.on('up',this.player1StopJump, this);
+		    this.P1_leftButton2.on('down',this.player1Left , this);
+		    this.P1_leftButton2.on('up', this.player1Stop, this);
+		    this.P1_rightButton2.on('down',this.player1Right, this);
+		    this.P1_rightButton2.on('up', this.player1Stop, this);
 		}
-		else if(playerId ==2){
+		else if(playerId ==2)
+		{
 			this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
 			this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
 			this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+			
+			this.P2_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P2_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P2_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 			// Reiniciamos eventos
 			this.P2_jumpButton.off('down');
@@ -316,6 +348,13 @@ if((gamemode == "Online")){
 		    this.P2_leftButton.off('up');
 		    this.P2_rightButton.off('down');
 		    this.P2_rightButton.off('up');
+		    
+		    this.P2_jumpButton2.off('down');
+		    this.P2_jumpButton2.off('up');
+		    this.P2_leftButton2.off('down');
+		    this.P2_leftButton2.off('up');
+		    this.P2_rightButton2.off('down');
+		    this.P2_rightButton2.off('up');
 
 			//Controles jugador 2
 		    this.P2_jumpButton.on('down',this.player2StartJump, this);
@@ -325,9 +364,17 @@ if((gamemode == "Online")){
 		    this.P2_rightButton.on('down',this.player2Right, this);
 		    this.P2_rightButton.on('up', this.player2Stop, this);
 
+		    this.P2_jumpButton2.on('down',this.player2StartJump, this);
+		    this.P2_jumpButton2.on('up',this.player2StopJump, this);
+		    this.P2_leftButton2.on('down',this.player2Left, this);
+		    this.P2_leftButton2.on('up', this.player2Stop, this);
+		    this.P2_rightButton2.on('down',this.player2Right, this);
+		    this.P2_rightButton2.on('up', this.player2Stop, this);
 
 		}
-	}else{
+	}
+    else
+    {
 	    // 1) P1
 	    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 	    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
@@ -378,10 +425,13 @@ if((gamemode == "Online")){
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
 
-	 if(gamemode == "Online"){
-	    	connection.send(JSON.stringify({type: "syncTimer", time: this.text.text}));
-	    }
+	 if(gamemode == "Online")
+	 {	    
+		 connection.send(JSON.stringify({type: "syncTimer", time: this.text.text}));
+	 }
   }
+  
+  
   update(){
 
     this.physics.add.overlap(this.player1, this.eggsP1, this.recogerHuevoP1, null, this);
@@ -390,26 +440,49 @@ if((gamemode == "Online")){
     this.physics.add.overlap(this.player1, this.movableStrawIcon, this.moveStrawRight, null, this);
     this.physics.add.overlap(this.player2, this.deletedPtfIcon, this.deletePlatform, null, this);
 
-    if(this.end1Visible == true) {
+    if(this.end1Visible == true) 
+    {
       this.physics.add.overlap(this.player1, this.endTrigger1, this.endArrived, null, this);
     }
 
-    if(this.end2Visible == true){
+    if(this.end2Visible == true)
+    {
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
 
-    if(this.initialTime < 60){
+    if(this.initialTime < 60)
+    {
       this.text.setX(gameWidth/2 - 28);
     }
 
-    if(this.initialTime < 0){
+    if(this.initialTime < 0)
+    {
       this.GameOverEs2();
+    }
+    
+    if ((alone == true) && (gameOver == false))
+    {
+    	this.AloneInGame();  	
+    	alone = false;
+    }
+    
+    if (skipTutorial == true)
+    {
+		this.SkipPreloadL3();
+		skipTutorial = false;
+	}
+    
+    if(gameOver == true)
+    {
+    	this.GameOverEs2();
+    	gameOver = false;
     }
 
   }
 
-  formatTime(seconds){
+  formatTime(seconds)
+  {
     var minutes = Math.floor(seconds/60);
     var partInSeconds = seconds%60;
     partInSeconds = partInSeconds.toString().padStart(2,'0');
@@ -418,14 +491,18 @@ if((gamemode == "Online")){
 
   onEvent ()
   {
-    this.initialTime -= 1; // One second
-    this.text.setText(this.formatTime(this.initialTime));
-
-    if(this.initialTime==0){
-      console.log("Se acaboo");
-    }
+	if(this.goalArrived == false)
+	{
+		this.initialTime -= 1; // One second
+	    this.text.setText(this.formatTime(this.initialTime));
+	
+	    if(this.initialTime==0){
+	      console.log("Se acaboo");
+	    }
+	}
   }
 
+  
   recogerHuevoP1 (player, egg)
   {
     egg.body.enable=false;
@@ -486,31 +563,34 @@ if((gamemode == "Online")){
   }
 
 
-endArrived(player, end){
-    end.body.enable=false;
-    this.goalSound.play();
-    this.playersArrived++;
+	endArrived(player, end)
+	{
+	    end.body.enable=false;
+	    this.goalSound.play();
+	    this.playersArrived++;
+	
+	    if (this.playersArrived == 2){
+	    	this.goalArrived = true;
+	        this.FinNivelEs2();
+	    }
+	  }
 
-    if (this.playersArrived == 2){
-        this.FinNivelEs2();
-    }
-  }
+	  moveStrawRight()
+	  {	
+	    this.movableStrawIcon.disableBody(true,true);
+	    this.handleSound.play();
+	
+	    this.tweens.add({
+	      targets:this.movableStraw,
+	      duration:2000,
+	      x:gameWidth-140,
+	    });
+	
+	    this.movableStrawIconAct.setVisible(true);
+	  }
 
-  moveStrawRight(){
-
-    this.movableStrawIcon.disableBody(true,true);
-    this.handleSound.play();
-
-    this.tweens.add({
-      targets:this.movableStraw,
-      duration:2000,
-      x:gameWidth-140,
-    });
-
-    this.movableStrawIconAct.setVisible(true);
-  }
-
-  deletePlatform(){
+  deletePlatform()
+  {
     this.deletedPtfIcon.disableBody(true,true);
     this.handleSound.play();
     this.deletedPtf.disableBody(true,true);
@@ -518,172 +598,233 @@ endArrived(player, end){
   }
 
 
-//ANIMATIONS
+  //ANIMATIONS
   //ANIMATIONS PLAYER 1
 
-  player1StartJump(){
+  player1StartJump()
+  {
     this.player1.setVelocityY(-300);
   }
 
-  player1StopJump(){
+  player1StopJump()
+  {
     this.player1.setVelocityY(0);
   }
 
 
-  player1Left() {
+  player1Left() 
+  {
     this.player1.setVelocityX(-160);
     this.player1.anims.play('move_left1', true);
     this.player1.flipX = false;
     this.dir1 = 0;
   }
 
-  player1Right() {
+  player1Right() 
+  {
     this.player1.setVelocityX(160);
     this.player1.anims.play('move_right1', true);
     this.dir1 = 1;
   }
 
-  player1Stop() {
+  player1Stop() 
+  {
     this.player1.setVelocityX(0);
 
-    if(this.dir1 == 1){
+    if(this.dir1 == 1)
+    {
       this.player1.anims.play('stop1R', true);
-    }else{
+    }
+    else
+    {
       this.player1.anims.play('stop1L', true);
     }
 
-    if(this.P1_leftButton.isDown){
+    if(this.P1_leftButton.isDown)
+    {
       this.player1Left();
     }
-    if(this.P1_rightButton.isDown){
+    
+    if(this.P1_rightButton.isDown)
+    {
       this.player1Right();
     }
   }
 
   //ANIMATIONS PLAYER 2
-  player2StartJump(){
+  player2StartJump()
+  {
     this.player2.setVelocityY(-300);
   }
 
-  player2StopJump(){
+  player2StopJump()
+  {
     this.player2.setVelocityY(0);
   }
 
 
-  player2Left() {
+  player2Left() 
+  {
     this.player2.setVelocityX(-160);
     this.player2.anims.play('move_left2', true);
     this.dir2 = 0;
   }
 
-  player2Right() {
+  player2Right() 
+  {
     this.player2.setVelocityX(160);
     this.player2.anims.play('move_right2', true);
     this.dir2 = 1;
   }
 
-  player2Stop() {
+  player2Stop() 
+  {
     this.player2.setVelocityX(0);
 
-    if(this.dir2 == 1){
+    if(this.dir2 == 1)
+    {
       this.player2.anims.play('stop2R', true);
-    }else{
+    }
+    else
+    {
       this.player2.anims.play('stop2L', true);
     }
 
-    if(this.P2_leftButton.isDown){
+    if(this.P2_leftButton.isDown)
+    {
       this.player2Left();
     }
-    if(this.P2_rightButton.isDown){
+    
+    if(this.P2_rightButton.isDown)
+    {
       this.player2Right();
     }
   }
 
 //GAME CONTROL
 
-  PauseMenu(){
-    this.clickSound.play();
+	  FinNivelEs2()
+	  {
+	    totalTime += 35 - this.initialTime;
+	    finalPunt = (totalTime * 5)/3;
 
-    if(musicGameplay.isPlaying){
-      musicGameplay.stop();
-    }
-    musicMenu.play();
+	    this.endTrigger1.setVisible(false);
+	    this.endTrigger2.setVisible(false);
+	    this.endTrigger1Empty.setVisible(false);
+	    this.endTrigger2Empty.setVisible(false);
+	    this.player1.setVisible(false);
+	    this.player2.setVisible(false);
+	    this.backgroundEs2.setVisible(false);
+	    this.movableStraw.setVisible(false);
+	    this.clockHUD.setVisible(false);
+	    this.text.setVisible(false);
+	    this.movableStrawIconAct.setVisible(false);
+	    this.deletedPtfIconAct2.setVisible(false);
+	    this.pauseButtonEs2.setVisible(false);
+	    this.skipButtonL3.setVisible(true);
 
-    this.scene.run('PauseMenu');
-    this.scene.bringToTop('PauseMenu');
-    this.scene.pause();
-  }
+	    this.tweens.add({
+	      targets: this.preLevel3,
+	      duration: 1000,
+	      alpha: 1,
+	      yoyo: true,
+	      hold: 4000,
+	      completeDelay: 2000
+	    });
 
-  FinNivelEs2(){
-    totalTime += 35 - this.initialTime;
-    finalPunt = (totalTime * 5)/3;
+	    this.time.addEvent({
+	      delay: 6300,
+	      callback: function() {
+	    	  clearInterval(playerUpdate);
+	        this.scene.stop('GamePlayEs2');
+	        this.scene.sendToBack('GamePlayEs2');
+	        this.scene.start('GamePlayFa1');
+	      },
+	    callbackScope: this
+	    }, this);
+	  }
+  
+	  AloneInGame()
+	  {
+		  if(musicGameplay.isPlaying){
+		      musicGameplay.stop();
+		  }
+		    musicMenu.play();
 
-    this.endTrigger1.setVisible(false);
-    this.endTrigger2.setVisible(false);
-    this.endTrigger1Empty.setVisible(false);
-    this.endTrigger2Empty.setVisible(false);
-    this.player1.setVisible(false);
-    this.player2.setVisible(false);
-    this.backgroundEs2.setVisible(false);
-    this.movableStraw.setVisible(false);
-    this.clockHUD.setVisible(false);
-    this.text.setVisible(false);
-    this.movableStrawIconAct.setVisible(false);
-    this.deletedPtfIconAct2.setVisible(false);
-    this.pauseButtonEs2.setVisible(false);
-    this.skipButtonL3.setVisible(true);
+		    this.scene.stop('GamePlayEs2');
+		    this.scene.sendToBack('GamePlayEs2');
+		    this.scene.start('AloneInGame');
+	  }
+	  
+	  GameOverEs2()
+	  {
+		    if(musicGameplay.isPlaying){
+		      musicGameplay.stop();
+		    }
+		    musicMenu.play();
 
-    this.tweens.add({
-      targets: this.preLevel3,
-      duration: 1000,
-      alpha: 1,
-      yoyo: true,
-      hold: 4000,
-      completeDelay: 2000
-    });
+		    if (gamemode == "Online")
+		    {
+		    	gameOver = false;
+		    	connection.send(JSON.stringify({type: "gameover"}));
+		    	clearInterval(playerUpdate);
+		    	connection.close();
+		    }
+		    
+		    this.scene.stop('GamePlayEs2');
+		    this.scene.sendToBack('GamePlayEs2');
+		    this.scene.start('GameOver');
+	  }
+	  
 
-    this.time.addEvent({
-      delay: 6300,
-      callback: function() {
-        this.scene.stop('GamePlayEs2');
-        this.scene.sendToBack('GamePlayEs2');
-        this.scene.start('GamePlayFa1');
-      },
-    callbackScope: this
-    }, this);
-  }
+	  SkipPreloadL3()
+	  {		
+		clearInterval(playerUpdate);
+	    this.scene.stop('GamePlayEs2');
+	    this.scene.sendToBack('GamePlayEs2');
+	    this.scene.start('GamePlayFa1');
+	  }
+	  
+	  PauseMenu()
+	  {
+	    this.clickSound.play();
+	
+	    if(musicGameplay.isPlaying)
+	    {
+	      musicGameplay.stop();
+	    }
+	    
+	    musicMenu.play();
+	
+	    if(gamemode == "Online")
+	    {
+	    	this.scene.run('PauseMenuMultiplayer');
+	        this.scene.bringToTop('PauseMenuMultiplayer');
+	        this.scene.sendToBack();
+	    }
+	    else
+	    {
+	    	this.scene.run('PauseMenu');
+	        this.scene.bringToTop('PauseMenu');
+	        this.scene.pause();
+	    }	    
+	  }
 
-  SkipPreloadL3(){
-    this.scene.stop('GamePlayEs2');
-    this.scene.sendToBack('GamePlayEs2');
-    this.scene.start('GamePlayFa1');
-  }
+	  EffectsConfig()
+	  {
+	    return {
+	      mute: false,
+	      volume: volumeEffects/10,
+	      rate: 1,
+	      detune: 0,
+	      seek: 0,
+	      loop: false,
+	      delay: 0
+	    };
+	  }
 
-
-  GameOverEs2(){
-    if(musicGameplay.isPlaying){
-      musicGameplay.stop();
-    }
-    musicMenu.play();
-
-    this.scene.stop('GamePlayEs2');
-    this.scene.sendToBack('GamePlayEs2');
-    this.scene.start('GameOver');
-  }
-
-  EffectsConfig(){
-    return {
-      mute: false,
-      volume: volumeEffects/10,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0
-    };
-  }
-
-	UpdatetAnims(){
+	UpdatetAnims()
+	{
 		if(this.player1.prevx > this.player1.x)
 		{
 			this.player1.anims.play('move_left1', true);
@@ -699,7 +840,8 @@ endArrived(player, end){
 
 		this.player1.prevx = this.player1.x;
 
-		if(this.player2.prevx > this.player2.x){
+		if(this.player2.prevx > this.player2.x)
+		{
 			this.player2.anims.play('move_left2', true);
 			this.player2.flipX = false;
 		}
@@ -712,6 +854,5 @@ endArrived(player, end){
 			this.player2.anims.play('stop2R', true);
 
 		this.player2.prevx = this.player2.x;
-
 	}
 }

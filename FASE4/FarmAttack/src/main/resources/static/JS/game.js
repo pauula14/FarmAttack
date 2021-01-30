@@ -64,6 +64,7 @@ var connection = null;
 var fullLobby = false;
 var startGame = false;
 var skipTutorial = false;
+var gameOver = false;
 var alone = false; 
 var leaved = false;
 var playerUpdate;

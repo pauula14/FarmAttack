@@ -1,5 +1,7 @@
 class GamePlayEs1Multiplayer extends Phaser.Scene{
-  constructor(){
+	
+  constructor()
+  {
       super("GamePlayEs1Multiplayer");
 
       this.numEgssP1 = 0;
@@ -17,35 +19,33 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
       //this.playerUpdate;
    }
 
-  preload(){
+  preload()
+  {
     this.levelWidth = 1462;
     this.levelHeight = 687;
     alone = false;
     levelGameplay = 'GamePlayEs1Multiplayer';
 
-    if(gamemode == "Online"){
-
+    if(gamemode == "Online")
+    {
     	console.log("online");
-
-  	    //Cuando la conexion da un error
+  	    
+    	//Cuando la conexion da un error
 	    connection.onerror = function(e) {
-	      //this.scene.stop('GamePlayEs1Multiplayer');
 	      console.log("WS error: " + e);
 	    }
 
 	    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
 	    connection.onclose = function(e){
-	      //connection.send(JSON.stringify({ type: "leave", inGame: "yes"}))
-	      //this.scene.stop('GamePlayEs1Multiplayer');
 	      console.log("Motivo del cierre: " + e.code);
 	      clearInterval(playerUpdate);
-	      console.log("Intervalo fuera");
-	      
+	      console.log("Intervalo fuera");	      
 	    }
     }
   }
 
-  create(){
+  create()
+  {
 
     this.dir1 = 1;
     this.dir2 = 0;
@@ -54,8 +54,6 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
     this.end1Visible = false;
     this.end2Visible = false;
     this.playersArrived = 0;
-
-   
 
     //EFFECTS
     this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
@@ -81,9 +79,17 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
     this.skipButtonL2Sel.setVisible(false);
     this.skipButtonL2Sel.setDepth(2);
 
-    this.skipButtonL2.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL2());
     this.skipButtonL2.on('pointerover', function (pointer) {this.skipButtonL2Sel.setVisible(true);}, this);
     this.skipButtonL2.on('pointerout', function (pointer) {this.skipButtonL2Sel.setVisible(false);}, this);
+    
+    if(gamemode == "Online")
+    {
+        this.skipButtonL2.setInteractive({ useHandCursor: true}).on('pointerdown', () => connection.send(JSON.stringify({ type: "skipTutorial"})));
+    }
+    else
+    {
+        this.skipButtonL2.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL2());
+    }    
 
     // 2) PLAYER
     this.player1 = this.physics.add.sprite(60, 685, 'chicken1R').setScale(0.7).setDepth(2);
@@ -134,7 +140,6 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
     //Exits
     this.ground.create(0, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false);
     this.ground.create(1180, 200, 'platform').setOrigin(0,0).setScale(0.7,0.5).refreshBody().setVisible(false);
-
 
     //Grupo de huevos
     this.eggsP1 = this.physics.add.staticGroup();
@@ -205,10 +210,6 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 					}
 				
 			}, 30);
-		
-		
-
-
 
 		 connection.onmessage = (msg) => {
 
@@ -241,20 +242,32 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 	         	console.log(" EL OTRO SE FUE :((((");
 	         	clearInterval(playerUpdate);
 	         	alone = true;
-	         	//gamemode = "Offline";
-	         	//this.PlayGame();
-	         	//skipTutorial = true;
 	         }
+	        
+	        if(parsedMessage.type == "skipTutorial"){
+            	console.log(" SALTAR!");
+            	skipTutorial = true;
+            }
+	        
+	        if(parsedMessage.type == "gameover"){
+	        	gameOver = true;
+	        }
+			
 
 		}
 
 
 
 
-		if(playerId == 1 ){
+		if(playerId == 1 )
+		{
 			this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 			this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
 			this.P1_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			
+			this.P1_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P1_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P1_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 	 		// Reiniciamos eventos
 		    this.P1_jumpButton.off('down');
@@ -263,6 +276,13 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 		    this.P1_leftButton.off('up');
 		    this.P1_rightButton.off('down');
 		    this.P1_rightButton.off('up');
+		    
+		    this.P1_jumpButton2.off('down');
+		    this.P1_jumpButton2.off('up');
+		    this.P1_leftButton2.off('down');
+		    this.P1_leftButton2.off('up');
+		    this.P1_rightButton2.off('down');
+		    this.P1_rightButton2.off('up');
 
 			//Controles jugador 1
 		    this.P1_jumpButton.on('down',this.player1StartJump , this);
@@ -271,11 +291,23 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 		    this.P1_leftButton.on('up', this.player1Stop, this);
 		    this.P1_rightButton.on('down',this.player1Right, this);
 		    this.P1_rightButton.on('up', this.player1Stop, this);
+		    
+		    this.P1_jumpButton2.on('down',this.player1StartJump , this);
+		    this.P1_jumpButton2.on('up',this.player1StopJump, this);
+		    this.P1_leftButton2.on('down',this.player1Left , this);
+		    this.P1_leftButton2.on('up', this.player1Stop, this);
+		    this.P1_rightButton2.on('down',this.player1Right, this);
+		    this.P1_rightButton2.on('up', this.player1Stop, this);
 		}
-		else if(playerId ==2){
-			this.P2_jumpButton = this.input.keyboard.addKey(P2_controls.up, false);
-			this.P2_leftButton = this.input.keyboard.addKey(P2_controls.left,false);
-			this.P2_rightButton = this.input.keyboard.addKey(P2_controls.right, false);
+		else if(playerId ==2)
+		{			
+			this.P2_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
+			this.P2_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
+			this.P2_rightButton = this.input.keyboard.addKey(P1_controls.right, false);
+			
+			this.P2_jumpButton2 = this.input.keyboard.addKey(P2_controls.up, false);
+			this.P2_leftButton2 = this.input.keyboard.addKey(P2_controls.left,false);
+			this.P2_rightButton2 = this.input.keyboard.addKey(P2_controls.right, false);
 
 			// Reiniciamos eventos
 			this.P2_jumpButton.off('down');
@@ -284,6 +316,13 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 		    this.P2_leftButton.off('up');
 		    this.P2_rightButton.off('down');
 		    this.P2_rightButton.off('up');
+		    
+		    this.P2_jumpButton2.off('down');
+		    this.P2_jumpButton2.off('up');
+		    this.P2_leftButton2.off('down');
+		    this.P2_leftButton2.off('up');
+		    this.P2_rightButton2.off('down');
+		    this.P2_rightButton2.off('up');
 
 			//Controles jugador 2
 		    this.P2_jumpButton.on('down',this.player2StartJump, this);
@@ -293,9 +332,17 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 		    this.P2_rightButton.on('down',this.player2Right, this);
 		    this.P2_rightButton.on('up', this.player2Stop, this);
 
+		    this.P2_jumpButton2.on('down',this.player2StartJump, this);
+		    this.P2_jumpButton2.on('up',this.player2StopJump, this);
+		    this.P2_leftButton2.on('down',this.player2Left, this);
+		    this.P2_leftButton2.on('up', this.player2Stop, this);
+		    this.P2_rightButton2.on('down',this.player2Right, this);
+		    this.P2_rightButton2.on('up', this.player2Stop, this);
 
 		}
-	}else{
+	}
+	else
+	{
 	    // 1) P1
 	    this.P1_jumpButton = this.input.keyboard.addKey(P1_controls.up, false);
 	    this.P1_leftButton = this.input.keyboard.addKey(P1_controls.left, false);
@@ -336,17 +383,17 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 	    this.P2_leftButton.on('up', this.player2Stop, this);
 	    this.P2_rightButton.on('down',this.player2Right, this);
 	    this.P2_rightButton.on('up', this.player2Stop, this);
-
 	}
 
 
     //Variable para saber los huevos recogidos
-    this.score=0;
+    this.score = 0;
 
     // Each 1000 ms call onEvent
     this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
     
-    if(gamemode == "Online"){
+    if(gamemode == "Online")
+    {
     	connection.send(JSON.stringify({type: "syncTimer", time: this.text.text}));
     }
 	
@@ -357,31 +404,48 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
     this.physics.add.overlap(this.player1, this.eggsP1, this.recogerHuevoP1, null, this);
     this.physics.add.overlap(this.player2, this.eggsP2, this.recogerHuevoP2, null, this);
 
-    if(this.end1Visible == true) {
+    if(this.end1Visible == true) 
+    {
       this.physics.add.overlap(this.player1, this.endTrigger1, this.endArrived, null, this);
     }
 
-    if(this.end2Visible == true){
+    if(this.end2Visible == true)
+    {
       this.physics.add.overlap(this.player2, this.endTrigger2, this.endArrived, null, this);
     }
 
-    if(this.initialTime < 60){
+    if(this.initialTime < 60)
+    {
       this.text.setX(gameWidth/2 - 28);
     }
 
-    if(this.initialTime < 0){
+    if(this.initialTime < 0)
+    {
       this.GameOverEs1();
     }
 
-    if (alone == true){
+    if ((alone == true) && (gameOver == false))
+    {
     	this.AloneInGame();  	
     	alone = false;
     }
 
+    if (skipTutorial == true)
+    {
+		this.SkipPreloadL2();
+		skipTutorial = false;
+	}
+    
+    if(gameOver == true)
+    {
+    	this.GameOverEs1();
+    	gameOver = false;
+    }
 	//alive();
   }
 
-  formatTime(seconds){
+  formatTime(seconds)
+  {
     var minutes = Math.floor(seconds/60);
     var partInSeconds = seconds%60;
     partInSeconds = partInSeconds.toString().padStart(2,'0');
@@ -390,11 +454,14 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 
   onEvent ()
   {
-	if(this.goalArrived == false){
+	if(this.goalArrived == false)
+	{
 		this.initialTime -= 1; // One second
 	    this.text.setText(this.formatTime(this.initialTime));
 	
-	    if(this.initialTime==0){
+	    if(this.initialTime==0)
+	    {
+	      gameOver = true;
 	      console.log("Se acaboo");
 	    }
 	}   
@@ -416,7 +483,8 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
     this.score += 1;
     this.numEgssP1 ++;
 
-    if(this.numEgssP1 == 3){
+    if(this.numEgssP1 == 3)
+    {
       this.end1Visible = true;
       this.time.addEvent({
         delay: 2500,
@@ -426,8 +494,6 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
         },
       callbackScope: this
       }, this);
-
-
     }
   }
 
@@ -462,100 +528,123 @@ class GamePlayEs1Multiplayer extends Phaser.Scene{
 
 
   
-endArrived(player, end){
-    end.body.enable=false;
-    this.goalSound.play();
-    this.playersArrived++;
+	endArrived(player, end)
+	{
+	    end.body.enable=false;
+	    this.goalSound.play();
+	    this.playersArrived++;
+	
+	    if (this.playersArrived == 2){
+	    	this.goalArrived = true;
+	        this.FinNivelEs1();
+	    }
+	  }
 
-    if (this.playersArrived == 2){
-    	this.goalArrived = true;
-        this.FinNivelEs1();
-    }
-  }
-
-//ANIMATIONS
+	//ANIMATIONS
   //ANIMATIONS PLAYER 1
-  player1StartJump(){
+  player1StartJump()
+  {
     this.player1.setVelocityY(-300);
   }
 
-  player1StopJump(){
+  player1StopJump()
+  {
     this.player1.setVelocityY(0);
   }
 
 
-  player1Left() {
+  player1Left()
+  {
     this.player1.setVelocityX(-160);
     this.player1.anims.play('move_left1', true);
     this.player1.flipX = false;
     this.dir1 = 0;
   }
 
-  player1Right() {
+  player1Right()
+  {
     this.player1.setVelocityX(160);
     this.player1.anims.play('move_right1', true);
     this.dir1 = 1;
   }
 
-  player1Stop() {
+  player1Stop()
+  {
     this.player1.setVelocityX(0);
 
-    if(this.dir1 == 1){
+    if(this.dir1 == 1)
+    {
       this.player1.anims.play('stop1R', true);
-    }else{
+    }
+    else
+    {
       this.player1.anims.play('stop1L', true);
     }
 
-    if(this.P1_leftButton.isDown){
+    if(this.P1_leftButton.isDown)
+    {
       this.player1Left();
     }
-    if(this.P1_rightButton.isDown){
+    
+    if(this.P1_rightButton.isDown)
+    {
       this.player1Right();
     }
   }
 
   //ANIMATIONS PLAYER 2
-  player2StartJump(){
+  player2StartJump()
+  {
     this.player2.setVelocityY(-300);
   }
 
-  player2StopJump(){
+  player2StopJump()
+  {
     this.player2.setVelocityY(0);
   }
 
 
-  player2Left() {
+  player2Left()
+  {
     this.player2.setVelocityX(-160);
     this.player2.anims.play('move_left2', true);
     this.dir2 = 0;
   }
 
-  player2Right() {
+  player2Right()
+  {
     this.player2.setVelocityX(160);
     this.player2.anims.play('move_right2', true);
     this.dir2 = 1;
   }
 
-  player2Stop() {
+  player2Stop()
+  {
     this.player2.setVelocityX(0);
 
-    if(this.dir2 == 1){
+    if(this.dir2 == 1)
+    {
       this.player2.anims.play('stop2R', true);
-    }else{
+    }
+    else
+    {
       this.player2.anims.play('stop2L', true);
     }
 
-    if(this.P2_leftButton.isDown){
+    if(this.P2_leftButton.isDown)
+    {
       this.player2Left();
     }
-    if(this.P2_rightButton.isDown){
+    
+    if(this.P2_rightButton.isDown)
+    {
       this.player2Right();
     }
   }
 
   //GAME CONTROL
-  FinNivelEs1(){
-
+  FinNivelEs1()
+  {
     totalTime += 35 - this.initialTime;
     finalPunt = (totalTime * 5)/4
 
@@ -594,7 +683,8 @@ endArrived(player, end){
 
   }
 
-  AloneInGame(){
+  AloneInGame()
+  {
 	  if(musicGameplay.isPlaying){
 	      musicGameplay.stop();
 	    }
@@ -605,16 +695,21 @@ endArrived(player, end){
 	    this.scene.start('AloneInGame');
   }
   
-  GameOverEs1(){
-
-    if(musicGameplay.isPlaying){
+  GameOverEs1()
+  {
+    if(musicGameplay.isPlaying)
+    {
       musicGameplay.stop();
     }
+    
     musicMenu.play();
 
     if (gamemode == "Online")
     {
+    	gameOver = false;
+    	connection.send(JSON.stringify({type: "gameover"}));
     	clearInterval(playerUpdate);
+    	connection.close();
     }
     
     this.scene.stop('GamePlayEs1Multiplayer');
@@ -624,23 +719,25 @@ endArrived(player, end){
 
   SkipPreloadL2()
   {
-	  clearInterval(playerUpdate);
+	clearInterval(playerUpdate);
     this.scene.stop('GamePlayEs1Multiplayer');
     this.scene.sendToBack('GamePlayEs1Multiplayer');
     this.scene.start('GamePlayEs2');
   }
 
-  PauseMenu(){
-
+  PauseMenu()
+  {
     this.clickSound.play();
 
-    if(musicGameplay.isPlaying){
+    if(musicGameplay.isPlaying)
+    {
       musicGameplay.stop();
     }
+    
     musicMenu.play();
     
-    if(gamemode == "Online"){
-    	//clearInterval(this.playerUpdate);
+    if(gamemode == "Online")
+    {
     	this.scene.run('PauseMenuMultiplayer');
         this.scene.bringToTop('PauseMenuMultiplayer');
         this.scene.sendToBack();
@@ -650,11 +747,11 @@ endArrived(player, end){
     	this.scene.run('PauseMenu');
         this.scene.bringToTop('PauseMenu');
         this.scene.pause();
-    }
-    
+    }   
   }
 
-  EffectsConfig(){
+  EffectsConfig()
+  {
     return {
       mute: false,
       volume: volumeEffects/10,
@@ -666,7 +763,8 @@ endArrived(player, end){
     };
   }
 
-	UpdatetAnims(){
+	UpdatetAnims()
+	{
 		if(this.player1.prevx > this.player1.x)
 		{
 			this.player1.anims.play('move_left1', true);
@@ -682,7 +780,8 @@ endArrived(player, end){
 
 		this.player1.prevx = this.player1.x;
 
-		if(this.player2.prevx > this.player2.x){
+		if(this.player2.prevx > this.player2.x)
+		{
 			this.player2.anims.play('move_left2', true);
 			this.player2.flipX = false;
 		}
@@ -695,6 +794,5 @@ endArrived(player, end){
 			this.player2.anims.play('stop2R', true);
 
 		this.player2.prevx = this.player2.x;
-
 	}
 }

@@ -274,6 +274,21 @@ public class LevelHandler extends TextWebSocketHandler{
      		
         	 
         	 break;
+        	 
+         	case "gameover":
+         		
+         		ObjectNode responseNodeOver = mapper.createObjectNode();
+         		responseNodeOver.put("type", "gameover");
+         		
+         		if (session.getId() == sessionOne.getId()) {
+          			sessionTwo.sendMessage(new TextMessage(responseNodeOver.toString()));
+          	 			
+          	   	 }else if (session.getId() == sessionTwo.getId()) {
+          	   		sessionOne.sendMessage(new TextMessage(responseNodeOver.toString()));
+          	   	 }
+         		
+        	 break;
+        	 
          }    
 	 
 	 }

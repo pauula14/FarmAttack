@@ -79,6 +79,7 @@ class PauseMenuMultiplayer extends Phaser.Scene{
     }
     musicGameplay.play();
 
+    
     this.scene.stop('PauseMenuMultiplayer');
     this.scene.sendToBack('PauseMenuMultiplayer');
     //this.scene.wake(levelGameplay);
