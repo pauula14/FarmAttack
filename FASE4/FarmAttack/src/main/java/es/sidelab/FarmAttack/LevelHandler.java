@@ -60,7 +60,18 @@ public class LevelHandler extends TextWebSocketHandler{
 			newNode.put("lobby", "full");
 			session.sendMessage(new TextMessage(newNode.toString()));
 			System.out.println("Impossible to establish connection. The lobby is full, so the session with id: " + session.getId() + " can't connect.");
-		}		
+		}	
+		
+		if((sessions.get(1) != null && sessions.get(2) != null)) {
+ 			
+ 			ObjectNode responseNodeRoom = mapper.createObjectNode();
+ 			responseNodeRoom.put("type", "fullroom");
+ 			
+ 			sessionTwo.sendMessage(new TextMessage(responseNodeRoom.toString()));
+	 			sessionOne.sendMessage(new TextMessage(responseNodeRoom.toString()));
+     		
+ 		}
+		
 	}
 	
 	//Método que se ejecuta tras cerrar la conexión
@@ -288,6 +299,12 @@ public class LevelHandler extends TextWebSocketHandler{
           	   	 }
          		
         	 break;
+        	 
+         	/*case "joinroom":
+         		
+         		
+         		
+         		break;*/
         	 
          }    
 	 

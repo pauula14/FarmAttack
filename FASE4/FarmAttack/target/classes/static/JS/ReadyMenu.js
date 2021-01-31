@@ -45,9 +45,9 @@ class ReadyMenu extends Phaser.Scene{
         
         musicGameplay = this.sound.add('levelMusic', config);
         this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
+        
 
-
-		this.background = this.add.image(gameWidth/2,gameHeight/2,"waitingBackground"); 
+		this.background = this.add.image(gameWidth/2,gameHeight/2,"readyBackground"); 
         
 	    //Pre carga Nivel 1
 	    this.preLevel1 = this.add.image(gameWidth/2, gameHeight/2, 'level1');
@@ -55,17 +55,17 @@ class ReadyMenu extends Phaser.Scene{
 	    this.preLevel1.alpha = 0;
 	    
         //PLAY    
-        this.playButton = this.add.image(gameWidth*7/16, gameHeight*8/16, 'playButton');
-        this.playButton.setScale(2.5/3);
-        this.playButtonSel = this.add.image(gameWidth*7/16, gameHeight*8/16, 'playButtonSel');
-        this.playButtonSel.setScale(2.5/3);
+        this.readyButton = this.add.image(gameWidth*7/16, gameHeight*11/16, 'readyButton');
+        this.readyButton.setScale(2.5/3);
+        this.readyButtonSel = this.add.image(gameWidth*7/16, gameHeight*11/16, 'readyButtonSel');
+        this.readyButtonSel.setScale(2.5/3);
         
-        this.playButton.setVisible(false);
-        this.playButtonSel.setVisible(false);
+        this.readyButton.setVisible(false);
+        this.readyButtonSel.setVisible(false);
 
-        this.playButton.on('pointerover', function (pointer) {this.playButtonSel.setVisible(true);}, this);
-        this.playButton.on('pointerout', function (pointer) {this.playButtonSel.setVisible(false);}, this);
-        this.playButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => /*this.PlayGame()*/ connection.send(JSON.stringify({type: "startGame"})));
+        this.readyButton.on('pointerover', function (pointer) {this.readyButtonSel.setVisible(true);}, this);
+        this.readyButton.on('pointerout', function (pointer) {this.readyButtonSel.setVisible(false);}, this);
+        this.readyButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => /*this.PlayGame()*/ connection.send(JSON.stringify({type: "startGame"})));
         
         /*if ((fullLobby == true) ){//}|| (playerId == "1")){
 	    	 console.log("putas todas");
@@ -88,15 +88,15 @@ class ReadyMenu extends Phaser.Scene{
         }
         */
         //BACK
-        this.readyButton = this.add.image(gameWidth*10/16, gameHeight*8/16, 'readyButton');
-        this.readyButton.setScale(2.5/3);
-        this.readyButtonSel = this.add.image(gameWidth*10/16, gameHeight*8/16, 'readyButtonSel');
-        this.readyButtonSel.setScale(2.5/3);
-        this.readyButtonSel.setVisible(false);
+        this.quitButton = this.add.image(gameWidth*10/16, gameHeight*11/16, 'backButton');
+        this.quitButton.setScale(2.5/3);
+        this.quitButtonSel = this.add.image(gameWidth*10/16, gameHeight*11/16, 'backButtonSel');
+        this.quitButtonSel.setScale(2.5/3);
+        this.quitButtonSel.setVisible(false);
 
-        this.readyButton.on('pointerover', function (pointer) {this.readyButtonSel.setVisible(true);}, this);
-        this.readyButton.on('pointerout', function (pointer) {this.readyButtonSel.setVisible(false);}, this);
-        this.readyButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => (connection.send(JSON.stringify({ type: "leave"})), leaved = true)/*this.BackInit()*/);
+        this.quitButton.on('pointerover', function (pointer) {this.quitButtonSel.setVisible(true);}, this);
+        this.quitButton.on('pointerout', function (pointer) {this.quitButtonSel.setVisible(false);}, this);
+        this.quitButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => (connection.send(JSON.stringify({ type: "leave"})), leaved = true)/*this.BackInit()*/);
         
 	    //SKIP BUTTON
 	    this.skipButtonL1 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
@@ -164,6 +164,11 @@ class ReadyMenu extends Phaser.Scene{
             	//this.PlayGame();
             	//skipTutorial = true;
             }
+            
+            if(data.type == "fullroom"){
+            	console.log("SALA LLENA");
+            	fullroom = true;
+            }
                         
         }// Fin onmessage
 		
@@ -180,28 +185,6 @@ class ReadyMenu extends Phaser.Scene{
 
 
 	update(){
-		//alive();
-		//this.updateUsersConected();
-		
-		/*if (playerId == "2"){
-			console.log("Holaaaaa 2");
-			this.playButton.setVisible(true);
-		}*/
-		
-		if (playerId == 2){
-			//console.log("Holaaaaa 2");
-			this.playButton.setVisible(true);
-		}
-		
-		if (playerId == 1){
-        	
-        	//ACTIVAR FONDO QUE PONE WAITING FOR PLAYERS
-        	
-        }
-        else
-        {
-        	//ACTIVAR FONDO QUE PONE READY TO PLAY!!
-        }
 		
 		if (startGame == true){
 			this.PlayGame();
@@ -226,6 +209,13 @@ class ReadyMenu extends Phaser.Scene{
 		if(namesreceived == true){
 			this.textusers.innerHTML = names;
 			namesreceived = false;
+		}
+		
+		if(fullroom == true)
+		{
+			this.background.setTexture("waitingBackground"); 
+			this.readyButton.setVisible(true);
+			fullroom = false;
 		}
 	}
 
@@ -258,8 +248,8 @@ class ReadyMenu extends Phaser.Scene{
         this.clickSound.play();
 
         //this.backgroundMM.setVisible(false);
-        this.playButton.setVisible(false);
-        this.playButtonSel.setVisible(false);
+        this.quitButton.setVisible(false);
+        this.quitButtonSel.setVisible(false);
         this.readyButton.setVisible(false);
         this.readyButtonSel.setVisible(false);
         //this.creditsButton.setVisible(false);

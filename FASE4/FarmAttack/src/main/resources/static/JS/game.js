@@ -70,6 +70,7 @@ var leaved = false;
 var playerUpdate;
 var namesreceived =false;
 var names;
+var fullroom = false;
 
 // Tamaño pantalla
 var gameWidth = 1425;

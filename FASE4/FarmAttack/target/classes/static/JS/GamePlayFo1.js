@@ -604,6 +604,7 @@ if((gamemode == "Online")){
       if (gamemode == "Online")
       {
       	clearInterval(playerUpdate);
+      	connection.close();
       }
       
       

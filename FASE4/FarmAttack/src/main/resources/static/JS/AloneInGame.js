@@ -12,7 +12,7 @@ class AloneInGame extends Phaser.Scene{
     this.clickSound = this.sound.add('clickSound', this.EffectsConfig());
 
     // 1) BACKGROUND
-    this.backgroundWM = this.add.image(gameWidth/2, gameHeight/2, 'backgroundWM');
+    this.backgroundWM = this.add.image(gameWidth/2, gameHeight/2, 'aloneBackground');
 
     //BOTON SALIR
     this.backButtonWM = this.add.image(gameWidth/2, gameHeight*12.85/16, 'quitButtonWM');
