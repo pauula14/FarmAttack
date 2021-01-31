@@ -25,7 +25,7 @@ window.onload = function(){
     //URL del JUEGO
     //utl: "http://farmAttack.es",
 
-    scene: [PreloadMenu, InitMenu, Chat, MainMenu, OptionsMenu, TutorialMenu, CreditsMenu, GamePlayEs1, GamePlayEs2, GamePlayFa1, GamePlayFa2, GamePlayFo1, PauseMenu, GameOver, Winner]
+    scene: [PreloadMenu, InitMenu, Chat, MainMenu, TypeMenu, OptionsMenu, TutorialMenu, CreditsMenu, GamePlayEs1, GamePlayEs2, GamePlayFa1, GamePlayFa2, GamePlayFo1, GamePlayFo1vs1, PauseMenu, GameOver, Winner, Winner1vs1]
 
   }
 
@@ -56,6 +56,7 @@ var gameHeight = 800;
 
 var totalTime = 0;
 var finalPunt = 0;
+var winner; //1 = gallina marron, 2 = gallina blanka
 
 var volumeMusic = 5;
 var volumeEffects = 5;

@@ -64,23 +64,6 @@ class MainMenu extends Phaser.Scene{
     this.creditsButton.on('pointerout', function (pointer) {this.creditsButtonSel.setVisible(false);}, this);
     this.creditsButton.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.CreditsMenu());
 
-    //Pre carga Nivel 1
-    this.preLevel1 = this.add.image(gameWidth/2, gameHeight/2, 'level1');
-    this.preLevel1.setDepth(2);
-    this.preLevel1.alpha = 0;
-
-    //SKIP BUTTON
-    this.skipButtonL1 = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButton');
-    this.skipButtonL1.setVisible(false);
-    this.skipButtonL1.setDepth(2);
-    this.skipButtonL1Sel = this.add.image(gameWidth*13.9/16, gameHeight*14.23/16, 'skipButtonSel');
-    this.skipButtonL1Sel.setVisible(false);
-    this.skipButtonL1Sel.setDepth(2);
-
-    this.skipButtonL1.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.SkipPreloadL1());
-    this.skipButtonL1.on('pointerover', function (pointer) {this.skipButtonL1Sel.setVisible(true);}, this);
-    this.skipButtonL1.on('pointerout', function (pointer) {this.skipButtonL1Sel.setVisible(false);}, this);
-
 //0;
 
     //BACK
@@ -93,47 +76,9 @@ class MainMenu extends Phaser.Scene{
 
     //this.scene.start("SelectMap");
     prevScene = 'MainMenu';
-    this.clickSound.play();
-
-    this.backgroundMM.setVisible(false);
-    this.playButton.setVisible(false);
-    this.playButtonSel.setVisible(false);
-    this.tutorialButton.setVisible(false);
-    this.optionsButton.setVisible(false);
-    this.creditsButton.setVisible(false);
-
-    this.skipButtonL1.setVisible(true);
-  //  this.backButtonMM.setVisible(false);
-
-  if(musicMenu.isPlaying){
-    musicMenu.stop();
-  }
-
-    this.tweens.add({
-      targets: this.preLevel1,
-      duration: 1000,
-      alpha: 1,
-      yoyo: true,
-      hold: 4000,
-      completeDelay: 2000
-    });
-
-      this.time.addEvent({
-        delay: 6500,
-        callback: function() {
-          this.scene.stop("MainMenu");
-          this.scene.start("GamePlayEs1");
-          musicGameplay.play();
-        },
-      callbackScope: this
-      }, this);
-
-  }
-
-  SkipPreloadL1(){
     this.scene.stop("MainMenu");
-    this.scene.start("GamePlayEs1");
-    musicGameplay.play();
+    this.scene.start("TypeMenu");
+
   }
 
   OptionsMenuMM(){

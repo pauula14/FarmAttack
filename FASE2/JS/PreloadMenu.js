@@ -93,6 +93,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('backgroundFa1', 'ASSETS/Gameplay/Maps/facade1.jpg'); //fachada 1
     this.load.image('backgroundFa2', 'ASSETS/Gameplay/Maps/facade2.jpg'); //fachada 2
     this.load.image('backgroundFo', 'ASSETS/Gameplay/Maps/forest.jpg'); //forest
+    this.load.image('backgroundFo1vs1', 'ASSETS/Gameplay/Maps/forest_1vs1.jpg'); //forest 1vs1
 
     this.load.image('platform', 'ASSETS/Placeholders/platform.png');
     this.load.image('platformBroken', 'ASSETS/Gameplay/Obstacles/broken_wood.png');//platform broken
@@ -138,6 +139,9 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('quitButtonGOMsel', 'Assets/Interface/GameOverMenu/Buttons/quit_button_selected.png');
     this.load.image('retryButtonGOMsel', 'Assets/Interface/GameOverMenu/Buttons/retry_button_selected.png');
 
+    this.load.image('brownChicken', 'Assets/Characters/Chickens/brown_stop_izq.png');
+    this.load.image('whiteChicken', 'Assets/Characters/Chickens/white_stop_izq.png');
+
     //SPRITES
     this.load.spritesheet('chicken1L', 'Assets/Characters/Chickens/brown_stop_izq.png', { frameWidth: 87, frameHeight: 108 });
     this.load.spritesheet('chicken1R', 'Assets/Characters/Chickens/brown_stop_dch.png', { frameWidth: 87, frameHeight: 108 });
@@ -159,7 +163,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.audio('goalSound', 'Assets/Music/LlegarCesta.mp3');
     this.load.audio('player_jump', 'Assets/Music/aleteo.mp3');
 
-    this.load.image('logo', 'Assets/Logo_KimeraGames.jpeg');
+    this.load.image('logo', 'ASSETS/Logo_KimeraGames.jpeg');
 
     this.load.on("complete", () => {
       percentText.destroy();

@@ -33,8 +33,8 @@ class Winner extends Phaser.Scene{
   BackMainMenu(){
     this.clickSound.play();
 
-    this.scene.stop('OptionsMenu');
-    this.scene.sendToBack('OptionsMenu');
+    this.scene.stop('Winner');
+    this.scene.sendToBack('Winner');
     this.scene.start('MainMenu'); //Ver como hacer para que lleve a la anterior real
   }
 
