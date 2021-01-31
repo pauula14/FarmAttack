@@ -79,11 +79,11 @@ class TypeMenu extends Phaser.Scene{
     this.clickSound.play();
 
     this.backgroundMM.setVisible(false);
-    this.playButton.setVisible(false);
-    this.playButtonSel.setVisible(false);
-    this.tutorialButton.setVisible(false);
-    this.optionsButton.setVisible(false);
-    this.creditsButton.setVisible(false);
+    this.coopButton.setVisible(false);
+    this.coopButtonSel.setVisible(false);
+    this.compButton.setVisible(false);
+    //this.optionsButton.setVisible(false);
+    this.backButtonMM.setVisible(false);
 
     this.skipButtonL1.setVisible(true);
   //  this.backButtonMM.setVisible(false);
