@@ -1,10 +1,6 @@
 package es.sidelab.FarmAttack;
 
-import java.io.IOException;
-import java.util.Calendar;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.web.socket.CloseStatus;
@@ -16,8 +12,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.concurrent.Semaphore;
-
 public class LevelHandler extends TextWebSocketHandler{
 	
 	private Map<Integer, WebSocketSession> sessions = new ConcurrentHashMap<>();
@@ -27,8 +21,6 @@ public class LevelHandler extends TextWebSocketHandler{
 	private WebSocketSession sessionTwo;
 	private int idOne = 1;
 	private int idTwo = 2;
-	private String NameOne = null;
-	private String NameTwo = null;
 	private ObjectMapper mapper = new ObjectMapper();
 	
 	@Override

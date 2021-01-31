@@ -127,7 +127,7 @@ class MainMenu extends Phaser.Scene{
         delay: 6500,
         callback: function() {
           this.scene.stop("MainMenu");
-          this.scene.start("GamePlayEs1Multiplayer");
+          this.scene.start("GamePlayEs1");
           musicGameplay.play();
         },
       callbackScope: this
@@ -137,7 +137,8 @@ class MainMenu extends Phaser.Scene{
 
   SkipPreloadL1(){
     this.scene.stop("MainMenu");
-    this.scene.start("GamePlayEs1Multiplayer");
+	gamemode ="Offline";
+    this.scene.start("GamePlayEs1");
     musicGameplay.play();
   }
 
@@ -161,6 +162,7 @@ class MainMenu extends Phaser.Scene{
     this.clickSound.play();
 
     this.scene.stop("MainMenu");
+	gamemode = "Offline";
     this.scene.start("TutorialMenu");
     prevScene = 'MainMenu';
   }
