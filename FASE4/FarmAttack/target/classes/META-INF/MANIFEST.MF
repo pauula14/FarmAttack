@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: FarmAttack
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: paula
+Implementation-Vendor-Id: es.sidelab
+Build-Jdk: 1.8.0_271
+Implementation-URL: https://github.com/pauula14/FarmAttack
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
