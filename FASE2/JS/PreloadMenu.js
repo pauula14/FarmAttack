@@ -139,8 +139,14 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('quitButtonGOMsel', 'Assets/Interface/GameOverMenu/Buttons/quit_button_selected.png');
     this.load.image('retryButtonGOMsel', 'Assets/Interface/GameOverMenu/Buttons/retry_button_selected.png');
 
+    //1 vs 1
     this.load.image('brownChicken', 'Assets/Characters/Chickens/brown_stop_izq.png');
     this.load.image('whiteChicken', 'Assets/Characters/Chickens/white_stop_izq.png');
+    this.load.image('compButton', 'Assets/Interface/GamemodeMenu/comp_button.png');
+    this.load.image('compButtonSel', 'Assets/Interface/GamemodeMenu/comp_button_selected.png');
+    this.load.image('coopButton', 'Assets/Interface/GamemodeMenu/coop_button.png');
+    this.load.image('coopButtonSel', 'Assets/Interface/GamemodeMenu/coop_button_selected.png');
+    this.load.image('typeBackground', 'Assets/Interface/VictoryMenu/victory_menu_1vs1.jpg');
 
     //SPRITES
     this.load.spritesheet('chicken1L', 'Assets/Characters/Chickens/brown_stop_izq.png', { frameWidth: 87, frameHeight: 108 });
