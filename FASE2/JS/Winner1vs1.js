@@ -29,7 +29,7 @@ class Winner1vs1 extends Phaser.Scene{
     //this.finalTime = this.add.text(gameWidth*8.2/16, gameHeight*7.1/16,  totalTime, {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#ffffff", stroke: "#000000"});
 
     this.winner = this.add.text(gameWidth*6/16, gameHeight*7.1/16,  "WINNER: ", {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#ffffff", stroke: "#000000"});
-    this.looser = this.add.text(gameWidth*6/16, gameHeight*9.2/16,  "LOOSER: ", {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#ffffff", stroke: "#000000"});
+    this.looser = this.add.text(gameWidth*6/16, gameHeight*9.2/16,  "LOSER: ", {fontFamily: 'fort', fontSize: "60px", align: 'center', fill: "#ffffff", stroke: "#000000"});
 
     this.chickenWinner = this.add.image(gameWidth*9.6/16, gameHeight*7.7/16, 'brownChicken');
     this.chickenWinner.setDepth(2);
