@@ -52,7 +52,7 @@ Ahora vamos a introducir los diagramas que hemos creado.
 
 Primero está el diagrama del servidor:
 
-![server diagram](https://github.com/pauula14/FarmAttack/blob/main/FASE3/FarmAttack/src/main/resources/static/Assets/Diagrams/Diagrama%20Rest%20Controller.jpeg)
+![server diagram](https://github.com/pauula14/FarmAttack/blob/main/FASE3/FarmAttack/src/main/resources/static/GDD/Diagrama%20de%20clases.jpeg)
 
 A continuación, el diagrama de navegación, en el que se puede ver las pantallas del juego y la navegación que el usuario puede hacer por las mismas:
 
