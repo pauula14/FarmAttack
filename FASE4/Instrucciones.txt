@@ -1,0 +1,12 @@
+
+__Instrucciones Ejecutar:__
+1. ejecutar cmd
+2. Ir a la ubicación del archivo con cd ....../FarmAttack-0.0.1-SNAPSHOT
+3. Ejecutar la línea de comando: java -jar FarmAttack-0.0.1-SNAPSHOT.jar
+* Es importante no cambiar el orden de las carpetas, es decir ejecutar el archivo desde donde está.
+4. Abrir el archivo ngrok.exe
+5. Introducir la linea de comando ngrok http 8080 -region eu
+
+Para que cualquiera pueda acceder a jugar al mismo servidor que estas ejecutando en local deberá introducir en su navegador la url similar a:
+http://bf23e0d09d67.eu.ngrok.io
+
