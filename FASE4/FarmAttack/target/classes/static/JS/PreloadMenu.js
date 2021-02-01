@@ -77,6 +77,7 @@ class PreloadMenu extends Phaser.Scene{
     this.load.image('tutorialButtonSel', '../ASSETS/Interface/MainMenu/Buttons/tutorial_button_selected.png');
     
     //MULTIPLAYER
+    this.load.image('fullLobby', '../ASSETS/Interface/WaitingRoomMenu/full_lobby_background.jpg');
     this.load.image('aloneBackground', '../ASSETS/Interface/YouAreAloneMenu/your_mate_has_left_background.jpg');
     this.load.image('waitingBackground', '../ASSETS/Interface/WaitingRoomMenu/waiting_room_menu_background.jpg');
     this.load.image('readyBackground', '../ASSETS/Interface/WaitingRoomMenu/waiting_for_players_background.jpg');

@@ -75,11 +75,7 @@ class ReadyMenu extends Phaser.Scene{
 	    	this.playButton.setVisible(true);
 	    }*/
         
-        if (fullLobby == true){
-        	
-        	//ACTIVAR FONDO QUE PONE FULL LOBBY
-        	
-        }/*else{
+        /*else{
         	connection.send(JSON.stringify({ type: "handshake" , nombre: name}));
         }*/
         /*else
@@ -217,6 +213,13 @@ class ReadyMenu extends Phaser.Scene{
 			this.readyButton.setVisible(true);
 			fullroom = false;
 		}
+		
+		if (fullLobby == true){
+        	
+			this.background.setTexture("fullLobby"); 
+        	fullLobby = false;//ACTIVAR FONDO QUE PONE FULL LOBBY
+        	
+        }
 	}
 
 
