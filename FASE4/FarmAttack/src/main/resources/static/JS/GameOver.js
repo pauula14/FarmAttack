@@ -23,9 +23,13 @@ class GameOver extends Phaser.Scene{
     this.retryButtonGoMSel.setVisible(false);
     this.retryButtonGoMSel.setDepth(2);
 
-    this.retryButtonGoM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.RetryGame());
-    this.retryButtonGoM.on('pointerover', function (pointer) {this.retryButtonGoMSel.setVisible(true);}, this);
-    this.retryButtonGoM.on('pointerout', function (pointer) {this.retryButtonGoMSel.setVisible(false);}, this);
+    if(gamemode == "Offline")
+    {
+    	this.retryButtonGoM.setInteractive({ useHandCursor: true}).on('pointerdown', () => this.RetryGame());
+        this.retryButtonGoM.on('pointerover', function (pointer) {this.retryButtonGoMSel.setVisible(true);}, this);
+        this.retryButtonGoM.on('pointerout', function (pointer) {this.retryButtonGoMSel.setVisible(false);}, this);
+    }
+    
 
 
     //BOTON SALIR
